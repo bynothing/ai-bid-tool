@@ -1,0 +1,58 @@
+{
+  "documentTitle": "主流系统图型生成示例",
+  "figures": [
+    {
+      "type": "sequence_diagram",
+      "placement": "4.3 接口交互设计",
+      "title": "风险预警触发与处置交互时序图",
+      "subtitle": "定位终端、平台服务、规则引擎和通知渠道之间的消息交互",
+      "participants": [
+        {"id": "device", "title": "定位终端", "desc": "采集侧", "icon": "gps"},
+        {"id": "gateway", "title": "接入网关", "desc": "数据入口", "icon": "gateway", "style": "accent"},
+        {"id": "rule", "title": "预警引擎", "desc": "智能判定", "icon": "ai"},
+        {"id": "notice", "title": "通知服务", "desc": "信息触达", "icon": "bell"},
+        {"id": "staff", "title": "监管人员", "desc": "处置反馈", "icon": "admin"}
+      ],
+      "messages": [
+        {"from": "device", "to": "gateway", "label": "上传位置与状态", "relation": "data", "activate": true},
+        {"from": "gateway", "to": "rule", "label": "提交实时数据", "relation": "data", "activate": true},
+        {"from": "rule", "to": "rule", "label": "规则匹配与风险识别", "relation": "control"},
+        {"from": "rule", "to": "notice", "label": "生成预警事件", "relation": "alert", "activate": true},
+        {"from": "notice", "to": "staff", "label": "推送处置任务", "relation": "alert"},
+        {"from": "staff", "to": "gateway", "label": "提交处置结果", "relation": "sync"},
+        {"from": "gateway", "to": "device", "label": "确认闭环状态", "relation": "flow"}
+      ],
+      "note": "绿色虚线为数据传输，红色为告警触发，橙色点线为处置反馈。"
+    },
+    {
+      "type": "swimlane_flowchart",
+      "placement": "5.2 异常处置业务流程",
+      "title": "放射源异常事件跨角色处置泳道图",
+      "subtitle": "单位申报、平台研判、监管处置和闭环归档",
+      "lanes": [
+        {"id": "unit", "title": "涉源单位", "icon": "organization"},
+        {"id": "platform", "title": "监管平台", "icon": "server"},
+        {"id": "agency", "title": "监管部门", "icon": "government"},
+        {"id": "archive", "title": "数据归档", "icon": "database"}
+      ],
+      "steps": [
+        {"id": "report", "lane": "unit", "order": 0, "title": "异常申报", "desc": "填写事件信息", "icon": "form"},
+        {"id": "receive", "lane": "platform", "order": 1, "title": "接收事件", "desc": "校验与登记", "icon": "workflow", "style": "accent"},
+        {"id": "judge", "lane": "platform", "order": 2, "title": "风险研判", "desc": "规则分析", "icon": "ai", "kind": "decision"},
+        {"id": "dispatch", "lane": "agency", "order": 3, "title": "下达处置", "desc": "指令派发", "icon": "bell", "style": "danger"},
+        {"id": "rectify", "lane": "unit", "order": 4, "title": "整改反馈", "desc": "提交证明", "icon": "upload"},
+        {"id": "check", "lane": "agency", "order": 5, "title": "审核确认", "desc": "结果核验", "icon": "check", "kind": "success"},
+        {"id": "store", "lane": "archive", "order": 6, "title": "归档留痕", "desc": "审计追溯", "icon": "audit", "kind": "success"}
+      ],
+      "edges": [
+        {"from": "report", "to": "receive", "label": "申报", "relation": "data"},
+        {"from": "receive", "to": "judge", "relation": "flow"},
+        {"from": "judge", "to": "dispatch", "label": "高风险", "relation": "alert"},
+        {"from": "dispatch", "to": "rectify", "label": "处置要求", "relation": "control"},
+        {"from": "rectify", "to": "check", "label": "反馈材料", "relation": "sync"},
+        {"from": "check", "to": "store", "label": "通过", "relation": "flow"}
+      ],
+      "note": "泳道强调责任边界，流程节点颜色强调告警、研判与闭环状态。"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s1_scoring",
+  "title": "评分标准拆解分析文档",
+  "description": "阶段1输出：完整评分标准拆解，区分资格/符合性/技术/价格/废标项",
+  "type": "object",
+  "required": ["evaluation_method", "criteria", "disqualification_clauses", "summary"],
+  "properties": {
+    "evaluation_method": { "type": "string", "description": "评审方式总体描述" },
+    "has_price_score": { "type": "boolean", "description": "是否有价格分" },
+    "has_technical_score": { "type": "boolean", "description": "是否有技术分" },
+    "has_business_score": { "type": "boolean", "description": "是否有商务分" },
+    "scoring_details": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dimension", "max_score", "scoring_rules"],
+        "properties": {
+          "dimension": { "type": "string" },
+          "max_score": { "type": "number" },
+          "scoring_rules": { "type": "string" },
+          "deduction_rules": { "type": "string" },
+          "bonus_rules": { "type": "string" }
+        }
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "required": ["qualification", "compliance", "technical", "price", "disqualification"],
+      "properties": {
+        "qualification": {
+          "type": "array", "items": { "type": "object" },
+          "description": "资格审查项"
+        },
+        "compliance": {
+          "type": "array", "items": { "type": "object" },
+          "description": "符合性审查项"
+        },
+        "technical": {
+          "type": "array", "items": { "type": "object" },
+          "description": "技术评审项"
+        },
+        "price": {
+          "type": "array", "items": { "type": "object" },
+          "description": "价格评审项"
+        },
+        "disqualification": {
+          "type": "array", "items": { "type": "object" },
+          "description": "废标项"
+        }
+      }
+    },
+    "disqualification_clauses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "clause", "detection_method"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^RQ-DQ-\\d{3}$" },
+          "clause": { "type": "string", "minLength": 10 },
+          "detection_method": { "type": "string", "description": "如何检测是否触发此废标项" },
+          "severity": { "type": "string", "enum": ["直接废标", "无效报价", "取消资格"] }
+        }
+      }
+    },
+    "review_key_points": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "评审关键点"
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_score", "pass_condition"],
+      "properties": {
+        "total_score": { "type": "number" },
+        "pass_condition": { "type": "string" },
+        "ranking_rule": { "type": "string" },
+        "same_score_rule": { "type": "string" }
+      }
+    }
+  }
+}

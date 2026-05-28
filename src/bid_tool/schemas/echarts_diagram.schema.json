@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/proposal-echarts.schema.json",
+  "title": "Proposal ECharts Diagram Description",
+  "type": "object",
+  "required": ["documentTitle", "charts"],
+  "properties": {
+    "documentTitle": { "type": "string", "minLength": 1 },
+    "charts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/chart" }
+    }
+  },
+  "$defs": {
+    "common": {
+      "type": "object",
+      "required": ["id", "type", "title", "note", "source"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+        "type": { "enum": ["bar_line", "radar", "sankey", "pie_donut", "stacked_bar", "line_multi", "funnel", "gauge"] },
+        "placement": { "type": "string" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "note": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1 },
+        "dataNotice": { "type": "string" }
+      }
+    },
+    "series": {
+      "type": "object",
+      "required": ["name", "values"],
+      "properties": {
+        "name": { "type": "string" },
+        "unit": { "type": "string" },
+        "values": { "type": "array", "items": { "type": "number" }, "minItems": 1 }
+      },
+      "additionalProperties": false
+    },
+    "nameValue": {
+      "type": "object",
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "value": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "chart": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "bar_line" },
+                "categories": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+                "bar": { "$ref": "#/$defs/series" },
+                "line": { "$ref": "#/$defs/series" }
+              },
+              "required": ["categories", "bar", "line"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "radar" },
+                "indicators": {
+                  "type": "array",
+                  "minItems": 3,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "max"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "max": { "type": "number", "exclusiveMinimum": 0 }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "series": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "$ref": "#/$defs/series" }
+                }
+              },
+              "required": ["indicators", "series"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "sankey" },
+                "nodes": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": { "name": { "type": "string" } },
+                    "additionalProperties": false
+                  }
+                },
+                "links": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["source", "target", "value"],
+                    "properties": {
+                      "source": { "type": "string" },
+                      "target": { "type": "string" },
+                      "value": { "type": "number", "minimum": 0 }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "unit": { "type": "string" }
+              },
+              "required": ["nodes", "links", "unit"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "pie_donut" },
+                "unit": { "type": "string" },
+                "data": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/nameValue" } }
+              },
+              "required": ["data"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "stacked_bar" },
+                "categories": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+                "series": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/series" } }
+              },
+              "required": ["categories", "series"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "line_multi" },
+                "categories": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+                "series": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/series" } }
+              },
+              "required": ["categories", "series"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "funnel" },
+                "unit": { "type": "string" },
+                "data": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/nameValue" } }
+              },
+              "required": ["data"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "gauge" },
+                "name": { "type": "string" },
+                "value": { "type": "number", "minimum": 0 },
+                "max": { "type": "number", "exclusiveMinimum": 0 },
+                "unit": { "type": "string" }
+              },
+              "required": ["value", "max"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

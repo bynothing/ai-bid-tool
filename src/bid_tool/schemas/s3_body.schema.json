@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s3_body",
+  "title": "技术部分完整正文（每章独立 .md 文件 + manifest）",
+  "description": "阶段3输出：按大纲逐章撰写的去AI化正文，每章保存为独立 Markdown 文件，manifest.json 记录章节元数据和段落-条款映射",
+  "type": "object",
+  "required": ["document_title", "chapters", "segments", "illustration_manifest", "chapter_files"],
+  "properties": {
+    "document_title": { "type": "string" },
+    "total_words": { "type": "integer" },
+    "chapter_files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "生成的独立章节 .md 文件列表",
+      "items": {
+        "type": "object",
+        "required": ["chapter_id", "filename", "title", "word_count"],
+        "properties": {
+          "chapter_id": { "type": "string", "pattern": "^CH-\\d{2}$" },
+          "filename": { "type": "string", "description": "章节正文文件名，如 ch_01.md" },
+          "title": { "type": "string" },
+          "word_count": { "type": "integer" },
+          "covers_reqs": { "type": "array", "items": { "type": "string" } },
+          "illustration_refs": { "type": "array", "items": { "type": "string" } },
+          "tone_check_score": { "type": "number", "minimum": 0, "maximum": 100 },
+          "style_violations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "word": { "type": "string" },
+                "category": { "type": "string" },
+                "position": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "description": "章节摘要信息，正文内容见对应的 .md 文件",
+      "items": {
+        "type": "object",
+        "required": ["chapter_id", "title", "content_file", "covers_reqs"],
+        "properties": {
+          "chapter_id": { "type": "string", "pattern": "^CH-\\d{2}$" },
+          "title": { "type": "string" },
+          "content_file": { "type": "string", "description": "对应的章节正文 .md 文件名" },
+          "content_preview": { "type": "string", "minLength": 30, "description": "章节正文前 200 字预览" },
+          "word_count": { "type": "integer" },
+          "covers_reqs": { "type": "array", "items": { "type": "string" } },
+          "illustration_refs": { "type": "array", "items": { "type": "string" }, "description": "引用的插图 ID" },
+          "tone_check_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "文风检查得分" },
+          "style_violations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "word": { "type": "string" },
+                "category": { "type": "string" },
+                "position": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["seg_id", "chapter_id", "text_preview", "covers_reqs"],
+        "properties": {
+          "seg_id": { "type": "string", "pattern": "^TX-\\d{2}\\.\\d+\\.\\d+$" },
+          "chapter_id": { "type": "string" },
+          "text_preview": { "type": "string", "minLength": 20 },
+          "word_count": { "type": "integer" },
+          "covers_reqs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "paragraph_index": { "type": "integer", "description": "在章节中的段落序号" }
+        }
+      },
+      "description": "正文段落到招标条款的映射，用于 trace.json"
+    },
+    "illustration_manifest": {
+      "type": "object",
+      "required": ["total_count", "items"],
+      "properties": {
+        "total_count": { "type": "integer" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["illu_id", "type", "title", "location_chapter", "location_context"],
+            "properties": {
+              "illu_id": { "type": "string", "pattern": "^(TU|KU|LC|YU)-\\d{3}$" },
+              "type": { "type": "string", "enum": ["架构图", "流程图", "界面原型", "数据表", "部署图", "甘特图", "示意图", "框图", "原图引用", "其他"] },
+              "title": { "type": "string" },
+              "location_chapter": { "type": "string" },
+              "location_context": { "type": "string", "description": "插在哪个段落之前/之后" },
+              "covers_reqs": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["total_reqs", "covered_reqs", "uncovered_reqs", "coverage_rate"],
+      "properties": {
+        "total_reqs": { "type": "integer" },
+        "covered_reqs": { "type": "integer" },
+        "uncovered_reqs": { "type": "array", "items": { "type": "string" } },
+        "coverage_rate": { "type": "number" }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s2_outline",
+  "title": "对标评分的终版技术大纲",
+  "description": "阶段2输出：完全匹配评分规则的投标技术部分标准化大纲",
+  "type": "object",
+  "required": ["chapters", "coverage_map"],
+  "properties": {
+    "document_title": { "type": "string" },
+    "bid_type": { "type": "string", "enum": ["技术方案", "商务方案", "整体投标文件"] },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["chapter_id", "level", "title", "covers_reqs"],
+        "properties": {
+          "chapter_id": { "type": "string", "pattern": "^CH-\\d{2}$" },
+          "parent_id": { "type": "string", "description": "父章节 ID，顶级章节为 null" },
+          "level": { "type": "integer", "enum": [1, 2, 3] },
+          "title": { "type": "string", "minLength": 2 },
+          "covers_reqs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["req_id", "requirement_text"],
+              "properties": {
+                "req_id": { "type": "string" },
+                "requirement_text": { "type": "string", "minLength": 5, "description": "招标文件中的原始技术要求文本" },
+                "priority": { "type": "string", "enum": ["★实质性", "强制性", "一般性", "参考性"] }
+              }
+            },
+            "description": "本章节覆盖的招标要求——每条包含ID和原始技术要求文本，防止后续正文偏离"
+          },
+          "estimated_pages": { "type": "number" },
+          "estimated_words": { "type": "integer" },
+          "illustration_placeholders": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["illu_id", "type", "title"],
+              "properties": {
+                "illu_id": { "type": "string", "pattern": "^(TU|KU|LC|YU|SG)-\\d{3}$" },
+                "type": { "type": "string", "enum": ["架构图", "流程图", "界面原型", "数据表", "部署图", "甘特图", "示意图", "框图", "原图引用", "平布置图", "工艺流程图", "体系框架图", "其他"] },
+                "title": { "type": "string" },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "scoring_points": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "对应的评分要点描述"
+          },
+          "children": {
+            "type": "array",
+            "items": { "$ref": "#/properties/chapters/items" },
+            "description": "子章节（递归）"
+          }
+        }
+      }
+    },
+    "coverage_map": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["req_id", "requirement_text", "chapter_id", "coverage_type"],
+        "properties": {
+          "req_id": { "type": "string" },
+          "requirement_text": { "type": "string", "minLength": 5, "description": "招标文件中的原始技术要求文本" },
+          "chapter_id": { "type": "string" },
+          "coverage_type": { "type": "string", "enum": ["直接响应", "间接响应", "引用其他章节"] },
+          "note": { "type": "string" }
+        }
+      },
+      "description": "每条招标要求到章节的映射——包含原始要求文本以确保可追溯"
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": ["total_reqs", "covered_reqs", "uncovered_reqs", "coverage_rate"],
+      "properties": {
+        "total_reqs": { "type": "integer" },
+        "covered_reqs": { "type": "integer" },
+        "uncovered_reqs": { "type": "array", "items": { "type": "string" } },
+        "coverage_rate": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

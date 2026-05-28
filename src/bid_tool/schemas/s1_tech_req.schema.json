@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s1_tech_req",
+  "title": "技术需求核心点逐条提炼文档",
+  "description": "阶段1输出：将招标文件所有技术要求逐条拆解，标注类别和优先级",
+  "type": "object",
+  "required": ["items", "category_summary"],
+  "properties": {
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "requirement_text", "priority", "response_strategy"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^RQ-TECH-\\d{3}$" },
+          "source_ref": { "type": "string", "description": "招标文件出处" },
+          "category": {
+            "type": "string",
+            "enum": [
+              "总体架构要求", "人机界面要求", "功能模块要求",
+              "运行环境要求", "集成对接要求", "测试验收要求",
+              "交付要求", "日志要求", "权限要求", "可视化要求",
+              "性能要求", "安全要求", "第三方检测要求", "其他",
+              "室内装饰装修工程", "二次消防改造工程", "强电工程",
+              "弱电工程", "给排水工程", "屋顶钢结构平台工程",
+              "总体管理要求", "合同实质性条款"
+            ]
+          },
+          "sub_category": { "type": "string", "description": "子分类，如数据库模块" },
+          "requirement_text": { "type": "string", "minLength": 5 },
+          "priority": { "type": "string", "enum": ["★实质性", "强制性", "一般性", "参考性"] },
+          "is_quantifiable": { "type": "boolean", "description": "是否有量化指标" },
+          "quantitative_target": { "type": "string", "description": "量化指标值（如有）" },
+          "response_strategy": {
+            "type": "string",
+            "enum": ["完全响应", "有条件响应", "替代方案", "偏离（需说明）"]
+          },
+          "required_evidence": { "type": "string", "description": "需提供的证明材料" },
+          "risk_if_fail": { "type": "string", "description": "不满足的后果" }
+        }
+      }
+    },
+    "category_summary": {
+      "type": "object",
+      "required": ["total_requirements", "star_count", "mandatory_count"],
+      "properties": {
+        "total_requirements": { "type": "integer" },
+        "star_count": { "type": "integer", "description": "★实质性条款数量" },
+        "mandatory_count": { "type": "integer", "description": "强制性条款数量" },
+        "categories": {
+          "type": "object",
+          "description": "按 category 分类的计数"
+        }
+      }
+    }
+  }
+}

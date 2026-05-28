@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "s5_illustration",
+  "title": "所有插图详细内容描述",
+  "description": "阶段5输出：逐图精确文字定义，可直接交付绘图",
+  "type": "object",
+  "required": ["illustrations", "style_guide"],
+  "properties": {
+    "illustrations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "illu_id", "type", "title", "output_width_px",
+          "layout", "color_scheme", "text_content"
+        ],
+        "properties": {
+          "illu_id": { "type": "string", "pattern": "^(TU|KU|LC|YU)-\\d{3}[a-z]?$" },
+          "type": { "type": "string" },
+          "title": { "type": "string" },
+          "subtitle": { "type": "string" },
+          "chapter_ref": { "type": "string" },
+          "covers_reqs": { "type": "array", "items": { "type": "string" } },
+          "output_width_px": { "type": "integer", "minimum": 800, "maximum": 4000 },
+          "output_ratio": { "type": "string", "description": "宽高比，如 16:10" },
+          "layout": {
+            "type": "object",
+            "required": ["structure", "layer_count", "direction"],
+            "properties": {
+              "structure": { "type": "string", "description": "构图结构描述" },
+              "layer_count": { "type": "integer" },
+              "direction": { "type": "string", "enum": ["水平分层", "垂直分区", "环形", "网格", "自由"] },
+              "has_side_panel": { "type": "boolean" },
+              "has_legend": { "type": "boolean" }
+            }
+          },
+          "color_scheme": {
+            "type": "object",
+            "required": ["primary", "accent", "background"],
+            "properties": {
+              "primary": { "type": "string", "description": "主色 hex" },
+              "accent": { "type": "string", "description": "强调色 hex" },
+              "background": { "type": "string", "description": "背景色 hex" },
+              "dark_layer": { "type": "string" },
+              "note": { "type": "string" }
+            }
+          },
+          "text_content": {
+            "type": "object",
+            "required": ["main_title", "layers"],
+            "properties": {
+              "main_title": { "type": "string" },
+              "footnote": { "type": "string" },
+              "layers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["name", "nodes"],
+                  "properties": {
+                    "name": { "type": "string", "description": "层级名称（中文）" },
+                    "en_name": { "type": "string", "description": "英文简称" },
+                    "is_dark": { "type": "boolean" },
+                    "description": { "type": "string" },
+                    "nodes": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "required": ["name"],
+                        "properties": {
+                          "name": { "type": "string" },
+                          "subtitle": { "type": "string" },
+                          "is_pill_style": { "type": "boolean" },
+                          "is_highlighted": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "style_guide": {
+      "type": "object",
+      "required": ["font_family", "font_size_range"],
+      "properties": {
+        "font_family": { "type": "string" },
+        "font_size_range": { "type": "string" },
+        "icon_style": { "type": "string" },
+        "connector_style": { "type": "string", "enum": ["实线箭头", "虚线箭头", "无连接线"] },
+        "shadow_style": { "type": "string" },
+        "border_style": { "type": "string" }
+      }
+    }
+  }
+}

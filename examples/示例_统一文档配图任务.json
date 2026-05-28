@@ -1,0 +1,137 @@
+{
+  "version": "1.0",
+  "document": {
+    "title": "高风险放射源监管平台投标技术方案",
+    "projectName": "甘肃省高风险放射源监管平台",
+    "bidSection": "总体技术方案与数据资源建设"
+  },
+  "style": {
+    "theme": "clarity_blue",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "overall_architecture",
+      "renderer": "svg",
+      "insertion": {
+        "section": "3.1 系统总体架构设计",
+        "afterText": "本项目总体采用分层解耦和数据驱动的技术体系。",
+        "caption": "图 3-1 系统总体架构图",
+        "purpose": "解释平台层级与主要能力组成"
+      },
+      "spec": {
+        "type": "layered_architecture",
+        "placement": "3.1 系统总体架构设计",
+        "title": "高风险放射源监管平台系统总体架构图",
+        "subtitle": "统一接入、业务协同、数据赋能与安全保障",
+        "actors": [
+          { "title": "监管部门", "desc": "监测研判", "icon": "government" },
+          { "title": "涉源单位", "desc": "业务办理", "icon": "organization" },
+          { "title": "移动终端", "desc": "现场处置", "icon": "mobile" }
+        ],
+        "layers": [
+          {
+            "label": "业务应用层",
+            "en": "APPLICATION",
+            "columns": 4,
+            "items": [
+              { "title": "实时监控", "icon": "monitor", "style": "accent" },
+              { "title": "预警处置", "icon": "alert", "style": "danger" },
+              { "title": "统计分析", "icon": "chart" },
+              { "title": "综合查询", "icon": "search" }
+            ]
+          },
+          {
+            "label": "平台服务层",
+            "en": "SERVICE",
+            "columns": 4,
+            "items": [
+              { "title": "统一接入", "icon": "gateway" },
+              { "title": "流程服务", "icon": "workflow" },
+              { "title": "消息通知", "icon": "message" },
+              { "title": "接口交换", "icon": "api" }
+            ]
+          },
+          {
+            "label": "数据与保障层",
+            "en": "DATA & SECURITY",
+            "style": "dark",
+            "columns": 4,
+            "items": [
+              { "title": "监管数据库", "icon": "database" },
+              { "title": "权限认证", "icon": "lock" },
+              { "title": "安全审计", "icon": "audit" },
+              { "title": "备份恢复", "icon": "backup" }
+            ]
+          }
+        ],
+        "integrations": [
+          { "title": "上级平台", "icon": "cloud" },
+          { "title": "外部接口", "icon": "api" }
+        ],
+        "note": "图中能力按投标技术响应进行归纳，具体接口边界以最终确认清单为准。"
+      }
+    },
+    {
+      "id": "coverage_trend",
+      "renderer": "echarts_html",
+      "insertion": {
+        "section": "3.2 建设成效与覆盖能力",
+        "caption": "图 3-2 监测接入规模与覆盖率趋势图",
+        "purpose": "示例展示数值型图件生成流程"
+      },
+      "spec": {
+        "id": "coverage_trend",
+        "type": "bar_line",
+        "placement": "3.2 建设成效与覆盖能力",
+        "title": "监测接入规模与覆盖率趋势图",
+        "subtitle": "柱状展示接入点位，折线展示覆盖率",
+        "note": "演示数据，仅用于验证 AI 数据描述到标书统计图的生成效果。",
+        "source": "排版测试模拟数据 / 非项目正式统计口径",
+        "dataNotice": "模拟数据，正式投标文件中须替换为经确认的统计口径。",
+        "categories": ["一期", "二期", "三期", "四期", "五期"],
+        "bar": { "name": "接入点位", "unit": "个", "values": [126, 198, 286, 358, 426] },
+        "line": { "name": "重点源覆盖率", "unit": "%", "values": [46, 62, 78, 91, 98] }
+      }
+    },
+    {
+      "id": "data_flow",
+      "renderer": "echarts_html",
+      "insertion": {
+        "section": "3.3 数据资源汇聚设计",
+        "caption": "图 3-3 监管数据汇聚与应用流向图",
+        "purpose": "说明数据进入治理资源池后的应用方向"
+      },
+      "spec": {
+        "id": "data_flow",
+        "type": "sankey",
+        "placement": "3.3 数据资源汇聚设计",
+        "title": "监管数据汇聚与应用流向图",
+        "subtitle": "展示数据来源、治理汇聚与业务应用之间的流向关系",
+        "note": "流向权重为绘图演示数据，真实项目应依据数据交换清单配置。",
+        "source": "排版测试模拟数据 / 非实际流量统计",
+        "dataNotice": "模拟数据，仅用于数据架构表达验证。",
+        "unit": "数据流量权重",
+        "nodes": [
+          { "name": "定位终端" },
+          { "name": "涉源单位" },
+          { "name": "上级平台" },
+          { "name": "接入交换" },
+          { "name": "监管数据资源池" },
+          { "name": "实时监控" },
+          { "name": "风险预警" },
+          { "name": "统计分析" }
+        ],
+        "links": [
+          { "source": "定位终端", "target": "接入交换", "value": 38 },
+          { "source": "涉源单位", "target": "接入交换", "value": 26 },
+          { "source": "上级平台", "target": "接入交换", "value": 14 },
+          { "source": "接入交换", "target": "监管数据资源池", "value": 78 },
+          { "source": "监管数据资源池", "target": "实时监控", "value": 30 },
+          { "source": "监管数据资源池", "target": "风险预警", "value": 25 },
+          { "source": "监管数据资源池", "target": "统计分析", "value": 23 }
+        ]
+      }
+    }
+  ]
+}

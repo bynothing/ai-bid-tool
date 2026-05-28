@@ -1,0 +1,51 @@
+# Software integration project profile
+# Used for IT system integration, software package delivery, etc.
+project_type: "软件封装集成"
+evaluation_method: "综合评分法"
+
+chapter_templates:
+  CH-01: "第一章 项目理解与总体技术方案"
+  CH-02: "第二章 资质、保密与合规保障"
+  CH-03: "第三章 总体集成通用技术方案"
+  CH-04: "第四章 人机交互界面设计"
+  CH-05: "第五章 数据库模块技术方案"
+  CH-06: "第六章 材料设计模块技术方案"
+  CH-07: "第七章 热环境确定模块技术方案"
+  CH-08: "第八章 热环境响应评估模块技术方案"
+  CH-09: "第九章 运行环境兼容性与离线部署方案"
+  CH-10: "第十章 集成对接与数据贯通方案"
+  CH-11: "第十一章 项目实施与交付方案"
+  CH-12: "第十二章 测试、验收与质量保障"
+  CH-13: "第十三章 售后服务与质保承诺"
+
+scoring_dimensions:
+  - name: "项目理解与总体方案"
+    max_score: 10
+    description: "对项目目标、范围、技术路线的理解深度和总体方案的合理性"
+  - name: "技术方案完整性"
+    max_score: 15
+    description: "各模块技术方案的完整性和专业性"
+  - name: "项目实施计划"
+    max_score: 8
+    description: "进度计划、里程碑、资源安排"
+  - name: "质量保障措施"
+    max_score: 7
+    description: "测试策略、验收标准、质量保证体系"
+  - name: "售后服务与技术支持"
+    max_score: 5
+    description: "质保期、响应时间、技术支持方案"
+  - name: "项目团队资质"
+    max_score: 5
+    description: "项目经理及核心成员的资质和经验"
+
+tech_req_categories:
+  - "功能需求"
+  - "性能需求"
+  - "安全需求"
+  - "兼容性需求"
+  - "部署需求"
+  - "接口需求"
+  - "数据需求"
+  - "UI/UX需求"
+  - "文档需求"
+  - "培训需求"

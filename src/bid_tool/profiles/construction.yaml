@@ -1,0 +1,55 @@
+# Construction project profile
+# Used for construction general contracting, renovation, etc.
+project_type: "施工总承包"
+evaluation_method: "综合评分法"
+
+chapter_templates:
+  CH-01: "第一章 总体概述"
+  CH-02: "第二章 施工现场平面布置和临时设施"
+  CH-03: "第三章 施工方案与技术措施"
+  CH-04: "第四章 质量管理体系与措施"
+  CH-05: "第五章 安全管理体系与措施"
+  CH-06: "第六章 环境保护管理体系与措施"
+  CH-07: "第七章 工程进度计划与保证措施"
+  CH-08: "第八章 资源配备计划"
+  CH-09: "第九章 施工主要机械设备配备"
+  CH-10: "第十章 项目管理机构配备"
+  CH-11: "第十一章 成品保护及后期服务措施"
+  CH-12: "第十二章 紧急情况处理预案"
+  CH-13: "第十三章 合理化建议"
+
+scoring_dimensions:
+  - name: "施工方案"
+    max_score: 15
+    description: "施工方案详细完善、针对性强、难点应对充分"
+  - name: "合理化建议"
+    max_score: 3
+    description: "建议针对性强、创新突出"
+  - name: "管理机构及人员配备"
+    max_score: 8
+    description: "机构完善、人员充足、分工明确"
+  - name: "进度计划与保证措施"
+    max_score: 8
+    description: "计划措施完善针对性强"
+  - name: "投入主要机械设备计划"
+    max_score: 3
+    description: "设备配备完善科学合理"
+  - name: "质量保证措施"
+    max_score: 5
+    description: "措施完善科学合理"
+  - name: "安全施工保障措施"
+    max_score: 5
+    description: "措施完善科学合理"
+  - name: "紧急情况处理措施"
+    max_score: 3
+    description: "预案清晰完善、措施科学合理"
+
+tech_req_categories:
+  - "室内装饰装修工程"
+  - "二次消防改造工程"
+  - "强电工程"
+  - "弱电工程"
+  - "给排水工程"
+  - "屋顶钢结构平台工程"
+  - "总体管理要求"
+  - "合同实质性条款"

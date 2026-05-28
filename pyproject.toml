@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bid-tool"
+version = "1.0.0"
+description = "标书自动生成工具 — 9阶段流水线 + 配图工具集"
+requires-python = ">=3.10"
+dependencies = [
+    "python-docx>=0.8.11",
+    "lxml>=4.9.0",
+    "jsonschema>=4.17.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+png = ["cairosvg>=2.5.0"]
+echarts_export = ["playwright>=1.30.0"]
+full = ["bid-tool[png,echarts_export]"]
+
+[project.scripts]
+bid-tool = "bid_tool.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

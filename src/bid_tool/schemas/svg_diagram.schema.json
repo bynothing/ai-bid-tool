@@ -1,0 +1,405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/svg-diagram.schema.json",
+  "title": "Proposal SVG Diagram Description",
+  "type": "object",
+  "required": ["figures"],
+  "properties": {
+    "documentTitle": { "type": "string" },
+    "figures": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/figure" }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "desc": { "type": "string" },
+        "icon": { "type": "string" },
+        "style": { "enum": ["default", "accent", "success", "warning", "danger"] }
+      },
+      "additionalProperties": true
+    },
+    "layer": {
+      "type": "object",
+      "required": ["label", "items"],
+      "properties": {
+        "label": { "type": "string" },
+        "en": { "type": "string" },
+        "columns": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "style": { "enum": ["default", "dark"] },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/item" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "node": {
+      "allOf": [
+        { "$ref": "#/$defs/item" },
+        {
+          "type": "object",
+          "required": ["id", "row", "col"],
+          "properties": {
+            "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+            "row": { "type": "integer", "minimum": 0 },
+            "col": { "type": "integer", "minimum": 0 },
+            "kind": { "enum": ["process", "external", "decision", "success", "failure"] }
+          }
+        }
+      ]
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "label": { "type": "string" },
+        "relation": { "enum": ["flow", "data", "control", "alert", "sync"] },
+        "bidirectional": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "participant": {
+      "allOf": [
+        { "$ref": "#/$defs/item" },
+        {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" }
+          }
+        }
+      ]
+    },
+    "message": {
+      "type": "object",
+      "required": ["from", "to", "label"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "label": { "type": "string" },
+        "relation": { "enum": ["flow", "data", "control", "alert", "sync"] },
+        "bidirectional": { "type": "boolean" },
+        "activate": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "lane": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+        "title": { "type": "string", "minLength": 1 },
+        "icon": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "laneStep": {
+      "allOf": [
+        { "$ref": "#/$defs/item" },
+        {
+          "type": "object",
+          "required": ["id", "lane", "order"],
+          "properties": {
+            "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+            "lane": { "type": "string" },
+            "order": { "type": "integer", "minimum": 0 },
+            "kind": { "enum": ["process", "decision", "success", "failure"] }
+          }
+        }
+      ]
+    },
+    "relationNode": {
+      "allOf": [
+        { "$ref": "#/$defs/item" },
+        {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+            "row": { "type": "integer", "minimum": 0 },
+            "col": { "type": "integer", "minimum": 0 }
+          }
+        }
+      ]
+    },
+    "container": {
+      "type": "object",
+      "required": ["id", "title", "nodes"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "icon": { "type": "string" },
+        "row": { "type": "integer", "minimum": 0 },
+        "col": { "type": "integer", "minimum": 0 },
+        "columns": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "style": { "enum": ["default", "accent"] },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/relationNode" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "group": {
+      "type": "object",
+      "required": ["label", "items"],
+      "properties": {
+        "label": { "type": "string" },
+        "icon": { "type": "string" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [{ "type": "string" }, { "$ref": "#/$defs/item" }]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "common": {
+      "type": "object",
+      "required": ["type", "title"],
+      "properties": {
+        "type": {
+          "enum": [
+            "layered_architecture",
+            "flowchart",
+            "swimlane_flowchart",
+            "sequence_diagram",
+            "capability_map",
+            "relationship_map",
+            "timeline_milestone",
+            "gantt_plan",
+            "risk_matrix",
+            "comparison_cards",
+            "network_topology"
+          ]
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "placement": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "time": { "type": "string" },
+        "desc": { "type": "string" },
+        "status": { "enum": ["default", "accent", "success", "warning", "danger"] },
+        "icon": { "type": "string" },
+        "start": { "type": "number" },
+        "end": { "type": "number" },
+        "milestone": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "riskItem": {
+      "type": "object",
+      "required": ["title", "probability", "impact"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "probability": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "impact": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "level": { "enum": ["low", "medium", "high", "critical"] },
+        "mitigation": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "comparisonColumn": {
+      "type": "object",
+      "required": ["title", "items"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "style": { "enum": ["default", "accent", "success", "warning", "danger"] },
+        "icon": { "type": "string" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [{ "type": "string" }, { "$ref": "#/$defs/item" }]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "topologyZone": {
+      "type": "object",
+      "required": ["title", "nodes"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "style": { "enum": ["default", "accent", "success", "warning", "danger"] },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/relationNode" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "figure": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "layered_architecture" },
+                "actors": { "type": "array", "items": { "$ref": "#/$defs/item" } },
+                "layers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/layer" } },
+                "integrations": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+              },
+              "required": ["layers"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "flowchart" },
+                "nodes": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/node" } },
+                "edges": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/edge" } }
+              },
+              "required": ["nodes", "edges"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "sequence_diagram" },
+                "participants": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/participant" } },
+                "messages": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/message" } }
+              },
+              "required": ["participants", "messages"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "swimlane_flowchart" },
+                "lanes": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "$ref": "#/$defs/lane" } },
+                "steps": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/laneStep" } },
+                "edges": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/edge" } }
+              },
+              "required": ["lanes", "steps", "edges"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "capability_map" },
+                "columns": { "type": "integer", "minimum": 1, "maximum": 4 },
+                "groups": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/group" } }
+              },
+              "required": ["groups"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "relationship_map" },
+                "columns": { "type": "integer", "minimum": 1, "maximum": 4 },
+                "containers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/container" } },
+                "edges": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/edge" } }
+              },
+              "required": ["containers", "edges"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "timeline_milestone" },
+                "phases": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/phase" } }
+              },
+              "required": ["phases"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "gantt_plan" },
+                "total": { "type": "number", "exclusiveMinimum": 0 },
+                "unit": { "type": "string" },
+                "phases": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/phase" } }
+              },
+              "required": ["phases"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "risk_matrix" },
+                "risks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/riskItem" } }
+              },
+              "required": ["risks"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "comparison_cards" },
+                "columns": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "$ref": "#/$defs/comparisonColumn" } }
+              },
+              "required": ["columns"]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/common" },
+            {
+              "properties": {
+                "type": { "const": "network_topology" },
+                "zones": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/topologyZone" } },
+                "edges": { "type": "array", "items": { "$ref": "#/$defs/edge" } }
+              },
+              "required": ["zones"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
