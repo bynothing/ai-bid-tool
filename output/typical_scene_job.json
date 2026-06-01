@@ -1,0 +1,147 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "中国中化有机硅研究院研发创新基地（成都）项目施工总承包 - 典型绘图测试",
+    "projectName": "中国中化有机硅研究院研发创新基地（成都）项目施工总承包",
+    "bidSection": "技术方案"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "technical",
+    "preferredFormat": "both",
+    "palette": "engineering_blue"
+  },
+  "illustrations": [
+    {
+      "id": "TU-002",
+      "type": "architecture.deployment",
+      "renderer": "auto",
+      "intent": "展示施工现场功能分区平面布局，包括办公区、生活区、材料堆场、施工区等",
+      "insertion": {
+        "section": "CH-02",
+        "caption": "图2 施工现场总平面布置图"
+      },
+      "data": {
+        "title": "施工现场总平面布置",
+        "subtitle": "功能分区明确、动线流畅的标准化施工现场布局",
+        "summary": "依据施工需要科学划分施工区域，实现人车分流、材料有序管理",
+        "platforms": [
+          {
+            "index": 1,
+            "title": "办公区",
+            "icon": "document",
+            "style": "default",
+            "items": [
+              "项目经理办公室",
+              "技术部办公室",
+              "安全质量部办公室",
+              "会议室（可容纳50人）",
+              "资料室"
+            ]
+          },
+          {
+            "index": 2,
+            "title": "生活区",
+            "icon": "user",
+            "style": "success",
+            "items": [
+              "管理人员宿舍",
+              "工人宿舍（分区管理）",
+              "食堂（可容纳200人）",
+              "浴室、卫生间",
+              "晾衣区、文体活动区"
+            ]
+          },
+          {
+            "index": 3,
+            "title": "材料堆场",
+            "icon": "package",
+            "style": "accent",
+            "items": [
+              "钢材加工存放区",
+              "周转材料堆放区",
+              "构配件存放区",
+              "危险化学品专用库",
+              "门式起重机作业区"
+            ]
+          },
+          {
+            "index": 4,
+            "title": "施工区",
+            "icon": "settings",
+            "style": "warning",
+            "items": [
+              "主体结构施工区",
+              "钢结构安装区",
+              "机电安装预留区",
+              "装饰装修作业区",
+              "垂直运输设备区"
+            ]
+          },
+          {
+            "index": 5,
+            "title": "辅助设施区",
+            "icon": "bell",
+            "style": "danger",
+            "items": [
+              "配电房（容量满足高峰需求）",
+              "供水系统（含消防水）",
+              "三级沉淀池",
+              "垃圾集中堆放点",
+              "应急物资仓库"
+            ]
+          },
+          {
+            "index": 6,
+            "title": "交通组织",
+            "icon": "alert",
+            "style": "cyan",
+            "items": [
+              "主干道宽度≥6m",
+              "施工车辆专用通道",
+              "人行安全通道",
+              "紧急疏散通道",
+              "消防通道（宽度≥4m）"
+            ]
+          }
+        ],
+        "content": [
+          "办公区与施工区采用围挡隔离，减少干扰",
+          "材料堆场靠近主要运输通道，便于卸货",
+          "生活区设置于主导风向下风向",
+          "危险化学品库与生活区安全距离≥20m",
+          "消防通道形成环形，保障应急疏散"
+        ],
+        "checks": [
+          "各功能区防火间距符合规范",
+          "道路转弯半径满足运输车辆要求",
+          "临建设施结构安全鉴定合格",
+          "排水系统雨污分流"
+        ],
+        "notes": [
+          "平面布置随施工进度动态调整",
+          "临时设施使用前完成验收备案"
+        ],
+        "requirements": [
+          "占地面积约35000㎡，满足高峰施工需求",
+          "临建采用A级防火材料"
+        ],
+        "safeguards": [
+          "配备专职卫生管理人员",
+          "定期进行环境卫生消杀"
+        ],
+        "conclusion": "平面布置科学合理，功能分区明确，满足绿色施工和安全管理要求"
+      },
+      "visual": {
+        "layout": "grid_layout",
+        "colorScheme": {
+          "primary": "#1a3a5c",
+          "secondary": "#4caf50",
+          "accent": "#ff9800"
+        },
+        "tone": "technical",
+        "density": "standard"
+      }
+    }
+  ]
+}

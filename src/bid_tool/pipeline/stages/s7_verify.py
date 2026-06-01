@@ -171,7 +171,7 @@ def run(data_dir=None, project_name=None, document_title=None):
             req['status'] = 'covered'
         if req_id in req_data:
             rd = req_data[req_id]
-            req['text'] = rd.get('requirement_text', req['text'])
+            req['req_text'] = rd.get('requirement_text', req.get('req_text', ''))
             req['source'] = rd.get('source', req.get('source', ''))
 
     total = len(trace['requirements'])

@@ -1,0 +1,167 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "Mermaid 与 Graphviz 渲染器验证",
+    "projectName": "标书配图平台",
+    "bidSection": "渲染器扩展测试"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "technical",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "mermaid_flow",
+      "type": "process.flowchart",
+      "renderer": "mermaid",
+      "intent": "验证 Mermaid 流程图渲染器可以生成流程源码、HTML 预览和可选图片",
+      "insertion": {
+        "section": "1.1 流程图",
+        "caption": "图 1-1 Mermaid 问题闭环流程图",
+        "purpose": "表达问题处理主流程"
+      },
+      "data": {
+        "title": "问题闭环处理流程",
+        "nodes": [
+          { "id": "discover", "title": "问题发现", "desc": "监控、巡检、用户反馈" },
+          { "id": "register", "title": "问题登记", "desc": "形成工单" },
+          { "id": "classify", "title": "分类定位", "desc": "判断级别", "kind": "decision" },
+          { "id": "handle", "title": "处理解决", "desc": "实施处置" },
+          { "id": "verify", "title": "复核验证", "desc": "确认恢复" },
+          { "id": "archive", "title": "关闭归档", "desc": "留痕归档", "kind": "success" }
+        ],
+        "edges": [
+          { "from": "discover", "to": "register" },
+          { "from": "register", "to": "classify" },
+          { "from": "classify", "to": "handle", "label": "需处理" },
+          { "from": "handle", "to": "verify" },
+          { "from": "verify", "to": "archive", "label": "通过" },
+          { "from": "verify", "to": "handle", "label": "未通过" }
+        ]
+      }
+    },
+    {
+      "id": "mermaid_sequence",
+      "type": "interaction.sequence",
+      "renderer": "mermaid",
+      "intent": "验证 Mermaid 时序图渲染器可以表达接口调用和回执",
+      "insertion": {
+        "section": "1.2 时序图",
+        "caption": "图 1-2 Mermaid 数据上报时序图",
+        "purpose": "表达系统间接口调用顺序"
+      },
+      "data": {
+        "title": "数据上报与回执时序",
+        "participants": [
+          { "id": "terminal", "title": "采集终端" },
+          { "id": "platform", "title": "业务平台" },
+          { "id": "gov", "title": "监管平台" }
+        ],
+        "messages": [
+          { "from": "terminal", "to": "platform", "label": "上报巡检数据", "relation": "data" },
+          { "from": "platform", "to": "platform", "label": "字段校验与签名" },
+          { "from": "platform", "to": "gov", "label": "推送合规数据", "relation": "data" },
+          { "from": "gov", "to": "platform", "label": "返回校验回执", "relation": "sync" },
+          { "from": "platform", "to": "terminal", "label": "同步处理结果", "relation": "sync" }
+        ]
+      }
+    },
+    {
+      "id": "graphviz_topology",
+      "type": "network.topology",
+      "renderer": "graphviz",
+      "intent": "验证 Graphviz 拓扑图渲染器可以输出 DOT、SVG 和 PNG 降级图",
+      "insertion": {
+        "section": "1.3 拓扑图",
+        "caption": "图 1-3 Graphviz 网络拓扑图",
+        "purpose": "表达网络分区和链路关系"
+      },
+      "data": {
+        "title": "监管平台网络拓扑关系",
+        "zones": [
+          {
+            "id": "access",
+            "title": "接入区",
+            "nodes": [
+              { "id": "gateway", "title": "接入网关", "desc": "HTTPS/API" },
+              { "id": "firewall", "title": "边界防火墙", "desc": "访问控制", "style": "warning" }
+            ]
+          },
+          {
+            "id": "service",
+            "title": "服务区",
+            "nodes": [
+              { "id": "app", "title": "应用服务", "desc": "业务处理" },
+              { "id": "queue", "title": "消息队列", "desc": "异步缓冲" }
+            ]
+          },
+          {
+            "id": "data",
+            "title": "数据区",
+            "nodes": [
+              { "id": "db", "title": "业务数据库", "desc": "结构化数据" },
+              { "id": "audit", "title": "审计库", "desc": "操作留痕", "style": "success" }
+            ]
+          }
+        ],
+        "edges": [
+          { "from": "gateway", "to": "firewall", "label": "入口流量", "relation": "control" },
+          { "from": "firewall", "to": "app", "label": "安全访问" },
+          { "from": "app", "to": "queue", "label": "异步任务", "relation": "data" },
+          { "from": "app", "to": "db", "label": "读写数据", "relation": "data" },
+          { "from": "app", "to": "audit", "label": "审计日志", "relation": "alert" }
+        ]
+      }
+    },
+    {
+      "id": "graphviz_relationship",
+      "type": "relationship.domain",
+      "renderer": "graphviz",
+      "intent": "验证 Graphviz 关系图渲染器可以表达跨域组件关系",
+      "insertion": {
+        "section": "1.4 关系图",
+        "caption": "图 1-4 Graphviz 组件关系图",
+        "purpose": "表达组件之间的依赖和数据关系"
+      },
+      "data": {
+        "title": "组件依赖与数据关系图",
+        "containers": [
+          {
+            "id": "front",
+            "title": "前端域",
+            "nodes": [
+              { "id": "portal", "title": "管理门户" },
+              { "id": "mobile", "title": "移动端" }
+            ]
+          },
+          {
+            "id": "backend",
+            "title": "服务域",
+            "nodes": [
+              { "id": "api", "title": "API 服务" },
+              { "id": "workflow", "title": "流程服务" },
+              { "id": "report", "title": "报表服务" }
+            ]
+          },
+          {
+            "id": "storage",
+            "title": "数据域",
+            "nodes": [
+              { "id": "master", "title": "主数据" },
+              { "id": "log", "title": "日志审计" }
+            ]
+          }
+        ],
+        "edges": [
+          { "from": "portal", "to": "api", "label": "业务请求" },
+          { "from": "mobile", "to": "api", "label": "现场处置" },
+          { "from": "api", "to": "workflow", "label": "流程驱动", "relation": "control" },
+          { "from": "api", "to": "master", "label": "数据读写", "relation": "data" },
+          { "from": "workflow", "to": "log", "label": "过程留痕", "relation": "alert" },
+          { "from": "report", "to": "master", "label": "指标统计", "relation": "data" }
+        ]
+      }
+    }
+  ]
+}

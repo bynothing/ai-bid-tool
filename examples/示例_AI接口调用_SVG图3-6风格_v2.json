@@ -1,0 +1,243 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "SVG 图3-6 风格统一接口验证",
+    "projectName": "标书配图平台",
+    "bidSection": "技术方案与服务保障"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "interface_rules_map",
+      "type": "integration.interface_map",
+      "renderer": "auto",
+      "intent": "验证 AI 通过统一接口生成类似 example 图3 的双平台接口关系与数据交互图",
+      "insertion": {
+        "section": "3.2 数据接口与交互规则",
+        "caption": "图 3-2 数据交互规则适配架构与接口关系图",
+        "purpose": "说明双平台间的数据推送、回执、安全校验和异常补传机制"
+      },
+      "visual": {
+        "tone": "formal_bid",
+        "editableVector": true,
+        "rendererPreference": "svg_native"
+      },
+      "data": {
+        "title": "2025数据交互规则适配架构与接口关系",
+        "subtitle": "业务系统、监管平台与数据链路的接口关系",
+        "leftPlatform": {
+          "title": "承建单位业务平台",
+          "subtitle": "采集、治理、推送",
+          "icon": "server",
+          "layers": [
+            { "title": "业务应用层", "items": ["项目管理", "巡检填报", "问题闭环", "统计分析"] },
+            { "title": "数据服务层", "items": ["数据清洗", "规则校验", "接口封装", "消息队列"] },
+            { "title": "安全支撑层", "items": ["身份认证", "签名验签", "日志审计", "异常告警"] },
+            { "title": "基础资源层", "items": ["数据库", "应用服务", "备份恢复", "网络接入"] }
+          ]
+        },
+        "rightPlatform": {
+          "title": "监管/业主集成平台",
+          "subtitle": "接收、核验、反馈",
+          "icon": "government",
+          "layers": [
+            { "title": "接口接入区", "items": ["HTTPS API", "批量文件", "消息回执", "状态查询"] },
+            { "title": "数据核验区", "items": ["字段完整性", "规则一致性", "重复校验", "时效校验"] },
+            { "title": "监管应用区", "items": ["综合看板", "问题督办", "报表归档", "趋势研判"] },
+            { "title": "安全审计区", "items": ["访问审计", "脱敏留痕", "权限管控", "风险告警"] }
+          ]
+        },
+        "flows": [
+          { "title": "基础数据同步", "protocol": "HTTPS + JSON / 每日增量", "style": "default", "ackLabel": "接收回执" },
+          { "title": "巡检结果上报", "protocol": "API实时推送 / 批量补传", "style": "accent", "ackLabel": "校验结果反馈" },
+          { "title": "问题工单回传", "protocol": "状态变更事件 / 闭环节点", "style": "warning", "ackLabel": "处理状态确认" },
+          { "title": "审计日志归档", "protocol": "签名文件 + 摘要校验", "style": "success", "ackLabel": "归档编号反馈" }
+        ],
+        "requirements": [
+          { "title": "统一身份认证", "style": "default" },
+          { "title": "字段规则校验", "style": "accent" },
+          { "title": "失败重试补传", "style": "warning" },
+          { "title": "全链路审计", "style": "success" }
+        ],
+        "notes": [
+          { "title": "数据标准", "icon": "form", "style": "default", "items": ["统一编码", "字段字典", "版本兼容"] },
+          { "title": "安全策略", "icon": "shield", "style": "success", "items": ["传输加密", "签名验签", "最小权限"] },
+          { "title": "异常处理", "icon": "alert", "style": "warning", "items": ["失败重试", "人工复核", "日志追踪"] }
+        ],
+        "note": "接口关系图需要同时体现方向、协议、回执、安全约束与异常补传机制。"
+      }
+    },
+    {
+      "id": "inspection_taxonomy",
+      "type": "operation.inspection_taxonomy",
+      "renderer": "auto",
+      "intent": "验证 AI 通过统一接口生成类似 example 图5 的日常运维巡检分类图",
+      "insertion": {
+        "section": "6.1 日常运维巡检体系",
+        "caption": "图 6-1 日常运维巡检体系分类图",
+        "purpose": "说明例行巡检、专项巡检和异常触发巡检的触发方式、检查内容和输出成果"
+      },
+      "visual": {
+        "tone": "formal_bid",
+        "rendererPreference": "svg_native"
+      },
+      "data": {
+        "title": "日常运维巡检体系分类",
+        "subtitle": "例行巡检、专项巡检和异常触发巡检",
+        "summary": "通过分类巡检机制，保障系统稳定运行、数据质量达标、接口畅通、终端在线可用。",
+        "categories": [
+          {
+            "index": 1,
+            "title": "季度例行巡检",
+            "subtitle": "底线要求",
+            "style": "success",
+            "icon": "calendar",
+            "trigger": "按季度计划执行\n每季度不少于1次",
+            "content": ["系统访问与页面使用检查", "数据接收、解析、入库与展示检查", "接口上报、返回结果与联通性检查", "终端在线状态与心跳检测"],
+            "checks": ["数据上传率 ≥ 90%", "接口成功率、延迟、错误码统计", "异常、离线、延迟数据清单核查"],
+            "output": "《季度巡检报告》+ 问题清单与整改建议"
+          },
+          {
+            "index": 2,
+            "title": "专项巡检",
+            "subtitle": "接口/数据/终端状态",
+            "style": "default",
+            "icon": "settings",
+            "trigger": "按专题计划执行\n或阶段性重点工作需要",
+            "content": ["接口专项巡检：联通、返回码、耗时", "数据质量专项巡检：完整性、准确性、及时性", "终端状态专项巡检：在线率、定位连续性", "历史数据一致性与上报核查"],
+            "checks": ["专题指标达标情况", "字段映射、格式、签名与规则符合性", "异常原因分析与影响范围评估"],
+            "output": "《专项巡检报告》+ 问题分析与整改方案"
+          },
+          {
+            "index": 3,
+            "title": "异常触发巡检",
+            "subtitle": "快速响应",
+            "style": "warning",
+            "icon": "bell",
+            "trigger": "由监控告警、异常事件\n或监管通报触发",
+            "content": ["针对告警或异常事件的定向巡检", "数据链路追踪与上报链路核查", "接口、终端、网络、服务器联动检查", "异常影响评估与应急处置验证"],
+            "checks": ["异常现象复现与定位", "根因分析与影响范围", "处置措施有效性验证"],
+            "output": "《异常巡检报告》+ 处置记录与整改建议"
+          }
+        ],
+        "outputs": ["巡检计划与执行记录", "问题清单与整改闭环", "数据与指标趋势分析", "巡检报告归档与可追溯"],
+        "note": "真实完整、可追溯、可量化、可验收，形成发现-处理-验证-归档-改进的持续优化机制。"
+      }
+    },
+    {
+      "id": "incident_response_loop",
+      "type": "operation.incident_response",
+      "renderer": "auto",
+      "intent": "验证 AI 通过统一接口生成类似 example 图6 的故障分级响应和问题闭环流程图",
+      "insertion": {
+        "section": "6.3 故障响应与闭环处置",
+        "caption": "图 6-3 故障分级响应与问题闭环流程图",
+        "purpose": "说明故障级别、响应时限、处理时限、服务方式和闭环流程"
+      },
+      "visual": {
+        "tone": "formal_bid",
+        "rendererPreference": "svg_native"
+      },
+      "data": {
+        "title": "故障分级响应与问题闭环流程",
+        "subtitle": "分级标准、响应时限、处置时限与持续改进",
+        "levels": [
+          {
+            "level": "一级",
+            "name": "较重大问题",
+            "style": "danger",
+            "icon": "alert",
+            "definition": "导致监管业务中断或大量数据中断，存在较高安全风险",
+            "scenes": ["平台完全不可访问", "大量终端数据中断", "上级平台上报中断"],
+            "response": "2小时内响应",
+            "handling": "4小时内恢复或提供临时方案",
+            "service": "7x24小时现场/远程协同处理",
+            "upgrade": "影响范围扩大或超时未恢复"
+          },
+          {
+            "level": "二级",
+            "name": "一般异常",
+            "style": "warning",
+            "icon": "bell",
+            "definition": "部分功能异常或数据异常，未造成监管业务中断",
+            "scenes": ["部分模块异常", "终端数据延迟", "接口返回异常"],
+            "response": "1个工作日内响应",
+            "handling": "2个工作日内处理完成",
+            "service": "工作时间内远程支持为主",
+            "upgrade": "问题升级为一级故障"
+          },
+          {
+            "level": "三级",
+            "name": "普通事项",
+            "style": "success",
+            "icon": "check",
+            "definition": "咨询、优化建议或轻微问题，不影响系统正常运行",
+            "scenes": ["操作咨询", "界面显示优化建议", "日志查询、数据核对"],
+            "response": "2个工作日内响应",
+            "handling": "5个工作日内处理完成",
+            "service": "远程支持工单处理",
+            "upgrade": "问题演变为二级或一级"
+          }
+        ],
+        "steps": [
+          { "title": "问题发现", "icon": "search", "desc": "通过监控告警、巡检发现、用户反馈等渠道发现问题", "output": "问题初步信息" },
+          { "title": "问题登记", "icon": "form", "desc": "登记问题信息，明确现象、影响范围、发生时间等", "output": "问题工单" },
+          { "title": "分类定位", "icon": "gps", "desc": "按故障分级标准分类，进行初步分析定位", "output": "问题分类结果" },
+          { "title": "处理解决", "icon": "settings", "style": "accent", "desc": "制定处理方案并实施解决，必要时协调升级处理", "output": "处理记录" },
+          { "title": "复核验证", "icon": "shield", "desc": "复核验证问题是否解决，功能及数据恢复是否正常", "output": "验证结果" },
+          { "title": "关闭归档", "icon": "file", "desc": "问题关闭，归档工单、处理记录、日志等资料", "output": "归档记录" },
+          { "title": "总结改进", "icon": "dashboard", "desc": "定期汇总分析，形成问题报告并优化流程", "output": "改进建议" }
+        ],
+        "safeguards": [
+          { "title": "专人负责", "desc": "明确责任人与联络人", "icon": "user" },
+          { "title": "全程跟踪", "desc": "工单状态实时跟踪", "icon": "calendar" },
+          { "title": "留痕可追溯", "desc": "全过程记录可追溯", "icon": "audit" },
+          { "title": "合规可审计", "desc": "满足监管审计要求", "icon": "shield" },
+          { "title": "数据支撑", "desc": "用数据驱动改进", "icon": "chart" }
+        ]
+      }
+    },
+    {
+      "id": "security_ring",
+      "type": "architecture.security_ring",
+      "renderer": "auto",
+      "intent": "验证 AI 通过统一接口生成中心核心加环形保障措施的数据安全体系图",
+      "insertion": {
+        "section": "7.1 数据安全保密保障",
+        "caption": "图 7-1 数据安全保密保障体系架构图",
+        "purpose": "说明安全保密体系的五项核心措施和管理闭环"
+      },
+      "visual": {
+        "tone": "formal_bid",
+        "rendererPreference": "svg_native"
+      },
+      "data": {
+        "title": "数据安全保密保障体系架构",
+        "subtitle": "五大核心措施 · 多层协同防护 · 全流程闭环管理",
+        "core": {
+          "title": "数据安全保密\n保障体系",
+          "desc": "合规为基 · 技术为盾 · 管理为纲 · 闭环可控",
+          "icon": "lock"
+        },
+        "measures": [
+          { "index": 1, "title": "账号权限与访问控制", "style": "default", "items": ["统一身份认证（SSO）", "角色分级授权", "多因素认证（MFA）", "敏感操作二次校验"] },
+          { "index": 2, "title": "数据导出、复制使用控制", "style": "success", "items": ["数据导出分级审批", "敏感数据脱敏处理", "单次/批量导出限制", "水印标识与追溯"] },
+          { "index": 3, "title": "接口认证与传输安全", "style": "warning", "items": ["接口认证（JWT/HMAC）", "传输加密（TLS 1.2+）", "数字签名与防重放", "IP白名单与访问控制"] },
+          { "index": 4, "title": "日志审计与行为追溯", "style": "purple", "items": ["操作日志全量记录", "登录/操作/导出审计", "日志防篡改与留存", "异常行为实时告警"] },
+          { "index": 5, "title": "监管数据防外泄", "style": "cyan", "items": ["数据分级分类管理", "敏感数据加密存储", "外发数据严格管控", "屏幕水印与打印控制"] }
+        ],
+        "loop": [
+          { "title": "制度规范", "icon": "contract" },
+          { "title": "技术防护", "icon": "settings" },
+          { "title": "监测审计", "icon": "monitor" },
+          { "title": "风险处置", "icon": "shield" },
+          { "title": "评估优化", "icon": "report" }
+        ]
+      }
+    }
+  ]
+}

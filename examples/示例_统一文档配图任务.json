@@ -1,116 +1,188 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "document": {
     "title": "高风险放射源监管平台投标技术方案",
     "projectName": "甘肃省高风险放射源监管平台",
     "bidSection": "总体技术方案与数据资源建设"
   },
   "style": {
-    "theme": "clarity_blue",
+    "theme": "formal_blue",
+    "tone": "formal_bid",
     "preferredFormat": "both"
   },
   "illustrations": [
     {
       "id": "overall_architecture",
-      "renderer": "svg",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "解释平台分层、用户入口、核心服务、数据与安全保障之间的关系",
       "insertion": {
         "section": "3.1 系统总体架构设计",
-        "afterText": "本项目总体采用分层解耦和数据驱动的技术体系。",
-        "caption": "图 3-1 系统总体架构图",
-        "purpose": "解释平台层级与主要能力组成"
+        "caption": "图3-1 系统总体架构图",
+        "purpose": "说明平台总体能力组成"
       },
-      "spec": {
-        "type": "layered_architecture",
-        "placement": "3.1 系统总体架构设计",
+      "data": {
         "title": "高风险放射源监管平台系统总体架构图",
-        "subtitle": "统一接入、业务协同、数据赋能与安全保障",
+        "subtitle": "统一接入·业务协同·数据赋能·安全保障 — 四层架构体系",
+        "note": "本架构满足 GB/T 22239-2019 等保三级要求，数据加密传输、操作全量审计",
         "actors": [
-          { "title": "监管部门", "desc": "监测研判", "icon": "government" },
-          { "title": "涉源单位", "desc": "业务办理", "icon": "organization" },
-          { "title": "移动终端", "desc": "现场处置", "icon": "mobile" }
+          {"title": "省级监管部门",  "desc": "监测研判 · 决策指挥",     "icon": "users",    "style": "accent"},
+          {"title": "涉源企业用户",  "desc": "业务办理 · 数据上报",     "icon": "briefcase"},
+          {"title": "现场执法人员",  "desc": "移动巡检 · 应急处置",     "icon": "smartphone"},
+          {"title": "上级监管平台",  "desc": "数据对接 · 指令接收",     "icon": "link",     "style": "purple"}
         ],
         "layers": [
           {
-            "label": "业务应用层",
-            "en": "APPLICATION",
-            "columns": 4,
-            "items": [
-              { "title": "实时监控", "icon": "monitor", "style": "accent" },
-              { "title": "预警处置", "icon": "alert", "style": "danger" },
-              { "title": "统计分析", "icon": "chart" },
-              { "title": "综合查询", "icon": "search" }
-            ]
-          },
-          {
-            "label": "平台服务层",
-            "en": "SERVICE",
-            "columns": 4,
-            "items": [
-              { "title": "统一接入", "icon": "gateway" },
-              { "title": "流程服务", "icon": "workflow" },
-              { "title": "消息通知", "icon": "message" },
-              { "title": "接口交换", "icon": "api" }
-            ]
-          },
-          {
-            "label": "数据与保障层",
-            "en": "DATA & SECURITY",
+            "label": "业务应用层 · 场景赋能",
+            "en": "APPLICATION LAYER",
             "style": "dark",
             "columns": 4,
             "items": [
-              { "title": "监管数据库", "icon": "database" },
-              { "title": "权限认证", "icon": "lock" },
-              { "title": "安全审计", "icon": "audit" },
-              { "title": "备份恢复", "icon": "backup" }
+              {"title": "放射源实时监控", "desc": "GPS/北斗定位 · 辐射剂量 · 电子围栏",      "icon": "map_pin",   "style": "accent"},
+              {"title": "智能预警处置",   "desc": "规则引擎 · 三级预警 · 闭环处置",           "icon": "alert_triangle","style": "danger"},
+              {"title": "多维统计分析",   "desc": "趋势分析 · 同比环比 · 大屏展示",           "icon": "chart",     "style": "accent"},
+              {"title": "综合查询追溯",   "desc": "全文检索 · 生命周期追溯 · 档案查询",        "icon": "search"}
+            ]
+          },
+          {
+            "label": "平台服务层 · 能力中台",
+            "en": "PLATFORM LAYER",
+            "columns": 4,
+            "items": [
+              {"title": "统一接入网关",   "desc": "多协议适配 · 负载均衡 · 限流熔断",         "icon": "radio",     "style": "success"},
+              {"title": "业务流程引擎",   "desc": "可视化流程 · 条件分支 · SLA监控",          "icon": "activity"},
+              {"title": "消息推送中心",   "desc": "短信·APP·邮件·微信 多通道触达",            "icon": "send"},
+              {"title": "数据交换平台",   "desc": "RESTful API · 批量同步 · 实时推送",        "icon": "link",      "style": "purple"},
+              {"title": "统一身份认证",   "desc": "SSO单点登录 · RBAC权限 · 操作审计",        "icon": "shield"},
+              {"title": "低代码配置中心", "desc": "表单设计 · 报表配置 · 规则编排",            "icon": "code"}
+            ]
+          },
+          {
+            "label": "数据资源层 · 数据底座",
+            "en": "DATA LAYER",
+            "style": "dark",
+            "items": [
+              {"title": "放射源基础库",   "desc": "源档案 · 许可证 · 台账信息",               "icon": "database",  "style": "accent"},
+              {"title": "实时定位库",     "desc": "轨迹数据 · 电子围栏 · 报警记录",           "icon": "zap"},
+              {"title": "监管业务库",     "desc": "审批流程 · 巡检记录 · 执法文书",           "icon": "folder"},
+              {"title": "数据治理中心",   "desc": "质量稽核 · 标准管理 · 数据血缘",           "icon": "settings",  "style": "success"},
+              {"title": "数据备份恢复",   "desc": "全量+增量 · 异地灾备 · RPO<5min",         "icon": "refresh_cw","style": "warning"}
+            ]
+          },
+          {
+            "label": "基础设施层 · 运行底座",
+            "en": "INFRASTRUCTURE LAYER",
+            "columns": 3,
+            "items": [
+              {"title": "政务云平台",     "desc": "信创适配 · 弹性扩容 · 高可用",            "icon": "server",    "style": "success"},
+              {"title": "安全防护体系",   "desc": "WAF·防火墙·态势感知·零信任",              "icon": "shield_off","style": "warning"},
+              {"title": "北斗定位终端",   "desc": "4G/5G通信 · 防拆报警 · 低功耗",            "icon": "radio"}
             ]
           }
         ],
         "integrations": [
-          { "title": "上级平台", "icon": "cloud" },
-          { "title": "外部接口", "icon": "api" }
+          {"title": "国家核安全局平台", "desc": "数据上报 · 指令接收 · 季度报告"},
+          {"title": "省级政务数据平台", "desc": "数据共享 · 接口调用 · 单点登录"},
+          {"title": "公安应急联动系统", "desc": "110/119/120 应急联动 · 一键调度"},
+          {"title": "第三方检测机构",   "desc": "检测报告上传 · 资质核验"}
         ],
-        "note": "图中能力按投标技术响应进行归纳，具体接口边界以最终确认清单为准。"
+        "requirements": [
+          {"title": "等保三级合规",       "desc": "GB/T 22239-2019"},
+          {"title": "数据加密传输",       "desc": "国密SM2/SM4"},
+          {"title": "可用性 ≥ 99.9%",     "desc": "双活+灾备"},
+          {"title": "接口响应 ≤ 500ms",   "desc": "P95全链路"},
+          {"title": "全量操作审计",       "desc": "不可篡改"},
+          {"title": "定位精度 ≤ 10m",     "desc": "北斗差分"}
+        ]
+      },
+      "visual": {
+        "density": "spacious",
+        "emphasis": "key_nodes"
+      }
+    },
+    {
+      "id": "core_business_flow",
+      "type": "process.flowchart",
+      "renderer": "auto",
+      "intent": "展示放射源从许可审批到日常监控到退役注销的完整业务流程闭环",
+      "insertion": {
+        "section": "3.2 核心业务流程",
+        "caption": "图3-2 放射源全生命周期管理流程图",
+        "purpose": "说明放射源从准入到退出的全流程管控"
+      },
+      "data": {
+        "title": "放射源全生命周期管理流程",
+        "subtitle": "许可审批 → 采购入库 → 日常监控 → 退役注销 全闭环",
+        "note": "红色节点为关键控制点，虚线为异常处理路径",
+        "nodes": [
+          {"id": "n01","row":0,"col":0,"title":"许可审批","desc":"企业提交辐射安全许可证申请\n环保部门审核发证","icon":"file","kind":"process","style":"accent"},
+          {"id": "n02","row":0,"col":1,"title":"采购入库","desc":"签订采购合同\n放射源到货验收登记","icon":"clipboard","kind":"process"},
+          {"id": "n03","row":0,"col":2,"title":"安装调试","desc":"现场安装·辐射防护检测\n编制操作规程","icon":"settings","kind":"process"},
+          {"id": "n04","row":1,"col":0,"title":"备案登记","desc":"在国家核安全局系统\n完成放射源备案登记","icon":"bookmark","kind":"process","style":"accent"},
+          {"id": "n05","row":1,"col":1,"title":"日常运行监控","desc":"24h定位监测·剂量监测\n电子围栏·状态预警","icon":"monitor","kind":"process","style":"accent"},
+          {"id": "n06","row":1,"col":2,"title":"异常检测","desc":"定位异常？剂量超标？\n电子围栏越界？","icon":"alert_triangle","kind":"decision","style":"danger"},
+          {"id": "n07","row":2,"col":1,"title":"应急响应处置","desc":"启动应急预案\n联动公安·环保·卫生","icon":"bell","kind":"process","style":"danger"},
+          {"id": "n08","row":2,"col":2,"title":"恢复正常监控","desc":"事故处理完毕\n恢复日常监控状态","icon":"refresh_cw","kind":"success","style":"success"},
+          {"id": "n09","row":3,"col":1,"title":"退役注销","desc":"放射源达到使用寿命\n申请退役·安全处置·注销备案","icon":"trash_2","kind":"success","style":"success"}
+        ],
+        "edges": [
+          {"from":"n01","to":"n02","label":"批准","relation":"flow"},
+          {"from":"n02","to":"n03","label":"到货","relation":"flow"},
+          {"from":"n03","to":"n04","label":"完成","relation":"flow"},
+          {"from":"n04","to":"n05","label":"备案完成","relation":"flow"},
+          {"from":"n05","to":"n06","label":"异常触发","relation":"flow"},
+          {"from":"n06","to":"n05","label":"无异常","relation":"sync"},
+          {"from":"n06","to":"n07","label":"确认异常","relation":"alert"},
+          {"from":"n07","to":"n08","label":"处置完毕","relation":"sync"},
+          {"from":"n08","to":"n05","label":"恢复","relation":"flow"},
+          {"from":"n05","to":"n09","label":"到期退役","relation":"flow"}
+        ],
+        "requirements": [
+          {"title":"许可审批通过率100%","desc":""},
+          {"title":"备案覆盖率100%","desc":""},
+          {"title":"异常响应≤30min","desc":"一级异常"},
+          {"title":"闭环处置率≥98%","desc":""}
+        ]
       }
     },
     {
       "id": "coverage_trend",
-      "renderer": "echarts_html",
+      "type": "chart.bar_line",
+      "renderer": "auto",
+      "intent": "展示监测接入点位规模和重点源覆盖率的阶段性提升趋势",
       "insertion": {
-        "section": "3.2 建设成效与覆盖能力",
-        "caption": "图 3-2 监测接入规模与覆盖率趋势图",
-        "purpose": "示例展示数值型图件生成流程"
+        "section": "3.3 建设成效与覆盖能力",
+        "caption": "图3-3 监测接入规模与覆盖率趋势图",
+        "purpose": "展示阶段建设成效"
       },
-      "spec": {
-        "id": "coverage_trend",
-        "type": "bar_line",
-        "placement": "3.2 建设成效与覆盖能力",
+      "data": {
         "title": "监测接入规模与覆盖率趋势图",
         "subtitle": "柱状展示接入点位，折线展示覆盖率",
-        "note": "演示数据，仅用于验证 AI 数据描述到标书统计图的生成效果。",
-        "source": "排版测试模拟数据 / 非项目正式统计口径",
-        "dataNotice": "模拟数据，正式投标文件中须替换为经确认的统计口径。",
+        "source": "投标测算数据",
+        "dataNotice": "示例数据，正式投标文件中需替换为确认口径",
         "categories": ["一期", "二期", "三期", "四期", "五期"],
         "bar": { "name": "接入点位", "unit": "个", "values": [126, 198, 286, 358, 426] },
         "line": { "name": "重点源覆盖率", "unit": "%", "values": [46, 62, 78, 91, 98] }
+      },
+      "visual": {
+        "emphasis": "milestones",
+        "watermark": "示例数据"
       }
     },
     {
       "id": "data_flow",
-      "renderer": "echarts_html",
+      "type": "chart.sankey",
+      "renderer": "auto",
+      "intent": "说明监管数据从来源接入、治理汇聚到业务应用的流向关系",
       "insertion": {
-        "section": "3.3 数据资源汇聚设计",
-        "caption": "图 3-3 监管数据汇聚与应用流向图",
-        "purpose": "说明数据进入治理资源池后的应用方向"
+        "section": "3.4 数据资源汇聚设计",
+        "caption": "图3-4 监管数据汇聚与应用流向图",
+        "purpose": "说明数据流转与应用路径"
       },
-      "spec": {
-        "id": "data_flow",
-        "type": "sankey",
-        "placement": "3.3 数据资源汇聚设计",
+      "data": {
         "title": "监管数据汇聚与应用流向图",
         "subtitle": "展示数据来源、治理汇聚与业务应用之间的流向关系",
-        "note": "流向权重为绘图演示数据，真实项目应依据数据交换清单配置。",
-        "source": "排版测试模拟数据 / 非实际流量统计",
-        "dataNotice": "模拟数据，仅用于数据架构表达验证。",
+        "source": "投标测算数据",
         "unit": "数据流量权重",
         "nodes": [
           { "name": "定位终端" },

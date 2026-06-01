@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1424" viewBox="0 0 1600 1424">
+<defs>
+  <linearGradient id="header" x2="1"><stop stop-color="#12324f"/><stop offset="1" stop-color="#1f5f8b"/></linearGradient>
+  <filter id="shadow" x="-8%" y="-12%" width="116%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#183652" flood-opacity=".035"/></filter>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1" fill="#cbd8e6" opacity=".35"/></pattern>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#526173"/></marker>
+  <marker id="arrow-flow" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1f5f8b"/></marker>
+  <marker id="arrow-data" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3b7280"/></marker>
+  <marker id="arrow-control" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5d6680"/></marker>
+  <marker id="arrow-alert" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#9b3434"/></marker>
+  <marker id="arrow-sync" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8a7245"/></marker>
+  <symbol id="ico-government" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18M5 9V7l7-4 7 4v2M6 20h12M7 9v9M12 9v9M17 9v9"/></symbol>
+  <symbol id="ico-organization" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5h10v16M14 10h6v11M8 9h2M8 13h2M8 17h2M17 14h1M17 18h1"/></symbol>
+  <symbol id="ico-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.5"/><path d="M5 21v-2.5a7 7 0 0 1 14 0V21"/></symbol>
+  <symbol id="ico-admin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7.5" r="3.2"/><path d="M3.5 19a6.5 6.5 0 0 1 10.5-5.1"/><path d="M18 14v7M14.5 17.5h7"/></symbol>
+  <symbol id="ico-radiation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><path d="M12 9V3a6 6 0 0 1 5.2 3l-5.2 3ZM9.4 13.5l-5.2 3a6 6 0 0 1 0-6l5.2 3Zm5.2 0 5.2 3a6 6 0 0 1-5.2 3v-6Z"/></symbol>
+  <symbol id="ico-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="ico-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5 9 4l6 2.5L21 4v14l-6 2.5L9 18l-6 2.5v-14ZM9 4v14M15 6.5v14"/></symbol>
+  <symbol id="ico-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="5" rx="1"/><rect x="14" y="4" width="7" height="5" rx="1"/><rect x="9" y="15" width="7" height="5" rx="1"/><path d="M10 6.5h4M17.5 9v3.5H12v2.5"/></symbol>
+  <symbol id="ico-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10h4v10M10 20V4h4v16M16 20v-8h4v8M3 20h18"/></symbol>
+  <symbol id="ico-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h5M9 12h6M9 16h6"/></symbol>
+  <symbol id="ico-form" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+  <symbol id="ico-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+  <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v6c0 4.6-3.1 7.5-8 9-4.9-1.5-8-4.4-8-9V6l8-3Z"/><path d="m9 12 2 2 4-5"/></symbol>
+  <symbol id="ico-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 7h.1M8 16h.1M11 7h5M11 16h5"/></symbol>
+  <symbol id="ico-api" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 4 12l4 4M16 8l4 4-4 4M14 4 10 20"/></symbol>
+  <symbol id="ico-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12h5"/></symbol>
+  <symbol id="ico-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 6h4M10 18h4"/></symbol>
+  <symbol id="ico-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></symbol>
+  <symbol id="ico-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5M12 17h.1"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-7"/></symbol>
+  <symbol id="ico-vehicle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16V9h12l4 4v3M6 16h12"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="ico-sensor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18v3M8 21h8"/><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+  <symbol id="ico-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 8.5 4 4 0 1 1 18 18H7Z"/></symbol>
+  <symbol id="ico-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6.5 10.5 10.5 6.5M13.5 6.5l4 4M17.5 13.5l-4 4M10.5 17.5l-4-4"/></symbol>
+  <symbol id="ico-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+  <symbol id="ico-audit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h10l3 3v15H6V3Z"/><path d="M9 10h6M9 14h4"/><circle cx="16.5" cy="16.5" r="3"/><path d="m19 19 2 2"/></symbol>
+  <symbol id="ico-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M5 9h14v10H5V9Z"/><path d="M3 12h2M19 12h2M9 13h.1M15 13h.1M9 16h6"/></symbol>
+  <symbol id="ico-browser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.1M10 6.5h.1"/></symbol>
+  <symbol id="ico-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 5h4M11 18.5h2"/></symbol>
+  <symbol id="ico-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h5l2-2h4l2 2h3v12H4V7Z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="ico-gps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></symbol>
+  <symbol id="ico-gateway" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3v18"/><path d="m7 8 5-5 5 5M7 16l5 5 5-5"/></symbol>
+  <symbol id="ico-queue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="4" rx="1"/><rect x="3" y="11" width="14" height="4" rx="1"/><rect x="3" y="17" width="10" height="4" rx="1"/></symbol>
+  <symbol id="ico-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M15 3v5h4M9 12h7M9 16h7"/></symbol>
+  <symbol id="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+  <symbol id="ico-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h17M5 20V10h4v10M11 20V5h4v15M17 20v-8h4"/></symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v5M16 3v5M4 10h16M8 14h3M13 14h3"/></symbol>
+  <symbol id="ico-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3ZM10 20h4"/></symbol>
+  <symbol id="ico-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="ico-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><path d="M13 12h8M18 12v4M15 12v3"/></symbol>
+  <symbol id="ico-firewall" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4V5ZM4 10h16M4 15h16M9 5v5M15 10v5M9 15v4"/></symbol>
+  <symbol id="ico-backup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="6" ry="3"/><path d="M4 7v8c0 1.7 2.7 3 6 3M16 7v4"/><path d="M14 17a4 4 0 1 0 1-4M14 13v4h4"/></symbol>
+  <symbol id="ico-cluster" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="6" rx="1"/><rect x="13" y="4" width="8" height="6" rx="1"/><rect x="8" y="15" width="8" height="6" rx="1"/><path d="M7 10v2h10v-2M12 12v3"/></symbol>
+  <symbol id="ico-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8M12 16v5M6 11h3l2-4 3 6 2-3h2"/></symbol>
+  <symbol id="ico-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3M7 8l5-5 5 5M4 16v5h16v-5"/></symbol>
+  <symbol id="ico-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="ico-contract" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6V3Z"/><path d="M9 8h6M9 12h6M9 16h3M14 17l3-3"/></symbol>
+  <style>
+    .fm { font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .title { font-weight:700; font-size:56px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#fff; letter-spacing:1px; }
+    .subtitle { font-weight:500; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#e8f2fb; }
+    .section { font-weight:700; font-size:39px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .section-en { font-weight:600; font-size:23px; font-family:Arial,sans-serif; fill:#526173; letter-spacing:1.3px; }
+    .node { font-weight:600; font-size:38px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .node-lg { font-weight:700; font-size:45px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .desc { font-weight:500; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#526173; }
+    .dark-node { font-weight:600; font-size:38px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#fff; }
+    .note { font-weight:500; font-size:24px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#526173; }
+    .edge-label { font-weight:700; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+  </style>
+</defs>
+<rect x="0" y="0" width="1600" height="1424" rx="0" fill="#ffffff" stroke="none" />
+<rect width="1600" height="1424" fill="url(#grid)" opacity="0"/>
+<rect x="0" y="0" width="1600" height="116" rx="0" fill="url(#header)" stroke="none" />
+<rect x="0" y="114" width="1600" height="3" rx="0" fill="#1f5f8b" stroke="none" />
+<text x="50" y="57" class="title" text-anchor="start">智慧水务平台总体架构图</text>
+<text x="52" y="92" class="subtitle" text-anchor="start">端·边·云·用 四层协同体系</text>
+
+<style>
+  .title { font-size:46px; letter-spacing:0; }
+  .subtitle { font-size:24px; }
+  .section { font-size:28px; }
+  .node-lg { font-size:28px; }
+  .node { font-size:24px; }
+  .desc { font-size:20px; }
+  .dark-node { font-size:26px; }
+  .note { font-size:18px; }
+  .edge-label { font-size:21px; }
+</style>
+<style>.node{font-size:20px}.desc{font-size:16px}.section{font-size:26px}.dark-node{font-size:22px}</style>
+<rect x="42" y="148" width="1198" height="140" rx="12" fill="#f3f7fb" stroke="#1f5f8b" filter="url(#shadow)"/>
+<rect x="42" y="148" width="1198" height="52" rx="12" fill="#1f5f8b" stroke="#1f5f8b" />
+<rect x="42" y="186" width="1198" height="16" rx="0" fill="#1f5f8b" stroke="#1f5f8b" />
+
+<text x="110" y="184" class="dark-node" text-anchor="start">服务对象 / 用户</text>
+<rect x="82" y="210" width="359" height="62" rx="8" fill="#ffffff" stroke="#3b7280" filter="url(#shadow)"/>
+
+<text x="126" y="248" class="node" text-anchor="start">水务局管理员</text>
+<text x="126" y="266" class="desc" text-anchor="start">调度指挥·决策分析</text>
+<rect x="461" y="210" width="359" height="62" rx="8" fill="#ffffff" stroke="#456f96" filter="url(#shadow)"/>
+
+<text x="505" y="248" class="node" text-anchor="start">运维人员</text>
+<text x="505" y="266" class="desc" text-anchor="start">移动巡检·工单处置</text>
+<rect x="840" y="210" width="359" height="62" rx="8" fill="#ffffff" stroke="#5d6680" filter="url(#shadow)"/>
+
+<text x="884" y="248" class="node" text-anchor="start">上级平台</text>
+<text x="884" y="266" class="desc" text-anchor="start">数据对接·指令接收</text>
+<rect x="42" y="306" width="1198" height="226" rx="12" fill="#ffffff" stroke="#1f5f8b" filter="url(#shadow)"/>
+<rect x="42" y="306" width="1198" height="56" rx="12" fill="#1f5f8b" stroke="#1f5f8b" />
+<rect x="42" y="350" width="1198" height="14" rx="0" fill="#1f5f8b" stroke="#1f5f8b" />
+<circle cx="74" cy="334" r="16" fill="#ffffff"/>
+<text x="74" y="341" class="dark-node" text-anchor="middle">1</text>
+<text x="102" y="342" class="dark-node" text-anchor="start">智慧应用层</text>
+<text x="102" y="358" class="desc" text-anchor="start">APPLICATION</text>
+<rect x="60" y="376" width="281" height="86" rx="6" fill="#ffffff" stroke="#3b7280" filter="url(#shadow)"/>
+<rect x="60" y="376" width="281" height="5" rx="6" fill="#3b7280" stroke="#3b7280" />
+<g color="#3b7280"><use href="#ico-monitor" x="68" y="390" width="24" height="24"/></g>
+<text x="98" y="396" class="node" text-anchor="start">实时监控</text>
+<text x="98" y="444" class="desc" text-anchor="start">泵站·管网·水质实时展示</text>
+<rect x="353" y="376" width="281" height="86" rx="6" fill="#ffffff" stroke="#9b3434" filter="url(#shadow)"/>
+<rect x="353" y="376" width="281" height="5" rx="6" fill="#9b3434" stroke="#9b3434" />
+
+<text x="391" y="396" class="node" text-anchor="start">智能预警</text>
+<text x="391" y="444" class="desc" text-anchor="start">异常检测·分级推送</text>
+<rect x="646" y="376" width="281" height="86" rx="6" fill="#ffffff" stroke="#3b7280" filter="url(#shadow)"/>
+<rect x="646" y="376" width="281" height="5" rx="6" fill="#3b7280" stroke="#3b7280" />
+
+<text x="684" y="396" class="node" text-anchor="start">调度指挥</text>
+<text x="684" y="444" class="desc" text-anchor="start">预案执行·资源调度</text>
+<rect x="939" y="376" width="281" height="86" rx="6" fill="#ffffff" stroke="#5d6680" filter="url(#shadow)"/>
+<rect x="939" y="376" width="281" height="5" rx="6" fill="#5d6680" stroke="#5d6680" />
+<g color="#5d6680"><use href="#ico-chart" x="947" y="390" width="24" height="24"/></g>
+<text x="977" y="396" class="node" text-anchor="start">数据分析</text>
+<text x="977" y="444" class="desc" text-anchor="start">趋势分析·报表统计</text>
+<rect x="42" y="556" width="1198" height="226" rx="12" fill="#ffffff" stroke="#456f96" filter="url(#shadow)"/>
+<rect x="42" y="556" width="1198" height="56" rx="12" fill="#f3f7fb" stroke="#456f96" />
+<rect x="42" y="600" width="1198" height="14" rx="0" fill="#f3f7fb" stroke="#456f96" />
+<circle cx="74" cy="584" r="16" fill="#ffffff"/>
+<text x="74" y="591" class="node" text-anchor="middle">2</text>
+<text x="102" y="592" class="node" text-anchor="start">平台服务层</text>
+<text x="102" y="608" class="desc" text-anchor="start">PLATFORM</text>
+<rect x="60" y="626" width="281" height="86" rx="6" fill="#ffffff" stroke="#3f7d62" filter="url(#shadow)"/>
+<rect x="60" y="626" width="281" height="5" rx="6" fill="#3f7d62" stroke="#3f7d62" />
+
+<text x="98" y="646" class="node" text-anchor="start">IoT接入</text>
+<text x="98" y="694" class="desc" text-anchor="start">多协议·百万级并发</text>
+<rect x="353" y="626" width="281" height="86" rx="6" fill="#ffffff" stroke="#456f96" filter="url(#shadow)"/>
+<rect x="353" y="626" width="281" height="5" rx="6" fill="#456f96" stroke="#456f96" />
+
+<text x="391" y="646" class="node" text-anchor="start">规则引擎</text>
+<text x="391" y="694" class="desc" text-anchor="start">可视化编排·实时触发</text>
+<rect x="646" y="626" width="281" height="86" rx="6" fill="#ffffff" stroke="#3b7280" filter="url(#shadow)"/>
+<rect x="646" y="626" width="281" height="5" rx="6" fill="#3b7280" stroke="#3b7280" />
+
+<text x="684" y="646" class="node" text-anchor="start">GIS服务</text>
+<text x="684" y="694" class="desc" text-anchor="start">二维/三维·空间分析</text>
+<rect x="939" y="626" width="281" height="86" rx="6" fill="#ffffff" stroke="#5d6680" filter="url(#shadow)"/>
+<rect x="939" y="626" width="281" height="5" rx="6" fill="#5d6680" stroke="#5d6680" />
+
+<text x="977" y="646" class="node" text-anchor="start">消息推送</text>
+<text x="977" y="694" class="desc" text-anchor="start">短信·APP·邮件·微信</text>
+<rect x="42" y="806" width="1198" height="226" rx="12" fill="#ffffff" stroke="#1f5f8b" filter="url(#shadow)"/>
+<rect x="42" y="806" width="1198" height="56" rx="12" fill="#1f5f8b" stroke="#1f5f8b" />
+<rect x="42" y="850" width="1198" height="14" rx="0" fill="#1f5f8b" stroke="#1f5f8b" />
+<circle cx="74" cy="834" r="16" fill="#ffffff"/>
+<text x="74" y="841" class="dark-node" text-anchor="middle">3</text>
+<text x="102" y="842" class="dark-node" text-anchor="start">数据资源层</text>
+<text x="102" y="858" class="desc" text-anchor="start">DATA</text>
+<rect x="60" y="876" width="379" height="86" rx="6" fill="#ffffff" stroke="#3b7280" filter="url(#shadow)"/>
+<rect x="60" y="876" width="379" height="5" rx="6" fill="#3b7280" stroke="#3b7280" />
+
+<text x="98" y="896" class="node" text-anchor="start">实时数据库</text>
+<text x="98" y="944" class="desc" text-anchor="start">时序数据·秒级采集</text>
+<rect x="451" y="876" width="379" height="86" rx="6" fill="#ffffff" stroke="#3f7d62" filter="url(#shadow)"/>
+<rect x="451" y="876" width="379" height="5" rx="6" fill="#3f7d62" stroke="#3f7d62" />
+<g color="#3f7d62"><use href="#ico-settings" x="459" y="890" width="24" height="24"/></g>
+<text x="489" y="896" class="node" text-anchor="start">数据治理</text>
+<text x="489" y="944" class="desc" text-anchor="start">质量稽核·标准管理</text>
+<rect x="842" y="876" width="379" height="86" rx="6" fill="#ffffff" stroke="#9a6a24" filter="url(#shadow)"/>
+<rect x="842" y="876" width="379" height="5" rx="6" fill="#9a6a24" stroke="#9a6a24" />
+
+<text x="880" y="896" class="node" text-anchor="start">数据备份</text>
+<text x="880" y="944" class="desc" text-anchor="start">全量+增量·异地灾备</text>
+<rect x="42" y="1056" width="1198" height="226" rx="12" fill="#ffffff" stroke="#5d6680" filter="url(#shadow)"/>
+<rect x="42" y="1056" width="1198" height="56" rx="12" fill="#f6f7fa" stroke="#5d6680" />
+<rect x="42" y="1100" width="1198" height="14" rx="0" fill="#f6f7fa" stroke="#5d6680" />
+<circle cx="74" cy="1084" r="16" fill="#ffffff"/>
+<text x="74" y="1091" class="node" text-anchor="middle">4</text>
+<text x="102" y="1092" class="node" text-anchor="start">基础设施层</text>
+<text x="102" y="1108" class="desc" text-anchor="start">INFRASTRUCTURE</text>
+<rect x="60" y="1126" width="575" height="86" rx="6" fill="#ffffff" stroke="#3f7d62" filter="url(#shadow)"/>
+<rect x="60" y="1126" width="575" height="5" rx="6" fill="#3f7d62" stroke="#3f7d62" />
+<g color="#3f7d62"><use href="#ico-server" x="68" y="1140" width="24" height="24"/></g>
+<text x="98" y="1146" class="node" text-anchor="start">政务云</text>
+<text x="98" y="1194" class="desc" text-anchor="start">信创适配·弹性扩容</text>
+<rect x="647" y="1126" width="575" height="86" rx="6" fill="#ffffff" stroke="#9a6a24" filter="url(#shadow)"/>
+<rect x="647" y="1126" width="575" height="5" rx="6" fill="#9a6a24" stroke="#9a6a24" />
+
+<text x="685" y="1146" class="node" text-anchor="start">安全防护</text>
+<text x="685" y="1194" class="desc" text-anchor="start">WAF·防火墙·零信任</text>
+<path d="M641 294V296" stroke="#1f5f8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<path d="M641 538V546" stroke="#1f5f8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<path d="M641 788V796" stroke="#1f5f8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<path d="M641 1038V1046" stroke="#1f5f8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<rect x="1258" y="304" width="300" height="986" rx="12" fill="#ffffff" stroke="#5d6680" filter="url(#shadow)"/>
+<rect x="1258" y="304" width="300" height="68" rx="12" fill="#5d6680" stroke="#5d6680" />
+<rect x="1258" y="352" width="300" height="22" rx="0" fill="#5d6680" stroke="#5d6680" />
+
+<text x="1318" y="332" class="dark-node" text-anchor="start">外部协同与交换</text>
+<text x="1318" y="354" class="subtitle" text-anchor="start">INTEGRATION</text>
+<rect x="1272" y="390" width="272" height="66" rx="8" fill="#f6f7fa" stroke="#5d6680" />
+<text x="1284" y="418" class="node" text-anchor="start">省水利厅平台</text>
+<text x="1284" y="440" class="desc" text-anchor="start">数据上报·指令接收</text>
+<rect x="1272" y="468" width="272" height="66" rx="8" fill="#f6f7fa" stroke="#5d6680" />
+<text x="1284" y="496" class="node" text-anchor="start">气象局接口</text>
+<text x="1284" y="518" class="desc" text-anchor="start">降雨预报·预警推送</text>
+<path d="M1220 419H1262" stroke="#5d6680" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<circle cx="1220" cy="419" r="4" fill="#5d6680"/>
+<path d="M1220 669H1262" stroke="#5d6680" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<circle cx="1220" cy="669" r="4" fill="#5d6680"/>
+<path d="M1220 919H1262" stroke="#5d6680" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<circle cx="1220" cy="919" r="4" fill="#5d6680"/>
+<path d="M1220 1169H1262" stroke="#5d6680" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+<circle cx="1220" cy="1169" r="4" fill="#5d6680"/>
+<rect x="42" y="1320" width="1198" height="78" rx="10" fill="#f3f7fb" stroke="#1f5f8b" filter="url(#shadow)"/>
+<g color="#1f5f8b"><use href="#ico-shield" x="60" y="1340" width="38" height="38"/></g>
+<text x="110" y="1356" class="section" text-anchor="start">核心要求</text>
+<text x="110" y="1378" class="desc" text-anchor="start"></text>
+<rect x="302" y="1336" width="217" height="46" rx="6" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="410.5" y="1366" class="node" text-anchor="middle">等保三级</text>
+<rect x="531" y="1336" width="217" height="46" rx="6" fill="#f3f7fb" stroke="#456f96" />
+<text x="639.5" y="1366" class="node" text-anchor="middle">可用性≥99.9%</text>
+<rect x="760" y="1336" width="217" height="46" rx="6" fill="#f3f8fa" stroke="#3b7280" />
+<text x="868.5" y="1366" class="node" text-anchor="middle">响应≤200ms</text>
+<rect x="989" y="1336" width="217" height="46" rx="6" fill="#f6f7fa" stroke="#5d6680" />
+<text x="1097.5" y="1366" class="node" text-anchor="middle">信创适配</text>
+<rect x="42" y="1346" width="1516" height="60" rx="8" fill="#f6f9fc" stroke="#cbd8e6" />
+<text x="59" y="1384" class="note" text-anchor="start">注：本架构满足等保三级、密评合规要求</text>
+</svg>

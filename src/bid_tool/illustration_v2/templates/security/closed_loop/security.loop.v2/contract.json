@@ -1,0 +1,11 @@
+{
+  "id": "security.loop.v2",
+  "diagram_type": "security.closed_loop",
+  "schema_kind": "security_loop",
+  "required_data_fields": ["center", "controls"],
+  "capacity": {
+    "controls": [4, 6],
+    "bullets_per_control": [0, 5],
+    "loop": [0, 5]
+  }
+}

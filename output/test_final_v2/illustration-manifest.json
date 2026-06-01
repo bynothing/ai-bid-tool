@@ -1,0 +1,77 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "高风险放射源监管平台投标技术方案",
+    "projectName": "甘肃省高风险放射源监管平台",
+    "bidSection": "总体技术方案与数据资源建设"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\examples\\示例_统一文档配图任务.json",
+  "illustrations": [
+    {
+      "id": "overall_architecture",
+      "type": "architecture.layered",
+      "renderer": "svg_native",
+      "section": "3.1 系统总体架构设计",
+      "caption": "图3-1 系统总体架构图",
+      "purpose": "解释平台分层、用户入口、核心服务、数据与安全保障之间的关系",
+      "outputs": {
+        "svg": "assets/svg/高风险放射源监管平台系统总体架构图.svg",
+        "png": "assets/svg/png/高风险放射源监管平台系统总体架构图.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 26, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=70, svg_native=165"
+      ]
+    },
+    {
+      "id": "core_business_flow",
+      "type": "process.flowchart",
+      "renderer": "html_css",
+      "section": "3.2 核心业务流程",
+      "caption": "图3-2 放射源全生命周期管理流程图",
+      "purpose": "展示放射源从许可审批到日常监控到退役注销的完整业务流程闭环",
+      "outputs": {
+        "html": "assets/html/core_business_flow.html",
+        "png": "assets/html/core_business_flow.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 9, 连线 10, 分支 1, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=100, mermaid=0, svg_native=95"
+      ]
+    },
+    {
+      "id": "coverage_trend",
+      "type": "chart.bar_line",
+      "renderer": "echarts_html",
+      "section": "3.3 建设成效与覆盖能力",
+      "caption": "图3-3 监测接入规模与覆盖率趋势图",
+      "purpose": "展示监测接入点位规模和重点源覆盖率的阶段性提升趋势",
+      "outputs": {
+        "reviewHtml": "review/echarts/index.html"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 数据图、展示型标书图; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "选择 ECharts：内容以数值、序列或指标为主，ECharts 更适合坐标轴、图例和标签表达; 评分 echarts_html=100"
+      ]
+    },
+    {
+      "id": "data_flow",
+      "type": "chart.sankey",
+      "renderer": "echarts_html",
+      "section": "3.4 数据资源汇聚设计",
+      "caption": "图3-4 监管数据汇聚与应用流向图",
+      "purpose": "说明监管数据从来源接入、治理汇聚到业务应用的流向关系",
+      "outputs": {
+        "reviewHtml": "review/echarts/index.html"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 数据图、展示型标书图; 元素 8, 连线 0, 分支 0, 泳道 0",
+        "选择 ECharts：内容以数值、序列或指标为主，ECharts 更适合坐标轴、图例和标签表达; 评分 echarts_html=100"
+      ]
+    }
+  ]
+}

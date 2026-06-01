@@ -1,0 +1,130 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "高风险放射源在线监管系统数据交互技术方案",
+    "projectName": "高风险放射源在线监管系统",
+    "bidSection": "数据交互与接口适配"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "interface_adaptation_map",
+      "type": "integration.interface_map",
+      "renderer": "auto",
+      "intent": "展示省级平台与国家平台之间的数据交互规则、推送反馈链路、接口适配层和通信安全要求",
+      "insertion": {
+        "section": "4.2 数据交互与接口适配",
+        "caption": "图 4-2 数据交互规则适配架构与接口关系图",
+        "purpose": "说明双平台接口关系、数据推送方向和安全控制要求"
+      },
+      "data": {
+        "title": "2025 数据交互规则适配架构与接口关系",
+        "subtitle": "依据数据交互技术规范，统一描述平台分层、接口链路、反馈确认与安全要求",
+        "leftPlatform": {
+          "title": "省级放射源在线监控平台",
+          "layers": [
+            {
+              "title": "应用服务层",
+              "items": ["放射源综合管理", "定位监控与轨迹", "预警管理与处置", "统计分析与报表"]
+            },
+            {
+              "title": "数据处理层",
+              "items": ["数据解析与映射", "数据校验与质控", "去重防重处理", "缓存与补传机制"]
+            },
+            {
+              "title": "接口服务层（适配2025规则）",
+              "items": ["接口适配网关", "认证鉴权服务", "签名验签服务", "日志与审计服务"]
+            },
+            {
+              "title": "基础设施层",
+              "items": ["应用服务器", "数据库", "缓存/消息队列", "日志存储"]
+            }
+          ]
+        },
+        "rightPlatform": {
+          "title": "国家在线监控平台（生态环境部）",
+          "layers": [
+            {
+              "title": "应用服务层",
+              "items": ["放射源监管管理", "定位监控与展示", "预警接收与处置", "统计分析与评估"]
+            },
+            {
+              "title": "数据处理层",
+              "items": ["数据校验与入库", "数据融合与共享", "预警分析与联动", "数据留存与归档"]
+            },
+            {
+              "title": "接口服务层（2025规则接口）",
+              "items": ["接口服务网关", "认证鉴权服务", "签名验签服务", "日志与审计服务"]
+            },
+            {
+              "title": "基础设施层",
+              "items": ["应用服务器", "数据库", "缓存/消息队列", "日志存储"]
+            }
+          ]
+        },
+        "flows": [
+          {
+            "label": "① 放射源信息上报（推送）",
+            "protocol": "HTTPS（JSON）",
+            "direction": "right",
+            "color": "#007bb5",
+            "ack": "上报结果反馈（ACK）"
+          },
+          {
+            "label": "② 定位信息推送（推送）",
+            "protocol": "MQTT / HTTPS（JSON）",
+            "direction": "right",
+            "color": "#3f8b3f",
+            "ack": "接收结果反馈（ACK）"
+          },
+          {
+            "label": "③ 预警信息推送（推送）",
+            "protocol": "HTTPS（JSON）",
+            "direction": "right",
+            "color": "#f28c28",
+            "ack": "接收结果反馈（ACK）"
+          },
+          {
+            "label": "④ 预警处理反馈（反馈）",
+            "protocol": "HTTPS（JSON）",
+            "direction": "left",
+            "color": "#6d55b3",
+            "ack": "反馈结果确认（ACK）"
+          }
+        ],
+        "requirements": [
+          { "title": "通信协议", "desc": "HTTPS 1.2+ / MQTT TLS 1.2+" },
+          { "title": "认证鉴权", "desc": "双向认证，CA证书 / Token" },
+          { "title": "数据签名", "desc": "HMAC-SHA256 签名与验签" },
+          { "title": "传输安全", "desc": "TLS 加密传输，防窃听/防篡改" },
+          { "title": "时间同步", "desc": "采用 UTC 时间，避免重放" },
+          { "title": "接口规范", "desc": "遵循 2025 规则字段、频率、编码要求" }
+        ],
+        "notes": [
+          "① 放射源信息上报：省级平台将基础信息、单位信息、状态信息按规则上报国家平台。",
+          "② 定位信息推送：省级平台将定位装置产生的位置、状态实时或批量推送至国家平台。",
+          "③ 预警信息推送：省级平台将本地预警信息推送至国家平台，便于跨区域协同处置。",
+          "④ 预警处理反馈：国家平台将预警处理结果、核实意见反馈至省级平台，形成闭环管理。"
+        ],
+        "legend": [
+          { "label": "实线箭头", "desc": "推送链路（省级 → 国家 / 国家 → 省级）" },
+          { "label": "虚线反馈", "desc": "ACK 确认与接收结果反馈" }
+        ],
+        "conclusion": "所有数据交互均需留痕、可追溯、可审计",
+        "note": "本图用于说明接口适配架构和数据交互关系，具体字段以最终接口规范和联调确认结果为准。"
+      },
+      "visual": {
+        "density": "standard",
+        "tone": "formal_bid",
+        "emphasis": "critical_path",
+        "legend": true,
+        "numbering": true,
+        "badges": true
+      }
+    }
+  ]
+}

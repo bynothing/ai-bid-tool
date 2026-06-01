@@ -1,0 +1,12 @@
+{
+  "id": "inspection.cards.v2",
+  "diagram_type": "taxonomy.inspection_cards",
+  "schema_kind": "inspection_cards",
+  "required_data_fields": ["categories"],
+  "capacity": {
+    "categories": [2, 4],
+    "sections_per_category": [1, 3],
+    "bullets_per_section": [0, 4],
+    "outputs": [0, 4]
+  }
+}

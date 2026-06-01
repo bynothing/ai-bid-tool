@@ -1,0 +1,74 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "独立绘图工具最小闭环验证",
+    "projectName": "Illustration Runtime",
+    "bidSection": "Rendering Contract"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "technical",
+    "preferredFormat": "both",
+    "palette": "engineering_blue"
+  },
+  "illustrations": [
+    {
+      "id": "contract_architecture",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "验证独立绘图工具可从 v2 JSON 生成工程化架构图，并输出 manifest",
+      "insertion": {
+        "section": "1.1",
+        "caption": "图 1-1 独立绘图工具接口架构图",
+        "purpose": "说明外部调用、平台核心和渲染器之间的边界"
+      },
+      "visual": {
+        "tone": "technical",
+        "density": "standard"
+      },
+      "data": {
+        "title": "独立绘图工具接口架构",
+        "subtitle": "外部 JSON 输入 · 渲染规划 · 产物清单输出",
+        "actors": [
+          { "title": "外部系统", "desc": "生成 v2 JSON", "icon": "api" },
+          { "title": "AI 调用方", "desc": "只描述语义数据", "icon": "ai" },
+          { "title": "bid-tool", "desc": "作为适配调用方", "icon": "workflow" }
+        ],
+        "layers": [
+          {
+            "label": "外部接口层",
+            "items": [
+              { "title": "独立命令行", "desc": "bid-illustrate", "icon": "terminal" },
+              { "title": "Python 接口", "desc": "api 模块", "icon": "api" },
+              { "title": "独立工具包", "desc": "解压即用", "icon": "server" }
+            ]
+          },
+          {
+            "label": "平台核心层",
+            "items": [
+              { "title": "协议校验", "desc": "Schema", "icon": "check" },
+              { "title": "渲染规划", "icon": "workflow" },
+              { "title": "清单汇总", "desc": "Manifest", "icon": "report" }
+            ]
+          },
+          {
+            "label": "渲染器层",
+            "items": [
+              { "title": "网页图", "desc": "HTML/CSS", "icon": "browser" },
+              { "title": "矢量图", "desc": "SVG", "icon": "form" },
+              { "title": "数据图", "desc": "ECharts", "icon": "chart" },
+              { "title": "关系图", "desc": "Mermaid/Graphviz", "icon": "network" }
+            ]
+          }
+        ],
+        "requirements": [
+          { "title": "统一 v2 JSON" },
+          { "title": "输出 manifest" },
+          { "title": "工程蓝灰风格" },
+          { "title": "不依赖标书流水线" }
+        ],
+        "note": "该示例只验证绘图工具自身闭环，不读取任何 S1-S9 标书阶段目录。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "version": "2.0",
+  "document": {"title": "全图型测试 — 10种精美图表", "projectName": "渲染引擎能力验证", "bidSection": "技术方案"},
+  "style": {"theme": "formal_blue", "tone": "formal_bid", "preferredFormat": "both"},
+  "illustrations": [
+    {
+      "id": "T01_layered",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "系统总体架构",
+      "insertion": {"section": "1.1", "caption": "图1 系统总体架构图"},
+      "data": {
+        "title": "智慧水务平台总体架构图",
+        "subtitle": "端·边·云·用 四层协同体系",
+        "note": "本架构满足等保三级、密评合规要求",
+        "actors": [
+          {"title": "水务局管理员", "desc": "调度指挥·决策分析", "icon": "users", "style": "accent"},
+          {"title": "运维人员", "desc": "移动巡检·工单处置", "icon": "smartphone"},
+          {"title": "上级平台", "desc": "数据对接·指令接收", "icon": "link", "style": "purple"}
+        ],
+        "layers": [
+          {
+            "label": "智慧应用层", "en": "APPLICATION", "style": "dark", "columns": 4,
+            "items": [
+              {"title": "实时监控", "desc": "泵站·管网·水质实时展示", "icon": "monitor", "style": "accent"},
+              {"title": "智能预警", "desc": "异常检测·分级推送", "icon": "alert_triangle", "style": "danger"},
+              {"title": "调度指挥", "desc": "预案执行·资源调度", "icon": "activity", "style": "accent"},
+              {"title": "数据分析", "desc": "趋势分析·报表统计", "icon": "chart"}
+            ]
+          },
+          {
+            "label": "平台服务层", "en": "PLATFORM", "columns": 4,
+            "items": [
+              {"title": "IoT接入", "desc": "多协议·百万级并发", "icon": "radio", "style": "success"},
+              {"title": "规则引擎", "desc": "可视化编排·实时触发", "icon": "code"},
+              {"title": "GIS服务", "desc": "二维/三维·空间分析", "icon": "map_pin"},
+              {"title": "消息推送", "desc": "短信·APP·邮件·微信", "icon": "send"}
+            ]
+          },
+          {
+            "label": "数据资源层", "en": "DATA", "style": "dark",
+            "items": [
+              {"title": "实时数据库", "desc": "时序数据·秒级采集", "icon": "zap", "style": "accent"},
+              {"title": "数据治理", "desc": "质量稽核·标准管理", "icon": "settings", "style": "success"},
+              {"title": "数据备份", "desc": "全量+增量·异地灾备", "icon": "refresh_cw", "style": "warning"}
+            ]
+          },
+          {
+            "label": "基础设施层", "en": "INFRASTRUCTURE",
+            "items": [
+              {"title": "政务云", "desc": "信创适配·弹性扩容", "icon": "server", "style": "success"},
+              {"title": "安全防护", "desc": "WAF·防火墙·零信任", "icon": "shield_off", "style": "warning"}
+            ]
+          }
+        ],
+        "integrations": [
+          {"title": "省水利厅平台", "desc": "数据上报·指令接收"},
+          {"title": "气象局接口", "desc": "降雨预报·预警推送"}
+        ],
+        "requirements": [
+          {"title": "等保三级", "desc": "GB/T 22239"},
+          {"title": "可用性≥99.9%", "desc": "双活灾备"},
+          {"title": "响应≤200ms", "desc": "P95延迟"},
+          {"title": "信创适配", "desc": "鲲鹏·麒麟·达梦"}
+        ]
+      }
+    },
+    {
+      "id": "T02_flowchart",
+      "type": "process.flowchart",
+      "renderer": "auto",
+      "intent": "完整审批流程",
+      "insertion": {"section": "2.1", "caption": "图2 业务流程"},
+      "data": {
+        "title": "涉水审批全流程",
+        "subtitle": "申请→受理→勘验→审批→颁证 闭环",
+        "note": "红色为关键控制节点，虚线为异常补正路径",
+        "nodes": [
+          {"id":"n01","row":0,"col":0,"title":"提交申请","desc":"在线填报·材料上传","icon":"file","kind":"process","style":"accent"},
+          {"id":"n02","row":0,"col":1,"title":"受理初审","desc":"材料完整性·合规性核验","icon":"search","kind":"decision","style":"warning"},
+          {"id":"n03","row":1,"col":0,"title":"补正材料","desc":"限期补正·重新提交","icon":"refresh_cw","kind":"process"},
+          {"id":"n04","row":1,"col":1,"title":"现场勘验","desc":"执法人员实地核查","icon":"camera","kind":"process","style":"accent"},
+          {"id":"n05","row":1,"col":2,"title":"勘验合格","desc":"勘验结论判断","icon":"check","kind":"decision","style":"warning"},
+          {"id":"n06","row":2,"col":0,"title":"限期整改","desc":"整改后重新勘验","icon":"settings","kind":"process","style":"danger"},
+          {"id":"n07","row":2,"col":1,"title":"审批发证","desc":"领导审批·电子证照","icon":"check","kind":"success","style":"success"},
+          {"id":"n08","row":2,"col":2,"title":"归档备案","desc":"资料归档·系统备案","icon":"folder","kind":"success","style":"success"}
+        ],
+        "edges": [
+          {"from":"n01","to":"n02","label":"提交","relation":"flow"},
+          {"from":"n02","to":"n03","label":"需补正","relation":"alert"},
+          {"from":"n02","to":"n04","label":"受理","relation":"flow"},
+          {"from":"n03","to":"n01","label":"重提","relation":"sync"},
+          {"from":"n04","to":"n05","label":"勘验完成","relation":"flow"},
+          {"from":"n05","to":"n06","label":"不合格","relation":"alert"},
+          {"from":"n05","to":"n07","label":"合格","relation":"flow"},
+          {"from":"n06","to":"n04","label":"整改后","relation":"sync"},
+          {"from":"n07","to":"n08","label":"归档","relation":"flow"}
+        ],
+        "requirements": [
+          {"title":"审批时限≤15工作日","desc":""},
+          {"title":"一次通过率≥85%","desc":""}
+        ]
+      }
+    },
+    {
+      "id": "T03_capability",
+      "type": "capability.map",
+      "renderer": "auto",
+      "intent": "项目管理能力矩阵",
+      "insertion": {"section": "3.1", "caption": "图3 能力矩阵"},
+      "data": {
+        "title": "项目管理能力矩阵",
+        "subtitle": "五大领域 · 16项核心能力",
+        "columns": 3,
+        "groups": [
+          {"label":"进度管理","icon":"calendar","style":"accent","items":[
+            {"title":"WBS分解","desc":"四级分解·责任到人"},
+            {"title":"关键路径","desc":"CPM·动态调整"},
+            {"title":"里程碑","desc":"三级节点·考核"}
+          ]},
+          {"label":"质量管理","icon":"shield","style":"success","items":[
+            {"title":"三检制度","desc":"自检·互检·专检"},
+            {"title":"材料验收","desc":"五步验收·取样"},
+            {"title":"BIM协同","desc":"碰撞检查·模拟"}
+          ]},
+          {"label":"安全管理","icon":"alert_triangle","style":"danger","items":[
+            {"title":"危险源辨识","desc":"LEC法·动态更新"},
+            {"title":"特种作业","desc":"7类许可·持证"},
+            {"title":"应急管理","desc":"预案体系·演练"}
+          ]},
+          {"label":"成本管理","icon":"chart","style":"gold","items":[
+            {"title":"预算编制","desc":"清单计价·询价"},
+            {"title":"过程管控","desc":"挣值分析·预警"},
+            {"title":"变更管理","desc":"分级审批·签证"}
+          ]},
+          {"label":"合同管理","icon":"file","style":"purple","items":[
+            {"title":"招标采购","desc":"公开招标·评标"},
+            {"title":"履约管理","desc":"进度款·质保金"},
+            {"title":"索赔管理","desc":"证据链·时限"}
+          ]}
+        ],
+        "requirements": [
+          {"title":"ISO 9001:2015", "desc":""},
+          {"title":"GB/T 50430", "desc":""}
+        ]
+      }
+    },
+    {
+      "id": "T04_swimlane",
+      "type": "process.swimlane",
+      "renderer": "auto",
+      "intent": "四角色协同流程",
+      "insertion": {"section": "4.1", "caption": "图4 设计变更流程"},
+      "data": {
+        "title": "设计变更管理流程",
+        "subtitle": "施工→监理→设计→业主 四方协同",
+        "lanes": [
+          {"id":"L1","title":"施工单位","icon":"truck","style":"default"},
+          {"id":"L2","title":"监理单位","icon":"search","style":"accent"},
+          {"id":"L3","title":"设计单位","icon":"code","style":"purple"},
+          {"id":"L4","title":"发包人","icon":"briefcase","style":"success"}
+        ],
+        "steps": [
+          {"id":"S1","lane":"L1","order":0,"title":"提出变更","desc":"填写申请·附依据","icon":"form"},
+          {"id":"S2","lane":"L2","order":1,"title":"监理审核","desc":"评估影响·签署意见","icon":"search","style":"warning"},
+          {"id":"S3","lane":"L3","order":2,"title":"设计方案","desc":"出具变更方案","icon":"settings"},
+          {"id":"S4","lane":"L4","order":3,"title":"业主审批","desc":"审批·签署变更令","icon":"check","style":"success"},
+          {"id":"S5","lane":"L1","order":4,"title":"执行变更","desc":"按令施工·更新日志","icon":"clipboard"},
+          {"id":"S6","lane":"L2","order":5,"title":"变更验收","desc":"核实完成·签署意见","icon":"shield","style":"success"}
+        ],
+        "edges": [
+          {"from":"S1","to":"S2","label":"提交"},
+          {"from":"S2","to":"S3","label":"通过"},
+          {"from":"S3","to":"S4","label":"报送"},
+          {"from":"S4","to":"S5","label":"批准"},
+          {"from":"S5","to":"S6","label":"完成"}
+        ]
+      }
+    },
+    {
+      "id": "T05_sequence",
+      "type": "interaction.sequence",
+      "renderer": "auto",
+      "intent": "接口调用时序",
+      "insertion": {"section": "5.1", "caption": "图5 支付接口时序"},
+      "data": {
+        "title": "第三方支付对接时序图",
+        "subtitle": "APP→业务系统→支付网关→银行",
+        "participants": [
+          {"id":"P1","title":"移动APP","desc":"用户入口","icon":"smartphone"},
+          {"id":"P2","title":"业务系统","desc":"订单处理","icon":"server","style":"accent"},
+          {"id":"P3","title":"支付网关","desc":"路由风控","icon":"shield","style":"warning"},
+          {"id":"P4","title":"银行核心","desc":"账务处理","icon":"database","style":"success"}
+        ],
+        "messages": [
+          {"from":"P1","to":"P2","label":"1.发起支付","relation":"flow"},
+          {"from":"P2","to":"P3","label":"2.转发（签名）","relation":"data"},
+          {"from":"P3","to":"P4","label":"3.扣款请求","relation":"control"},
+          {"from":"P4","to":"P3","label":"4.扣款回执","relation":"sync"},
+          {"from":"P3","to":"P2","label":"5.结果通知","relation":"sync"},
+          {"from":"P2","to":"P1","label":"6.展示结果","relation":"flow"}
+        ]
+      }
+    },
+    {
+      "id": "T06_relationship",
+      "type": "relationship.domain",
+      "renderer": "auto",
+      "intent": "子系统关系图",
+      "insertion": {"section": "6.1", "caption": "图6 系统集成关系"},
+      "data": {
+        "title": "智慧工地系统集成关系图",
+        "subtitle": "四子系统数据流与协同关系",
+        "columns": 2,
+        "containers": [
+          {"id":"C1","title":"人员管理","icon":"users","style":"accent","row":0,"col":0,"nodes":[
+            {"id":"n11","title":"实名考勤","desc":"人脸识别·闸机"},
+            {"id":"n12","title":"安全教育","desc":"三级教育·考核"}
+          ]},
+          {"id":"C2","title":"设备监控","icon":"cpu","style":"teal","row":0,"col":1,"nodes":[
+            {"id":"n21","title":"塔吊监测","desc":"力矩·高度·回转"},
+            {"id":"n22","title":"环境监测","desc":"PM2.5·噪声·风速"}
+          ]},
+          {"id":"C3","title":"视频AI","icon":"camera","style":"purple","row":1,"col":0,"nodes":[
+            {"id":"n31","title":"安全帽检测","desc":"未佩戴实时告警"},
+            {"id":"n32","title":"烟火检测","desc":"明火·烟雾告警"}
+          ]},
+          {"id":"C4","title":"综合平台","icon":"dashboard","style":"gold","row":1,"col":1,"nodes":[
+            {"id":"n41","title":"指挥大屏","desc":"数据汇聚·态势"},
+            {"id":"n42","title":"预警中心","desc":"规则引擎·推送"}
+          ]}
+        ],
+        "edges": [
+          {"from":"n12","to":"n41","relation":"data","label":"考核数据"},
+          {"from":"n21","to":"n41","relation":"data","label":"运行数据"},
+          {"from":"n31","to":"n41","relation":"alert","label":"告警事件"},
+          {"from":"n41","to":"n42","relation":"flow","label":"告警下发"}
+        ]
+      }
+    },
+    {
+      "id": "T07_interface",
+      "type": "integration.interface_map",
+      "renderer": "auto",
+      "intent": "双平台接口关系",
+      "insertion": {"section": "7.1", "caption": "图7 接口关系图"},
+      "data": {
+        "title": "数据交互适配架构与接口关系",
+        "subtitle": "业务平台与监管平台的接口链路",
+        "leftPlatform": {
+          "title":"业务平台","subtitle":"采集、治理、推送","icon":"server",
+          "layers":[
+            {"title":"业务应用层","items":["项目管理","巡检填报","问题闭环"]},
+            {"title":"数据服务层","items":["数据清洗","规则校验","接口封装"]},
+            {"title":"安全支撑层","items":["身份认证","签名验签","日志审计"]}
+          ]
+        },
+        "rightPlatform": {
+          "title":"监管平台","subtitle":"接收、核验、反馈","icon":"government",
+          "layers":[
+            {"title":"接口接入区","items":["HTTPS API","批量文件","消息回执"]},
+            {"title":"数据核验区","items":["字段完整性","规则一致性","时效校验"]},
+            {"title":"监管应用区","items":["综合看板","问题督办","报表归档"]}
+          ]
+        },
+        "flows": [
+          {"title":"基础数据同步","protocol":"HTTPS+JSON/每日增量","style":"default","ackLabel":"接收回执"},
+          {"title":"巡检结果上报","protocol":"API实时推送","style":"accent","ackLabel":"校验反馈"},
+          {"title":"问题工单回传","protocol":"状态变更事件","style":"warning","ackLabel":"状态确认"},
+          {"title":"审计日志归档","protocol":"签名文件+摘要","style":"success","ackLabel":"归档反馈"}
+        ],
+        "requirements": [
+          {"title":"统一认证","style":"default"},
+          {"title":"字段校验","style":"accent"},
+          {"title":"失败重试","style":"warning"},
+          {"title":"全链路审计","style":"success"}
+        ],
+        "notes": [
+          {"title":"数据标准","icon":"form","style":"default","items":["统一编码","字段字典"]},
+          {"title":"安全策略","icon":"shield","style":"success","items":["传输加密","签名验签"]},
+          {"title":"异常处理","icon":"alert","style":"warning","items":["失败重试","人工复核"]}
+        ],
+        "note":"接口关系图需同时体现方向、协议、回执、安全约束与异常补传机制。"
+      }
+    },
+    {
+      "id": "T08_inspection",
+      "type": "operation.inspection_taxonomy",
+      "renderer": "auto",
+      "intent": "巡检分类体系",
+      "insertion": {"section": "8.1", "caption": "图8 巡检分类"},
+      "data": {
+        "title":"日常运维巡检体系分类",
+        "subtitle":"例行巡检、专项巡检和异常触发巡检",
+        "summary":"通过分类巡检机制保障系统稳定运行、数据质量达标。",
+        "categories":[
+          {
+            "index":1,"title":"季度例行巡检","subtitle":"底线要求","style":"success","icon":"calendar",
+            "trigger":"按季度计划执行\n每季度不少于1次",
+            "content":["系统访问检查","数据接收与展示检查","接口联通性检查","终端在线状态检测"],
+            "checks":["数据上传率≥90%","接口成功率统计","异常终端清单核查"],
+            "output":"《季度巡检报告》+问题清单"
+          },
+          {
+            "index":2,"title":"专项巡检","subtitle":"接口/数据/终端","style":"default","icon":"settings",
+            "trigger":"按专题计划或工作重点",
+            "content":["接口专项巡检","数据质量专项巡检","终端状态专项巡检"],
+            "checks":["专题指标达标","字段映射符合性","异常原因分析"],
+            "output":"《专项巡检报告》+整改方案"
+          },
+          {
+            "index":3,"title":"异常触发巡检","subtitle":"快速响应","style":"warning","icon":"bell",
+            "trigger":"监控告警或监管通报触发",
+            "content":["定向巡检","链路追踪","联动检查","影响评估"],
+            "checks":["异常复现与定位","根因分析","处置有效性"],
+            "output":"《异常巡检报告》+处置记录"
+          }
+        ],
+        "outputs":["巡检计划与执行记录","问题清单与整改闭环","趋势分析与报告归档"],
+        "note":"发现-处理-验证-归档-改进的持续优化闭环。"
+      }
+    },
+    {
+      "id": "T09_incident",
+      "type": "operation.incident_response",
+      "renderer": "auto",
+      "intent": "故障分级响应",
+      "insertion": {"section": "9.1", "caption": "图9 故障响应"},
+      "data": {
+        "title":"故障分级响应与问题闭环流程",
+        "subtitle":"三级标准·7步闭环·持续改进",
+        "levels":[
+          {
+            "level":"一级","name":"重大问题","style":"danger","icon":"alert",
+            "definition":"导致业务中断或数据中断，存在较高安全风险",
+            "scenes":["平台完全不可访问","大量终端数据中断","上级上报中断"],
+            "response":"2小时响应","handling":"4小时恢复",
+            "service":"7x24现场/远程","upgrade":"影响扩大或超时"
+          },
+          {
+            "level":"二级","name":"一般异常","style":"warning","icon":"bell",
+            "definition":"部分功能异常，未造成业务中断",
+            "scenes":["部分模块异常","数据延迟","接口异常"],
+            "response":"1工作日响应","handling":"2工作日处理",
+            "service":"工作时间远程","upgrade":"升级为一级"
+          },
+          {
+            "level":"三级","name":"普通事项","style":"success","icon":"check",
+            "definition":"咨询建议或轻微问题",
+            "scenes":["操作咨询","界面建议","日志查询"],
+            "response":"2工作日响应","handling":"5工作日处理",
+            "service":"工单处理","upgrade":"演变为二级"
+          }
+        ],
+        "steps":[
+          {"title":"问题发现","icon":"search","desc":"监控告警·巡检发现·反馈","output":"问题信息"},
+          {"title":"问题登记","icon":"form","desc":"登记现象·影响范围·时间","output":"问题工单"},
+          {"title":"分类定位","icon":"gps","desc":"按分级标准分类定位","output":"分类结果"},
+          {"title":"处理解决","icon":"settings","desc":"制定方案并实施解决","output":"处理记录","style":"accent"},
+          {"title":"复核验证","icon":"shield","desc":"验证功能数据恢复","output":"验证结果"},
+          {"title":"关闭归档","icon":"file","desc":"归档工单与处理日志","output":"归档记录"},
+          {"title":"总结改进","icon":"dashboard","desc":"汇总分析·优化流程","output":"改进建议"}
+        ],
+        "safeguards":[
+          {"title":"专人负责","desc":"明确责任人","icon":"user"},
+          {"title":"全程跟踪","desc":"实时跟踪","icon":"calendar"},
+          {"title":"留痕可追溯","desc":"全过程记录","icon":"audit"},
+          {"title":"合规可审计","desc":"满足监管要求","icon":"shield"}
+        ]
+      }
+    },
+    {
+      "id": "T10_security",
+      "type": "architecture.security_ring",
+      "renderer": "auto",
+      "intent": "安全体系环形图",
+      "insertion": {"section": "10.1", "caption": "图10 安全体系"},
+      "data": {
+        "title":"数据安全保密保障体系架构",
+        "subtitle":"五大措施·多层防护·闭环管理",
+        "core":{"title":"数据安全\n保障体系","desc":"合规为基·技术为盾","icon":"lock"},
+        "measures":[
+          {"index":1,"title":"账号权限与访问控制","style":"default","items":["统一SSO认证","角色分级授权","MFA多因素认证","敏感操作校验"]},
+          {"index":2,"title":"数据导出使用控制","style":"success","items":["分级审批","脱敏处理","导出限制","水印追溯"]},
+          {"index":3,"title":"接口认证传输安全","style":"warning","items":["JWT/HMAC认证","TLS 1.2+加密","数字签名防重放","IP白名单"]},
+          {"index":4,"title":"日志审计行为追溯","style":"purple","items":["全量操作记录","防篡改留存","异常实时告警"]},
+          {"index":5,"title":"监管数据防外泄","style":"cyan","items":["分级分类管理","加密存储","外发管控","屏幕水印"]}
+        ],
+        "loop":[
+          {"title":"制度规范","icon":"contract"},
+          {"title":"技术防护","icon":"settings"},
+          {"title":"监测审计","icon":"monitor"},
+          {"title":"风险处置","icon":"shield"},
+          {"title":"评估优化","icon":"report"}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "platform.interface.v2",
+  "diagram_type": "relationship.platform_interface",
+  "schema_kind": "platform_interface",
+  "required_data_fields": ["left", "right", "flows"],
+  "capacity": {
+    "platform_layers": [2, 4],
+    "items_per_layer": [1, 5],
+    "flows": [2, 5],
+    "requirements": [0, 6]
+  }
+}

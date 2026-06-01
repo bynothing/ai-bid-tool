@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -88,8 +89,8 @@ def validate_echarts_semantics(package: dict[str, Any]) -> list[str]:
 
 
 def validate_job(job: dict[str, Any]) -> tuple[list[str], dict[str, Any], dict[str, Any]]:
-    errors = validate_schema(job, SCHEMA_DIR / "proposal_illustration_job.schema.json", "job")
-    svg_package, chart_package = split_specs(job) if not errors else ({"figures": []}, {"charts": []})
+    errors: list[str] = []
+    svg_package, chart_package = split_specs(job)
     if svg_package["figures"]:
         errors.extend(validate_schema(svg_package, SCHEMA_DIR / "svg_diagram.schema.json", "svg"))
     if chart_package["charts"]:
@@ -102,10 +103,17 @@ def validate_job(job: dict[str, Any]) -> tuple[list[str], dict[str, Any], dict[s
 
 
 def write_input_packages(output: Path, svg_package: dict[str, Any], chart_package: dict[str, Any]) -> tuple[Path, Path]:
+    output = output.resolve()
     input_dir = output / "inputs"
     input_dir.mkdir(parents=True, exist_ok=True)
     svg_file = input_dir / "svg-diagrams.json"
     charts_file = input_dir / "echarts-diagrams.json"
+
+    # Strip v2-only fields (palette, placement) that v1 schema doesn't know
+    for fig in svg_package.get("figures", []):
+        fig.pop("palette", None)
+        fig.pop("placement", None)
+
     svg_file.write_text(json.dumps(svg_package, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     charts_file.write_text(json.dumps(chart_package, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return svg_file, charts_file
@@ -114,6 +122,8 @@ def write_input_packages(output: Path, svg_package: dict[str, Any], chart_packag
 def render_svg(svg_file: Path, output: Path, theme: str, png: bool, png_scale: int) -> list[dict[str, Any]]:
     if not read_json(svg_file).get("figures"):
         return []
+    svg_file = svg_file.resolve()
+    output = output.resolve()
     svg_output = output / "assets" / "svg"
     command = [
         sys.executable,
@@ -124,10 +134,14 @@ def render_svg(svg_file: Path, output: Path, theme: str, png: bool, png_scale: i
         str(svg_output),
         "--theme",
         theme,
+        "--skip-validation",
     ]
     if png:
         command.extend(["--png", "--png-scale", str(png_scale)])
-    subprocess.run(command, check=True, cwd=str(_PACKAGE_ROOT))
+    env = os.environ.copy()
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONUTF8", "1")
+    subprocess.run(command, check=True, cwd=str(_PACKAGE_ROOT), env=env)
     return read_json(svg_output / "result.json")
 
 
@@ -204,7 +218,7 @@ def make_records(
             svg_index += 1
             record["outputs"]["svg"] = (Path("assets") / "svg" / result["svg"]).as_posix()
             if result.get("png"):
-                record["outputs"]["png"] = (Path("assets") / "svg" / result["png"]).as_posix()
+                record["outputs"]["png"] = (Path("assets") / "svg" / "png" / result["png"]).as_posix()
         else:
             record["outputs"].update(chart_exports.get(item["spec"]["id"], {}))
             if review_page:
@@ -254,6 +268,41 @@ def write_manifest(job: dict[str, Any], records: list[dict[str, Any]], output: P
 
 
 def main() -> None:
+    """配图工具 CLI 入口。
+
+    适用场景：外部系统或本地单独调用配图工具生成标书图（SVG、PNG、ECharts 审图页）。
+
+    快速使用::
+
+        bid-tool illustrate --job <任务JSON> --output <输出目录> --png
+
+    参数说明:
+
+        --job               配图任务 JSON 文件路径（必填）
+        --output            输出目录，默认为 output/illustrations
+        --png              同步生成 PNG 预览
+        --validate-only     仅校验任务 JSON，不生成图片
+        --no-echarts-export  ECharts 只生成本地审图页，不自动导出图片
+        --png-scale         PNG 导出倍数（1/2/3），默认 2
+
+    输出目录结构::
+
+        <output>/
+        ├── illustration-manifest.json   机器可读清单
+        ├── 生成清单.md                   人工审查清单
+        ├── inputs/                      路由后传给渲染器的输入
+        └── assets/
+            ├── svg/                   SVG 矢量图 + PNG
+            ├── html/                   HTML/CSS 审图页
+            ├── echarts/                ECharts 数据图（可选）
+            ├── mermaid/                Mermaid 图（可选）
+            └── graphviz/               Graphviz 图（可选）
+
+    配色选择：工具会基于图件内容自动匹配主题色（深蓝/青/绿/紫/橙等）。
+    外部调用方只需提供 renderer: "auto"，平台自动选择最优渲染器。
+
+    完整说明见：docs/ILLUSTRATION_CLI_USAGE.md
+    """
     parser = argparse.ArgumentParser(description="统一生成招投标文档使用的 SVG 框图与 ECharts 数据图")
     parser.add_argument("--job", type=Path, required=True, help="统一配图任务 JSON 文件")
     parser.add_argument("--output", type=Path, default=Path.cwd() / "output" / "illustrations", help="输出目录")
@@ -266,6 +315,40 @@ def main() -> None:
 
     job_file = args.job.resolve()
     job = read_json(job_file)
+    if str(job.get("version")) != "2.0":
+        print(f"配图平台正式使用 V2，当前任务不是 version=\"2.0\": {job_file}")
+        print("请按 src/bid_tool/schemas/illustration_job_v2.schema.json 迁移，使用 type/renderer/intent/data 字段。")
+        raise SystemExit(2)
+    if str(job.get("version")) == "2.0":
+        from .core.job import IllustrationJob
+        from .core.validator import quality_warnings, validate_platform_job
+        from .platform import render_job
+
+        platform_job = IllustrationJob.from_raw(job, source=job_file)
+        errors = validate_platform_job(platform_job)
+        if errors:
+            print(f"配图平台 v2 任务校验失败: {job_file}")
+            for error in errors:
+                print(f"  - {error}")
+            raise SystemExit(2)
+        warnings = quality_warnings(platform_job)
+        if warnings:
+            print("配图平台 v2 质量提示:")
+            for warning in warnings:
+                print(f"  - {warning}")
+        print(f"配图平台 v2 任务校验通过: {job_file} ({len(platform_job.illustrations)} 张图)")
+        if args.validate_only:
+            return
+        output = args.output.resolve()
+        records = render_job(
+            platform_job,
+            output,
+            png=args.png,
+            png_scale=args.png_scale,
+            export_echarts=not args.no_echarts_export,
+        )
+        print(f"完成: {output / '生成清单.md'} ({len(records)} 张图)")
+        return
     errors, svg_package, chart_package = validate_job(job)
     if errors:
         print(f"统一配图任务校验失败: {job_file}")

@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "中国中化有机硅研究院研发创新基地（成都）项目施工总承包 - 典型绘图测试",
+    "projectName": "中国中化有机硅研究院研发创新基地（成都）项目施工总承包",
+    "bidSection": "技术方案"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\output\\typical_scene_job.json",
+  "illustrations": [
+    {
+      "id": "TU-002",
+      "type": "architecture.deployment",
+      "renderer": "html_css",
+      "section": "CH-02",
+      "caption": "图2 施工现场总平面布置图",
+      "purpose": "展示施工现场功能分区平面布局，包括办公区、生活区、材料堆场、施工区等",
+      "outputs": {
+        "html": "assets/html/TU-002.html",
+        "png": "assets/html/TU-002.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 graphviz=0, html_css=115, svg_native=0"
+      ]
+    }
+  ]
+}

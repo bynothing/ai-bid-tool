@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>标书 AI 数据图工作台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">PROPOSAL DIAGRAM WORKBENCH</p>
+      <h1>标书 AI 数据图工作台</h1>
+      <p class="header-note">本地 HTML + ECharts SVG 渲染，可导入 AI 生成的结构化 JSON</p>
+    </div>
+    <div class="header-tags">
+      <span>离线可用</span>
+      <span>SVG / PNG 导出</span>
+      <span>演示数据</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="side-panel">
+      <section class="panel">
+        <h2>图件清单</h2>
+        <div id="chart-tabs" class="chart-tabs"></div>
+      </section>
+      <section class="panel">
+        <h2>AI 描述导入</h2>
+        <p class="help">导入符合 <code>schema/echarts_diagram.schema.json</code> 的 JSON 文件。</p>
+        <label class="file-button">
+          导入 JSON
+          <input id="file-input" type="file" accept=".json,application/json">
+        </label>
+        <button id="reset-demo" class="button secondary">恢复演示数据</button>
+        <p id="import-message" class="message"></p>
+      </section>
+      <section class="panel compact">
+        <h2>说明</h2>
+        <p>当前支持柱线组合图、雷达图、Sankey 流向图。演示图内数据不代表实际项目统计。</p>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <div class="selected-info">
+          <span id="chart-type" class="type-badge"></span>
+          <span id="placement"></span>
+        </div>
+        <div class="actions">
+          <button id="download-spec" class="button secondary">下载当前 JSON</button>
+          <button id="download-svg" class="button">导出 SVG</button>
+          <button id="download-png" class="button primary">导出 PNG</button>
+        </div>
+      </div>
+      <div id="chart-stage" class="chart-stage" aria-label="数据图预览区域"></div>
+    </section>
+  </main>
+
+  <footer>建议工作流：AI 生成 JSON -> 本地导入审图 -> 导出 SVG 用于正式标书，PNG 用于快速预览。</footer>
+
+  <script src="./vendor/echarts.min.js"></script>
+  <script src="./demo-specs.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

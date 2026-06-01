@@ -1,0 +1,79 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "SVG 图3-6 风格统一接口验证",
+    "projectName": "标书配图平台",
+    "bidSection": "技术方案与服务保障"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\examples\\示例_AI接口调用_SVG图3-6风格_v2.json",
+  "illustrations": [
+    {
+      "id": "interface_rules_map",
+      "type": "integration.interface_map",
+      "renderer": "svg_native",
+      "section": "3.2 数据接口与交互规则",
+      "caption": "图 3-2 数据交互规则适配架构与接口关系图",
+      "purpose": "验证 AI 通过统一接口生成类似 example 图3 的双平台接口关系与数据交互图",
+      "outputs": {
+        "svg": "assets/svg/2025数据交互规则适配架构与接口关系.svg",
+        "png": "assets/svg/png/2025数据交互规则适配架构与接口关系.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 4, 连线 0, 分支 0, 泳道 0",
+        "显式偏好 rendererPreference=svg_native"
+      ]
+    },
+    {
+      "id": "inspection_taxonomy",
+      "type": "operation.inspection_taxonomy",
+      "renderer": "svg_native",
+      "section": "6.1 日常运维巡检体系",
+      "caption": "图 6-1 日常运维巡检体系分类图",
+      "purpose": "验证 AI 通过统一接口生成类似 example 图5 的日常运维巡检分类图",
+      "outputs": {
+        "svg": "assets/svg/日常运维巡检体系分类.svg",
+        "png": "assets/svg/png/日常运维巡检体系分类.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "显式偏好 rendererPreference=svg_native"
+      ]
+    },
+    {
+      "id": "incident_response_loop",
+      "type": "operation.incident_response",
+      "renderer": "svg_native",
+      "section": "6.3 故障响应与闭环处置",
+      "caption": "图 6-3 故障分级响应与问题闭环流程图",
+      "purpose": "验证 AI 通过统一接口生成类似 example 图6 的故障分级响应和问题闭环流程图",
+      "outputs": {
+        "svg": "assets/svg/故障分级响应与问题闭环流程.svg",
+        "png": "assets/svg/png/故障分级响应与问题闭环流程.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 7, 连线 0, 分支 0, 泳道 0",
+        "显式偏好 rendererPreference=svg_native"
+      ]
+    },
+    {
+      "id": "security_ring",
+      "type": "architecture.security_ring",
+      "renderer": "svg_native",
+      "section": "7.1 数据安全保密保障",
+      "caption": "图 7-1 数据安全保密保障体系架构图",
+      "purpose": "验证 AI 通过统一接口生成中心核心加环形保障措施的数据安全体系图",
+      "outputs": {
+        "svg": "assets/svg/数据安全保密保障体系架构.svg",
+        "png": "assets/svg/png/数据安全保密保障体系架构.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "显式偏好 rendererPreference=svg_native"
+      ]
+    }
+  ]
+}

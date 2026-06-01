@@ -47,14 +47,32 @@ def cmd_illustrate(args):
         ]
         if args.png:
             sys.argv.append('--png')
+        if getattr(args, 'png_scale', None):
+            sys.argv.extend(['--png-scale', str(args.png_scale)])
         if args.validate_only:
             sys.argv.append('--validate-only')
+        if getattr(args, 'no_echarts_export', False):
+            sys.argv.append('--no-echarts-export')
         illustrate_main()
     except SystemExit as e:
         if e.code != 0:
             raise
     finally:
         sys.argv = original_argv
+
+
+def cmd_illustration_bundle(args):
+    from .illustration.standalone import build_bundle
+
+    output = build_bundle(
+        args.output,
+        include_examples=not args.no_examples,
+        make_zip=args.zip,
+    )
+    print(f"Standalone illustration bundle created: {output}")
+    print(f"Launcher: {output / 'run_illustration.py'}")
+    if args.zip:
+        print(f"Zip: {output.with_suffix('.zip')}")
 
 
 def cmd_export(args):
@@ -128,7 +146,17 @@ def main():
     p_illu.add_argument('--job', type=Path, required=True, help='统一配图任务 JSON 文件')
     p_illu.add_argument('--output', type=Path, help='输出目录')
     p_illu.add_argument('--png', action='store_true', help='同步生成 PNG 预览')
+    p_illu.add_argument('--png-scale', type=int, choices=(1, 2, 3), default=2, help='PNG 输出倍率')
     p_illu.add_argument('--validate-only', action='store_true', help='仅校验任务文件')
+    p_illu.add_argument('--no-echarts-export', action='store_true',
+                        help='ECharts 只生成本地 HTML 审图页，不自动导出图片')
+
+    # illustration bundle
+    p_bundle = sub.add_parser('illustration-bundle', help='生成可独立解压运行的绘图工具包')
+    p_bundle.add_argument('--output', type=Path, default=Path.cwd() / 'dist' / 'bid-illustration-standalone',
+                          help='独立绘图工具包输出目录')
+    p_bundle.add_argument('--no-examples', action='store_true', help='不复制 examples 目录')
+    p_bundle.add_argument('--zip', action='store_true', help='同时生成 zip 压缩包')
 
     # export
     p_export = sub.add_parser('export', help='导出 DOCX')
@@ -152,6 +180,8 @@ def main():
         cmd_gate(args)
     elif args.command == 'illustrate':
         cmd_illustrate(args)
+    elif args.command == 'illustration-bundle':
+        cmd_illustration_bundle(args)
     elif args.command == 'export':
         cmd_export(args)
     else:

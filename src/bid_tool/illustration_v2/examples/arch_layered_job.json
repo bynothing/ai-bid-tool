@@ -1,0 +1,58 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "Example Bid Technical Proposal",
+    "projectName": "Illustration V2 Pilot"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "svg"
+  },
+  "illustrations": [
+    {
+      "id": "overall_architecture",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "Show the overall system architecture with stable bid-document styling.",
+      "insertion": {
+        "section": "3.1",
+        "caption": "Figure 3-1 Overall System Architecture"
+      },
+      "visual": {
+        "rendererPreference": "template_svg"
+      },
+      "data": {
+        "title": "Overall System Architecture",
+        "subtitle": "Fixed three-layer SVG geometry",
+        "note": "All text is validated against the template contract before rendering.",
+        "layers": [
+          {
+            "label": "Application Layer",
+            "items": [
+              {"title": "Unified Portal", "desc": "Role-based access and workbench", "icon": "users", "style": "accent"},
+              {"title": "Monitoring", "desc": "Alerts, status and trend views", "icon": "monitor"},
+              {"title": "Reports", "desc": "Exportable bid evidence", "icon": "chart"}
+            ]
+          },
+          {
+            "label": "Service Layer",
+            "items": [
+              {"title": "API Gateway", "desc": "Routing and authentication", "icon": "server", "style": "success"},
+              {"title": "Workflow", "desc": "Approval and closed-loop tasks", "icon": "activity"},
+              {"title": "Integration", "desc": "External platform adapters", "icon": "link"}
+            ]
+          },
+          {
+            "label": "Data Layer",
+            "items": [
+              {"title": "Data Store", "desc": "Project and trace data", "icon": "database", "style": "cyan"},
+              {"title": "Audit", "desc": "Logs and evidence chain", "icon": "shield"},
+              {"title": "Runtime", "desc": "Deployment and operations", "icon": "cloud"}
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

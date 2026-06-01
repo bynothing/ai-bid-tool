@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bid-illustration-standalone"
+version = "2.0.0"
+description = "Standalone bid illustration platform runtime"
+requires-python = ">=3.10"
+dependencies = [
+    "jsonschema>=4.17.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+png = ["cairosvg>=2.5.0"]
+echarts_export = ["playwright>=1.30.0"]
+full = ["bid-illustration-standalone[png,echarts_export]"]
+
+[project.scripts]
+bid-illustrate = "bid_tool.illustration.toolkit:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"bid_tool.schemas" = ["*.json", "*.md"]
+"bid_tool.illustration" = ["*.md", "echarts_workbench/**/*"]

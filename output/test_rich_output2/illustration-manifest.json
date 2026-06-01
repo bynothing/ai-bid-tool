@@ -1,0 +1,27 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "智能城市运营中心 — 总体架构设计",
+    "projectName": "智慧城市IOC项目"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\output\\test_rich_system.json",
+  "illustrations": [
+    {
+      "id": "TEST-001",
+      "type": "architecture.layered",
+      "renderer": "svg_native",
+      "section": "3.1",
+      "caption": "图 3-1 智能城市运营中心总体架构图",
+      "purpose": "展示智能城市运营中心从终端感知到应用呈现的完整六层架构",
+      "outputs": {
+        "svg": "assets/svg/智能城市运营中心总体架构图.svg",
+        "png": "assets/svg/png/智能城市运营中心总体架构图.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 37, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=30, svg_native=125"
+      ]
+    }
+  ]
+}

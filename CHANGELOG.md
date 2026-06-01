@@ -21,6 +21,74 @@
 
 ---
 
+## 2026-05-30 — v1.2.0
+
+**类型**：功能新增 + 流水线调整 + Schema 更新
+
+### 修改内容
+
+**1. 新增表格内容规划阶段**
+
+- 新增 `s5_tables` 阶段，位于 S4 内容冻结之后、S5 配图描述之前。
+- 新增 `s5_table_prompt.md`，用于基于冻结正文识别适合表格化表达的内容。
+- 新增 `s5_table_plan.schema.json`，约束 `table_insertion_plan.json` 的表格位置、列、行、用途和来源。
+
+**2. 图文合成支持先插表格再插图**
+
+- S6 合成阶段读取 `output/s5_tables/table_insertion_plan.json`。
+- S6 会把表格插入章节 Markdown，并继续插入最新绘图 manifest 中的图片/HTML 资产。
+- S6 报告新增表格数量和表格插入日志。
+
+**3. 配图阶段避开表格化内容**
+
+- S5 配图 prompt 会读取表格计划，提示 LLM 不要把清单、对照、资源配置类内容重复生成插图。
+
+### 影响范围
+
+- `src/bid_tool/pipeline/engine.py`
+- `src/bid_tool/pipeline/validator.py`
+- `src/bid_tool/pipeline/stages/s5_tables.py`
+- `src/bid_tool/pipeline/stages/s5_illustrate.py`
+- `src/bid_tool/pipeline/stages/s6_synthesize.py`
+- `src/bid_tool/prompts/s5_table_prompt.md`
+- `src/bid_tool/schemas/s5_table_plan.schema.json`
+- `pyproject.toml`
+- `README.md`
+
+---
+
+## 2026-05-29 — v1.1.0
+
+**类型**：功能新增 + 功能修改 + 文档更新
+
+### 修改内容
+
+**1. 绘图平台独立化**
+
+- 新增 `bid_tool.illustration.standalone`，可生成只包含绘图运行时、V2 schema、示例和文档的独立工具包。
+- 新增 `bid-tool illustration-bundle` 命令，支持输出目录和 zip 压缩包。
+- 独立包内提供 `run_illustration.py`，解压后可直接运行绘图任务。
+
+**2. 独立 CLI**
+
+- 新增安装后可直接调用的 `bid-illustrate` 命令。
+- 新增 `bid-illustration-bundle` 命令。
+- `bid-tool illustrate` 补齐 `--png-scale` 参数转发。
+
+**3. 打包资源声明**
+
+- `pyproject.toml` 增加 schema、Markdown 文档和 ECharts 工作台资源的 package-data 配置。
+
+### 影响范围
+
+- `src/bid_tool/illustration/standalone.py`
+- `src/bid_tool/cli.py`
+- `pyproject.toml`
+- `README.md`
+- `src/bid_tool/illustration/ILLUSTRATION_CLI_USAGE.md`
+
+---
+
 ## 2026-05-28 — v1.0.0
 
 **类型**：功能新增 + Bug修复

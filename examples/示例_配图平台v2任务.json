@@ -1,0 +1,168 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "高风险放射源监管平台投标技术方案",
+    "projectName": "高风险放射源监管平台",
+    "bidSection": "总体技术方案"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "overall_architecture",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "展示平台总体分层架构、服务能力和外部系统接入关系",
+      "insertion": {
+        "section": "3.1 系统总体架构设计",
+        "caption": "图 3-1 系统总体架构图",
+        "purpose": "说明平台总体技术组成"
+      },
+      "data": {
+        "title": "高风险放射源监管平台系统总体架构图",
+        "subtitle": "统一接入、业务协同、数据治理与安全保障",
+        "actors": [
+          { "title": "监管部门", "desc": "监测研判", "icon": "government" },
+          { "title": "涉源单位", "desc": "业务办理", "icon": "organization" },
+          { "title": "移动终端", "desc": "现场处置", "icon": "mobile" }
+        ],
+        "layers": [
+          {
+            "label": "业务应用层",
+            "en": "APPLICATION",
+            "columns": 4,
+            "items": [
+              { "title": "实时监控", "icon": "monitor", "style": "accent" },
+              { "title": "预警处置", "icon": "alert", "style": "danger" },
+              { "title": "统计分析", "icon": "chart" },
+              { "title": "综合查询", "icon": "search" }
+            ]
+          },
+          {
+            "label": "平台服务层",
+            "en": "SERVICE",
+            "columns": 4,
+            "items": [
+              { "title": "统一接入", "icon": "gateway" },
+              { "title": "流程服务", "icon": "workflow" },
+              { "title": "消息通知", "icon": "message" },
+              { "title": "接口交换", "icon": "api" }
+            ]
+          },
+          {
+            "label": "数据与安全层",
+            "en": "DATA & SECURITY",
+            "style": "dark",
+            "columns": 4,
+            "items": [
+              { "title": "监管数据库", "icon": "database" },
+              { "title": "权限认证", "icon": "lock" },
+              { "title": "安全审计", "icon": "audit" },
+              { "title": "备份恢复", "icon": "backup" }
+            ]
+          }
+        ],
+        "integrations": [
+          { "title": "上级平台", "icon": "cloud" },
+          { "title": "外部接口", "icon": "api" }
+        ],
+        "note": "图中组件边界以最终接口清单为准。"
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "key_nodes",
+        "legend": true,
+        "badges": true
+      }
+    },
+    {
+      "id": "coverage_trend",
+      "type": "chart.bar_line",
+      "renderer": "auto",
+      "intent": "展示接入点位规模和重点源覆盖率的阶段性增长趋势",
+      "insertion": {
+        "section": "3.2 建设成效与覆盖能力",
+        "caption": "图 3-2 监测接入规模与覆盖率趋势图",
+        "purpose": "说明平台覆盖能力提升趋势"
+      },
+      "data": {
+        "id": "coverage_trend",
+        "title": "监测接入规模与覆盖率趋势图",
+        "subtitle": "柱状展示接入点位，折线展示覆盖率",
+        "note": "演示数据，仅用于验证 AI 数据描述到标书统计图的生成效果。",
+        "source": "排版测试模拟数据 / 非项目正式统计口径",
+        "dataNotice": "模拟数据，正式投标文件中须替换为经确认的统计口径。",
+        "categories": ["一期", "二期", "三期", "四期", "五期"],
+        "bar": { "name": "接入点位", "unit": "个", "values": [126, 198, 286, 358, 426] },
+        "line": { "name": "重点源覆盖率", "unit": "%", "values": [46, 62, 78, 91, 98] }
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "key_nodes",
+        "legend": true,
+        "watermark": "模拟数据"
+      }
+    },
+    {
+      "id": "implementation_gantt",
+      "type": "timeline.gantt",
+      "renderer": "auto",
+      "intent": "展示项目实施阶段、周期安排和关键交付节点",
+      "insertion": {
+        "section": "5.1 项目实施计划",
+        "caption": "图 5-1 项目实施计划甘特图",
+        "purpose": "说明项目实施进度安排"
+      },
+      "data": {
+        "title": "项目实施计划甘特图",
+        "subtitle": "阶段推进、里程碑评审与成果交付安排",
+        "unit": "月",
+        "total": 12,
+        "phases": [
+          { "title": "项目启动", "start": 0, "end": 1, "desc": "启动会、计划确认", "milestone": true },
+          { "title": "需求调研", "start": 1, "end": 3, "desc": "业务梳理、需求确认" },
+          { "title": "系统建设", "start": 3, "end": 8, "desc": "开发、集成、内部测试" },
+          { "title": "联调试运行", "start": 8, "end": 10, "desc": "接口联调、试运行优化" },
+          { "title": "验收交付", "start": 10, "end": 12, "desc": "验收、培训、移交", "milestone": true }
+        ],
+        "note": "周期为示例安排，正式计划以招标文件和实施组织设计为准。"
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "milestones",
+        "legend": true,
+        "numbering": true
+      }
+    },
+    {
+      "id": "risk_matrix",
+      "type": "matrix.risk",
+      "renderer": "auto",
+      "intent": "展示项目主要风险的概率、影响等级和管控重点",
+      "insertion": {
+        "section": "7.2 风险控制措施",
+        "caption": "图 7-2 项目风险矩阵图",
+        "purpose": "说明风险分级和重点管控方向"
+      },
+      "data": {
+        "title": "项目风险矩阵图",
+        "subtitle": "概率 x 影响分级，突出高等级风险",
+        "risks": [
+          { "title": "接口联调延期", "probability": 3, "impact": 4, "level": "high", "mitigation": "提前冻结接口清单并设置联调窗口" },
+          { "title": "数据质量波动", "probability": 2, "impact": 4, "level": "medium", "mitigation": "建立数据校验规则和问题闭环机制" },
+          { "title": "现场协调不足", "probability": 3, "impact": 3, "level": "medium", "mitigation": "建立周例会和问题升级机制" }
+        ],
+        "note": "风险等级用于投标方案表达，实施中将结合项目实际动态调整。"
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "risk_levels",
+        "legend": true,
+        "badges": true
+      }
+    }
+  ]
+}

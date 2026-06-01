@@ -1,0 +1,30 @@
+{
+  "stage": "s6_synthesis",
+  "total_illustrations": 1,
+  "total_tables": 1,
+  "total_tables_inserted": 1,
+  "total_inserted": 1,
+  "chapters_processed": 1,
+  "assets_copied": 1,
+  "insertion_log": [
+    {
+      "chapter": "CH-02",
+      "illu_id": "TU-002",
+      "figure_number": "图 2-1",
+      "inserted_at_line": 2,
+      "section_ref": "CH-02"
+    }
+  ],
+  "table_insertion_log": [
+    {
+      "chapter": "CH-02",
+      "table_id": "TB-001",
+      "table_number": "表 2-1",
+      "inserted_at_line": 2,
+      "section_ref": "CH-02"
+    }
+  ],
+  "chapter_files": {
+    "CH-02": "output\\s6_typical_with_tables\\chapters\\CH-02_资质保密与合规保障.md"
+  }
+}

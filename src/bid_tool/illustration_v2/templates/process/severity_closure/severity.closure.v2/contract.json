@@ -1,0 +1,11 @@
+{
+  "id": "severity.closure.v2",
+  "diagram_type": "process.severity_closure",
+  "schema_kind": "severity_closure",
+  "required_data_fields": ["levels", "steps"],
+  "capacity": {
+    "levels": [2, 4],
+    "steps": [4, 8],
+    "measures": [0, 5]
+  }
+}

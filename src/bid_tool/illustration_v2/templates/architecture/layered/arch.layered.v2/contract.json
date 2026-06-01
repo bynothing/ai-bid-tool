@@ -1,0 +1,45 @@
+{
+  "id": "arch.layered.v2",
+  "diagram_type": "architecture.layered",
+  "renderer": "template_svg",
+  "svg_template": "template.svg",
+  "paradigm": "Three stacked architecture layers with fixed card slots. Runtime only injects text, icon labels, visibility flags, and theme colors.",
+  "capacity": {
+    "min_layers": 2,
+    "max_layers": 3,
+    "min_items_per_layer": 1,
+    "max_items_per_layer": 4
+  },
+  "text_limits": {
+    "title": 16,
+    "desc": 42,
+    "label": 18,
+    "subtitle": 36
+  },
+  "icon_whitelist": [
+    "server",
+    "cloud",
+    "shield",
+    "user",
+    "users",
+    "monitor",
+    "settings",
+    "code",
+    "database",
+    "file",
+    "chart",
+    "calendar",
+    "check",
+    "dashboard",
+    "link",
+    "cpu",
+    "activity",
+    "target"
+  ],
+  "slots": {
+    "document": ["TITLE", "SUBTITLE", "DOCUMENT_TITLE", "NOTE"],
+    "layers": ["L1", "L2", "L3"],
+    "cards_per_layer": 4
+  }
+}
+

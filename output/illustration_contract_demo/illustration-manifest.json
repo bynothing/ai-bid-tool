@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "独立绘图工具最小闭环验证",
+    "projectName": "Illustration Runtime",
+    "bidSection": "Rendering Contract"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\examples\\示例_独立绘图工具最小闭环.json",
+  "illustrations": [
+    {
+      "id": "contract_architecture",
+      "type": "architecture.layered",
+      "renderer": "svg_native",
+      "section": "1.1",
+      "caption": "图 1-1 独立绘图工具接口架构图",
+      "purpose": "验证独立绘图工具可从 v2 JSON 生成工程化架构图，并输出 manifest",
+      "outputs": {
+        "svg": "assets/svg/01_独立绘图工具接口架构.svg",
+        "png": "assets/svg/png/01_独立绘图工具接口架构.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 13, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=80, svg_native=140"
+      ]
+    }
+  ]
+}

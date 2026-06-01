@@ -15,8 +15,9 @@ EXPECTED_SCHEMAS = [
     's2_outline.schema.json',
     's3_body.schema.json',
     's5_illustration.schema.json',
+    's5_table_plan.schema.json',
     's7_trace_matrix.schema.json',
-    'proposal_illustration_job.schema.json',
+    'illustration_job_v2.schema.json',
     'svg_diagram.schema.json',
     'echarts_diagram.schema.json',
 ]
@@ -76,7 +77,7 @@ def test_pipeline_stage_schemas_match_files():
 def test_illustration_schemas_match_files():
     """Illustration toolkit schemas should reference existing files."""
     from bid_tool.illustration.toolkit import SCHEMA_DIR as ILLU_SCHEMA_DIR
-    for name in ['proposal_illustration_job.schema.json',
+    for name in ['illustration_job_v2.schema.json',
                  'svg_diagram.schema.json',
                  'echarts_diagram.schema.json']:
         assert (ILLU_SCHEMA_DIR / name).exists(), f"Missing illustration schema: {name}"

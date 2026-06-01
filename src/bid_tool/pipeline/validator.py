@@ -24,7 +24,8 @@ STAGE_SCHEMAS = {
     ],
     's2': ['s2_outline.schema.json'],
     's3': ['s3_body.schema.json'],
-    's5': ['s5_illustration.schema.json'],
+    's5_tables': ['s5_table_plan.schema.json'],
+    's5': ['illustration_job_v2.schema.json'],
     's7': ['s7_trace_matrix.schema.json'],
 }
 
@@ -40,7 +41,7 @@ COVERAGE_GATES = {
 
 def load_json(filepath):
     """加载 JSON 文件，支持 YAML front matter 的 .md 文件"""
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
 
     # 尝试提取 YAML/JSON front matter
@@ -87,6 +88,39 @@ def check_schema_required(data, schema):
     return issues
 
 
+def check_jsonschema(data, schema):
+    try:
+        import jsonschema
+    except ImportError:
+        return check_schema_required(data, schema)
+
+    validator = jsonschema.Draft202012Validator(schema)
+    issues = []
+    for issue in sorted(validator.iter_errors(data), key=lambda error: list(error.path)):
+        location = ".".join(str(item) for item in issue.path) or "<root>"
+        issues.append(f"{location}: {issue.message}")
+    return issues
+
+
+def check_table_plan_semantics(data):
+    issues = []
+    seen_ids = set()
+    for index, table in enumerate(data.get('tables', [])):
+        table_id = table.get('id', f'<table-{index}>')
+        if table_id in seen_ids:
+            issues.append(f"tables[{index}].id: 重复表格ID {table_id}")
+        seen_ids.add(table_id)
+
+        columns = table.get('columns', [])
+        expected = len(columns)
+        for row_index, row in enumerate(table.get('rows', [])):
+            if len(row) != expected:
+                issues.append(
+                    f"tables[{index}].rows[{row_index}]: 单元格数量 {len(row)} 与列数 {expected} 不一致"
+                )
+    return issues
+
+
 def validate_stage(stage, data_dir):
     """对指定阶段的输出进行全量校验"""
     if stage not in STAGE_SCHEMAS:
@@ -95,6 +129,13 @@ def validate_stage(stage, data_dir):
 
     schema_files = STAGE_SCHEMAS[stage]
     all_issues = {}
+
+    # 特殊映射：schema 文件名 -> 数据文件名前缀
+    DATA_PREFIX_MAP = {
+        's5_table_plan.schema.json': 'table_insertion_plan',
+        'illustration_job_v2.schema.json': 's5_illustration_job',
+        's5_illustration.schema.json': 's5_illustration',
+    }
 
     for sf in schema_files:
         schema_path = str(TEMPLATES_DIR / sf)
@@ -108,10 +149,10 @@ def validate_stage(stage, data_dir):
             continue
 
         # 查找对应的数据文件
-        data_prefix = sf.replace('.schema.json', '')
-        data_files = glob.glob(os.path.join(data_dir, f'{data_prefix}.*'))
+        data_prefix = DATA_PREFIX_MAP.get(sf, sf.replace('.schema.json', ''))
+        data_files = glob.glob(os.path.join(data_dir, f'{data_prefix}.json'))
         if not data_files:
-            data_files = glob.glob(os.path.join(data_dir, '*.json'))
+            data_files = glob.glob(os.path.join(data_dir, f'{data_prefix}_job.json'))
 
         if not data_files:
             all_issues[sf] = [f'在 {data_dir} 中未找到 {data_prefix} 的数据文件']
@@ -123,7 +164,12 @@ def validate_stage(stage, data_dir):
             if data is None:
                 issues.append(f'无法解析数据文件: {df}')
                 continue
-            issues.extend(check_schema_required(data, schema))
+            if sf in ('illustration_job_v2.schema.json', 's5_table_plan.schema.json'):
+                issues.extend(check_jsonschema(data, schema))
+                if sf == 's5_table_plan.schema.json':
+                    issues.extend(check_table_plan_semantics(data))
+            else:
+                issues.extend(check_schema_required(data, schema))
 
         all_issues[sf] = issues
 

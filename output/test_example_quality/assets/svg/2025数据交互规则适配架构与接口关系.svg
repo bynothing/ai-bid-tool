@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1160" viewBox="0 0 1600 1160">
+<defs>
+  <linearGradient id="header" x2="1"><stop stop-color="#12324f"/><stop offset="1" stop-color="#1f5f8b"/></linearGradient>
+  <filter id="shadow" x="-8%" y="-12%" width="116%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#183652" flood-opacity=".035"/></filter>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1" fill="#cbd8e6" opacity=".35"/></pattern>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#526173"/></marker>
+  <marker id="arrow-flow" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1f5f8b"/></marker>
+  <marker id="arrow-data" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3b7280"/></marker>
+  <marker id="arrow-control" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5d6680"/></marker>
+  <marker id="arrow-alert" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#9b3434"/></marker>
+  <marker id="arrow-sync" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8a7245"/></marker>
+  <symbol id="ico-government" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18M5 9V7l7-4 7 4v2M6 20h12M7 9v9M12 9v9M17 9v9"/></symbol>
+  <symbol id="ico-organization" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5h10v16M14 10h6v11M8 9h2M8 13h2M8 17h2M17 14h1M17 18h1"/></symbol>
+  <symbol id="ico-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.5"/><path d="M5 21v-2.5a7 7 0 0 1 14 0V21"/></symbol>
+  <symbol id="ico-admin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7.5" r="3.2"/><path d="M3.5 19a6.5 6.5 0 0 1 10.5-5.1"/><path d="M18 14v7M14.5 17.5h7"/></symbol>
+  <symbol id="ico-radiation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><path d="M12 9V3a6 6 0 0 1 5.2 3l-5.2 3ZM9.4 13.5l-5.2 3a6 6 0 0 1 0-6l5.2 3Zm5.2 0 5.2 3a6 6 0 0 1-5.2 3v-6Z"/></symbol>
+  <symbol id="ico-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="ico-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5 9 4l6 2.5L21 4v14l-6 2.5L9 18l-6 2.5v-14ZM9 4v14M15 6.5v14"/></symbol>
+  <symbol id="ico-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="5" rx="1"/><rect x="14" y="4" width="7" height="5" rx="1"/><rect x="9" y="15" width="7" height="5" rx="1"/><path d="M10 6.5h4M17.5 9v3.5H12v2.5"/></symbol>
+  <symbol id="ico-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10h4v10M10 20V4h4v16M16 20v-8h4v8M3 20h18"/></symbol>
+  <symbol id="ico-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h5M9 12h6M9 16h6"/></symbol>
+  <symbol id="ico-form" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+  <symbol id="ico-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+  <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v6c0 4.6-3.1 7.5-8 9-4.9-1.5-8-4.4-8-9V6l8-3Z"/><path d="m9 12 2 2 4-5"/></symbol>
+  <symbol id="ico-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 7h.1M8 16h.1M11 7h5M11 16h5"/></symbol>
+  <symbol id="ico-api" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8 4 12l4 4M16 8l4 4-4 4M14 4 10 20"/></symbol>
+  <symbol id="ico-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12h5"/></symbol>
+  <symbol id="ico-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 6h4M10 18h4"/></symbol>
+  <symbol id="ico-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></symbol>
+  <symbol id="ico-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5M12 17h.1"/></symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-7"/></symbol>
+  <symbol id="ico-vehicle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16V9h12l4 4v3M6 16h12"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="ico-sensor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18v3M8 21h8"/><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+  <symbol id="ico-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 8.5 4 4 0 1 1 18 18H7Z"/></symbol>
+  <symbol id="ico-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6.5 10.5 10.5 6.5M13.5 6.5l4 4M17.5 13.5l-4 4M10.5 17.5l-4-4"/></symbol>
+  <symbol id="ico-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+  <symbol id="ico-audit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h10l3 3v15H6V3Z"/><path d="M9 10h6M9 14h4"/><circle cx="16.5" cy="16.5" r="3"/><path d="m19 19 2 2"/></symbol>
+  <symbol id="ico-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M5 9h14v10H5V9Z"/><path d="M3 12h2M19 12h2M9 13h.1M15 13h.1M9 16h6"/></symbol>
+  <symbol id="ico-browser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.1M10 6.5h.1"/></symbol>
+  <symbol id="ico-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 5h4M11 18.5h2"/></symbol>
+  <symbol id="ico-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h5l2-2h4l2 2h3v12H4V7Z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="ico-gps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></symbol>
+  <symbol id="ico-gateway" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3v18"/><path d="m7 8 5-5 5 5M7 16l5 5 5-5"/></symbol>
+  <symbol id="ico-queue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="4" rx="1"/><rect x="3" y="11" width="14" height="4" rx="1"/><rect x="3" y="17" width="10" height="4" rx="1"/></symbol>
+  <symbol id="ico-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M15 3v5h4M9 12h7M9 16h7"/></symbol>
+  <symbol id="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+  <symbol id="ico-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h17M5 20V10h4v10M11 20V5h4v15M17 20v-8h4"/></symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v5M16 3v5M4 10h16M8 14h3M13 14h3"/></symbol>
+  <symbol id="ico-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3ZM10 20h4"/></symbol>
+  <symbol id="ico-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="ico-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><path d="M13 12h8M18 12v4M15 12v3"/></symbol>
+  <symbol id="ico-firewall" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4V5ZM4 10h16M4 15h16M9 5v5M15 10v5M9 15v4"/></symbol>
+  <symbol id="ico-backup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="6" ry="3"/><path d="M4 7v8c0 1.7 2.7 3 6 3M16 7v4"/><path d="M14 17a4 4 0 1 0 1-4M14 13v4h4"/></symbol>
+  <symbol id="ico-cluster" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="6" rx="1"/><rect x="13" y="4" width="8" height="6" rx="1"/><rect x="8" y="15" width="8" height="6" rx="1"/><path d="M7 10v2h10v-2M12 12v3"/></symbol>
+  <symbol id="ico-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8M12 16v5M6 11h3l2-4 3 6 2-3h2"/></symbol>
+  <symbol id="ico-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3M7 8l5-5 5 5M4 16v5h16v-5"/></symbol>
+  <symbol id="ico-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="ico-contract" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6V3Z"/><path d="M9 8h6M9 12h6M9 16h3M14 17l3-3"/></symbol>
+  <style>
+    .fm { font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; }
+    .title { font-weight:700; font-size:56px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#fff; letter-spacing:1px; }
+    .subtitle { font-weight:500; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#e8f2fb; }
+    .section { font-weight:700; font-size:39px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .section-en { font-weight:600; font-size:23px; font-family:Arial,sans-serif; fill:#526173; letter-spacing:1.3px; }
+    .node { font-weight:600; font-size:38px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .node-lg { font-weight:700; font-size:45px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+    .desc { font-weight:500; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#526173; }
+    .dark-node { font-weight:600; font-size:38px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#fff; }
+    .note { font-weight:500; font-size:24px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#526173; }
+    .edge-label { font-weight:700; font-size:28px; font-family:"SimHei","Microsoft YaHei","Noto Sans SC",sans-serif; fill:#1e293b; }
+  </style>
+</defs>
+<rect x="0" y="0" width="1600" height="1160" rx="0" fill="#ffffff" stroke="none" />
+<rect width="1600" height="1160" fill="url(#grid)" opacity="0"/>
+<rect x="0" y="0" width="1600" height="116" rx="0" fill="url(#header)" stroke="none" />
+<rect x="0" y="114" width="1600" height="3" rx="0" fill="#1f5f8b" stroke="none" />
+<text x="50" y="57" class="title" text-anchor="start">2025数据交互规则适配架构与接口关系</text>
+<text x="52" y="92" class="subtitle" text-anchor="start">业务系统、监管平台与数据链路的接口关系</text>
+
+<style>
+  .title { font-size:46px; letter-spacing:0; }
+  .subtitle { font-size:24px; }
+  .section { font-size:28px; }
+  .node-lg { font-size:28px; }
+  .node { font-size:24px; }
+  .desc { font-size:20px; }
+  .dark-node { font-size:26px; }
+  .note { font-size:18px; }
+  .edge-label { font-size:21px; }
+</style>
+<rect x="48" y="150" width="480" height="560" rx="16" fill="#ffffff" stroke="#1f5f8b" filter="url(#shadow)"/>
+<rect x="48" y="150" width="480" height="84" rx="16" fill="#1f5f8b" stroke="#1f5f8b" />
+<rect x="48" y="212" width="480" height="24" rx="0" fill="#1f5f8b" stroke="#1f5f8b" />
+<g color="#ffffff"><use href="#ico-server" x="76" y="176" width="40" height="40"/></g>
+<text x="132" y="200" class="dark-node" text-anchor="start">承建单位业务平台</text>
+<text x="132" y="226" class="subtitle" text-anchor="start">采集、治理、推送</text>
+<rect x="76" y="258" width="424" height="96" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="96" y="296" class="node" text-anchor="start">业务应用层</text>
+<text x="96" y="326" class="desc" text-anchor="start">项目管理、巡检填报、问题闭环、统计分析</text>
+<rect x="76" y="370" width="424" height="96" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="96" y="408" class="node" text-anchor="start">数据服务层</text>
+<text x="96" y="438" class="desc" text-anchor="start">数据清洗、规则校验、接口封装、消息队列</text>
+<rect x="76" y="482" width="424" height="96" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="96" y="520" class="node" text-anchor="start">安全支撑层</text>
+<text x="96" y="550" class="desc" text-anchor="start">身份认证、签名验签、日志审计、异常告警</text>
+<rect x="76" y="594" width="424" height="96" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="96" y="632" class="node" text-anchor="start">基础资源层</text>
+<text x="96" y="662" class="desc" text-anchor="start">数据库、应用服务、备份恢复、网络接入</text>
+<rect x="1072" y="150" width="480" height="560" rx="16" fill="#ffffff" stroke="#3f7d62" filter="url(#shadow)"/>
+<rect x="1072" y="150" width="480" height="84" rx="16" fill="#3f7d62" stroke="#3f7d62" />
+<rect x="1072" y="212" width="480" height="24" rx="0" fill="#3f7d62" stroke="#3f7d62" />
+<g color="#ffffff"><use href="#ico-government" x="1100" y="176" width="40" height="40"/></g>
+<text x="1156" y="200" class="dark-node" text-anchor="start">监管/业主集成平台</text>
+<text x="1156" y="226" class="subtitle" text-anchor="start">接收、核验、反馈</text>
+<rect x="1100" y="258" width="424" height="96" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<text x="1120" y="296" class="node" text-anchor="start">接口接入区</text>
+<text x="1120" y="326" class="desc" text-anchor="start">HTTPS API、批量文件、消息回执、状态查询</text>
+<rect x="1100" y="370" width="424" height="96" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<text x="1120" y="408" class="node" text-anchor="start">数据核验区</text>
+<text x="1120" y="438" class="desc" text-anchor="start">字段完整性、规则一致性、重复校验、时效校验</text>
+<rect x="1100" y="482" width="424" height="96" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<text x="1120" y="520" class="node" text-anchor="start">监管应用区</text>
+<text x="1120" y="550" class="desc" text-anchor="start">综合看板、问题督办、报表归档、趋势研判</text>
+<rect x="1100" y="594" width="424" height="96" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<text x="1120" y="632" class="node" text-anchor="start">安全审计区</text>
+<text x="1120" y="662" class="desc" text-anchor="start">访问审计、脱敏留痕、权限管控、风险告警</text>
+<path d="M548 210 C 672 184, 844 184, 1052 210" fill="none" stroke="#1f5f8b" stroke-width="4" marker-end="url(#arrow-data)"/>
+<rect x="660" y="168" width="280" height="42" rx="21" fill="#ffffff" stroke="#1f5f8b" />
+<text x="800" y="196" class="edge-label" text-anchor="middle">基础数据同步</text>
+<text x="800" y="238" class="note" text-anchor="middle">HTTPS + JSON / 每日增量</text>
+<path d="M1052 242 C 902 282, 700 282, 548 242" fill="none" stroke="#8a7245" stroke-width="2.4" stroke-dasharray="9 6" marker-end="url(#arrow-sync)"/>
+<text x="800" y="282" class="note" text-anchor="middle">接收回执</text>
+<path d="M548 292 C 672 266, 844 266, 1052 292" fill="none" stroke="#3b7280" stroke-width="4" marker-end="url(#arrow-data)"/>
+<rect x="660" y="250" width="280" height="42" rx="21" fill="#ffffff" stroke="#3b7280" />
+<text x="800" y="278" class="edge-label" text-anchor="middle">巡检结果上报</text>
+<text x="800" y="320" class="note" text-anchor="middle">API实时推送 / 批量补传</text>
+<path d="M1052 324 C 902 364, 700 364, 548 324" fill="none" stroke="#8a7245" stroke-width="2.4" stroke-dasharray="9 6" marker-end="url(#arrow-sync)"/>
+<text x="800" y="364" class="note" text-anchor="middle">校验结果反馈</text>
+<path d="M548 374 C 672 348, 844 348, 1052 374" fill="none" stroke="#9a6a24" stroke-width="4" marker-end="url(#arrow-data)"/>
+<rect x="660" y="332" width="280" height="42" rx="21" fill="#ffffff" stroke="#9a6a24" />
+<text x="800" y="360" class="edge-label" text-anchor="middle">问题工单回传</text>
+<text x="800" y="402" class="note" text-anchor="middle">状态变更事件 / 闭环节点</text>
+<path d="M1052 406 C 902 446, 700 446, 548 406" fill="none" stroke="#8a7245" stroke-width="2.4" stroke-dasharray="9 6" marker-end="url(#arrow-sync)"/>
+<text x="800" y="446" class="note" text-anchor="middle">处理状态确认</text>
+<path d="M548 456 C 672 430, 844 430, 1052 456" fill="none" stroke="#3f7d62" stroke-width="4" marker-end="url(#arrow-data)"/>
+<rect x="660" y="414" width="280" height="42" rx="21" fill="#ffffff" stroke="#3f7d62" />
+<text x="800" y="442" class="edge-label" text-anchor="middle">审计日志归档</text>
+<text x="800" y="484" class="note" text-anchor="middle">签名文件 + 摘要校验</text>
+<path d="M1052 488 C 902 528, 700 528, 548 488" fill="none" stroke="#8a7245" stroke-width="2.4" stroke-dasharray="9 6" marker-end="url(#arrow-sync)"/>
+<text x="800" y="528" class="note" text-anchor="middle">归档编号反馈</text>
+<rect x="48" y="740" width="1504" height="124" rx="12" fill="#ffffff" stroke="#cbd8e6" filter="url(#shadow)"/>
+<rect x="48" y="740" width="230" height="124" rx="12" fill="#f3f7fb" stroke="#1f5f8b" />
+<g color="#1f5f8b"><use href="#ico-shield" x="86" y="774" width="50" height="50"/></g>
+<text x="154" y="810" class="section" text-anchor="start">接口约束</text>
+<rect x="310" y="766" width="280" height="72" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<text x="450" y="810" class="node" text-anchor="middle">统一身份认证</text>
+<rect x="610" y="766" width="280" height="72" rx="8" fill="#f3f8fa" stroke="#3b7280" />
+<text x="750" y="810" class="node" text-anchor="middle">字段规则校验</text>
+<rect x="910" y="766" width="280" height="72" rx="8" fill="#fbf8f1" stroke="#9a6a24" />
+<text x="1050" y="810" class="node" text-anchor="middle">失败重试补传</text>
+<rect x="1210" y="766" width="280" height="72" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<text x="1350" y="810" class="node" text-anchor="middle">全链路审计</text>
+<rect x="64" y="890" width="460" height="112" rx="8" fill="#f3f7fb" stroke="#1f5f8b" />
+<rect x="46" y="908" width="48" height="48" rx="8" fill="#1f5f8b" stroke="#1f5f8b" />
+<g color="#ffffff"><use href="#ico-form" x="57" y="919" width="26" height="26"/></g>
+<text x="106" y="932" class="node" text-anchor="start">数据标准</text>
+<circle cx="96" cy="961" r="4" fill="#1f5f8b"/>
+<text x="114" y="968" class="desc" text-anchor="start">统一编码</text>
+<circle cx="96" cy="997" r="4" fill="#1f5f8b"/>
+<text x="114" y="1004" class="desc" text-anchor="start">字段字典</text>
+<rect x="564" y="890" width="460" height="112" rx="8" fill="#f4faf7" stroke="#3f7d62" />
+<rect x="546" y="908" width="48" height="48" rx="8" fill="#3f7d62" stroke="#3f7d62" />
+<g color="#ffffff"><use href="#ico-shield" x="557" y="919" width="26" height="26"/></g>
+<text x="606" y="932" class="node" text-anchor="start">安全策略</text>
+<circle cx="596" cy="961" r="4" fill="#3f7d62"/>
+<text x="614" y="968" class="desc" text-anchor="start">传输加密</text>
+<circle cx="596" cy="997" r="4" fill="#3f7d62"/>
+<text x="614" y="1004" class="desc" text-anchor="start">签名验签</text>
+<rect x="1064" y="890" width="460" height="112" rx="8" fill="#fbf8f1" stroke="#9a6a24" />
+<rect x="1046" y="908" width="48" height="48" rx="8" fill="#9a6a24" stroke="#9a6a24" />
+<g color="#ffffff"><use href="#ico-alert" x="1057" y="919" width="26" height="26"/></g>
+<text x="1106" y="932" class="node" text-anchor="start">异常处理</text>
+<circle cx="1096" cy="961" r="4" fill="#9a6a24"/>
+<text x="1114" y="968" class="desc" text-anchor="start">失败重试</text>
+<circle cx="1096" cy="997" r="4" fill="#9a6a24"/>
+<text x="1114" y="1004" class="desc" text-anchor="start">人工复核</text>
+<rect x="42" y="1082" width="1516" height="60" rx="8" fill="#f6f9fc" stroke="#cbd8e6" />
+<text x="59" y="1120" class="note" text-anchor="start">注：接口关系图需要同时体现方向、协议、回执、安全约束与异常补传机制。</text>
+</svg>

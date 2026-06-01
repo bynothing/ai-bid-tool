@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+<rect width="1600" height="980" fill="#ffffff"/>
+<text x="800" y="42" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="38" font-weight="800" fill="#10253f">Daily Operation Inspection Classification</text>
+<text x="800" y="78" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="20" font-weight="700" fill="#1f7ac6">Classify routine inspection mechanisms for operations and maintenance.</text>
+<text x="1540" y="50" text-anchor="end" font-family="Microsoft YaHei, Arial" font-size="14" fill="#55708c">Radiation Monitoring Bid Technical Proposal</text>
+<rect x="168" y="112" width="1264" height="64" rx="8" fill="#f7fbff" stroke="#95bce5"/>
+<text x="800" y="152" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="23" font-weight="700" fill="#10253f">Routine, special and exception-triggered inspections protect stable operation, data quality and online availability.</text>
+<line x1="800" y1="176" x2="800" y2="210" stroke="#0f4f8a" stroke-width="2"/>
+<g>
+<rect x="39" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#2fa45a" stroke-width="2"/>
+<rect x="39" y="220" width="478" height="86" rx="10" fill="#2fa45a"/>
+<rect x="39" y="292" width="478" height="18" fill="#2fa45a"/>
+<circle cx="131" cy="250" r="20" fill="#ffffff"/>
+<text x="131" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#2fa45a">1</text>
+<text x="306.0" y="254" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="25" font-weight="800" fill="#ffffff">Quarterly Patrol</text>
+<text x="306.0" y="286" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ffffff">Baseline requirement</text>
+<rect x="109" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#2fa45a" stroke-dasharray="5 4"/>
+<text x="278.0" y="348" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="17" font-weight="700" fill="#2fa45a">Trigger Mode</text>
+<text x="278.0" y="371" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">Executed by quarterly plan</text>
+<g>
+<rect x="79" y="374" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="386" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="415" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text x="117" y="408" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2fa45a">Content</text>
+<text x="127" y="436" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="436" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Page access check</text><text x="127" y="468" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="468" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Data receive and pars</text><text x="149" y="492" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">e</text><text x="127" y="500" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="500" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Report connectivity</text><text x="127" y="532" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="532" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Server status</text>
+</g><g>
+<rect x="79" y="510" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="522" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="551" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text x="117" y="544" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2fa45a">Check Points</text>
+<text x="127" y="572" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="572" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Upload rate</text><text x="127" y="604" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="604" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Response delay</text><text x="127" y="636" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="636" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Exception list</text><text x="127" y="668" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="668" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Resource usage</text>
+</g><g>
+<rect x="79" y="646" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="658" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="687" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text x="117" y="680" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2fa45a">Evidence</text>
+<text x="127" y="708" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="708" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Plan record</text><text x="127" y="740" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="740" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Problem list</text><text x="127" y="772" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="149" y="772" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Trend analysis</text>
+</g>
+<rect x="67" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#2fa45a" stroke-width="1.5"/>
+<text x="113" y="720" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2fa45a">Output</text>
+<text x="209" y="720" font-family="Microsoft YaHei, Arial" font-size="17" fill="#10253f">Quarterly patrol report</text>
+</g><g>
+<rect x="561" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#2777bf" stroke-width="2"/>
+<rect x="561" y="220" width="478" height="86" rx="10" fill="#2777bf"/>
+<rect x="561" y="292" width="478" height="18" fill="#2777bf"/>
+<circle cx="653" cy="250" r="20" fill="#ffffff"/>
+<text x="653" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#2777bf">2</text>
+<text x="828.0" y="254" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="25" font-weight="800" fill="#ffffff">Special Patrol</text>
+<text x="828.0" y="286" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ffffff">Interface/data/status</text>
+<rect x="631" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#2777bf" stroke-dasharray="5 4"/>
+<text x="800.0" y="348" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="17" font-weight="700" fill="#2777bf">Trigger Mode</text>
+<text x="800.0" y="371" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">By special plan or key work</text>
+<g>
+<rect x="601" y="374" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="386" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="415" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text x="639" y="408" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2777bf">Content</text>
+<text x="649" y="436" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="436" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Interface connectivit</text><text x="671" y="460" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">y</text><text x="649" y="468" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="468" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Data completeness</text><text x="649" y="500" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="500" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Terminal online rate</text><text x="649" y="532" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="532" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Warning linkage</text>
+</g><g>
+<rect x="601" y="510" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="522" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="551" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text x="639" y="544" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2777bf">Check Points</text>
+<text x="649" y="572" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="572" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Field mapping</text><text x="649" y="604" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="604" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Signature rule</text><text x="649" y="636" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="636" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Impact range</text><text x="649" y="668" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="668" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Rectification trackin</text><text x="671" y="692" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">g</text>
+</g><g>
+<rect x="601" y="646" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="658" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="687" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text x="639" y="680" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2777bf">Evidence</text>
+<text x="649" y="708" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="708" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Special report</text><text x="649" y="740" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="740" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Analysis plan</text><text x="649" y="772" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="671" y="772" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Trace record</text>
+</g>
+<rect x="589" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#2777bf" stroke-width="1.5"/>
+<text x="635" y="720" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#2777bf">Output</text>
+<text x="731" y="720" font-family="Microsoft YaHei, Arial" font-size="17" fill="#10253f">Special inspection report</text>
+</g><g>
+<rect x="1083" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#ef7d22" stroke-width="2"/>
+<rect x="1083" y="220" width="478" height="86" rx="10" fill="#ef7d22"/>
+<rect x="1083" y="292" width="478" height="18" fill="#ef7d22"/>
+<circle cx="1175" cy="250" r="20" fill="#ffffff"/>
+<text x="1175" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#ef7d22">3</text>
+<text x="1350.0" y="254" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="25" font-weight="800" fill="#ffffff">Exception Patrol</text>
+<text x="1350.0" y="286" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ffffff">Fast response</text>
+<rect x="1153" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#ef7d22" stroke-dasharray="5 4"/>
+<text x="1322.0" y="348" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="17" font-weight="700" fill="#ef7d22">Trigger Mode</text>
+<text x="1322.0" y="371" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">Triggered by alarm or event</text>
+<g>
+<rect x="1123" y="374" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="386" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="415" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text x="1161" y="408" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ef7d22">Content</text>
+<text x="1171" y="436" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="436" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Targeted event check</text><text x="1171" y="468" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="468" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Link trace check</text><text x="1171" y="500" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="500" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Service linkage</text><text x="1171" y="532" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="532" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Emergency validation</text>
+</g><g>
+<rect x="1123" y="510" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="522" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="551" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text x="1161" y="544" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ef7d22">Check Points</text>
+<text x="1171" y="572" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="572" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Recurrence</text><text x="1171" y="604" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="604" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Root cause</text><text x="1171" y="636" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="636" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Measure effect</text><text x="1171" y="668" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="668" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Prevention advice</text>
+</g><g>
+<rect x="1123" y="646" width="406" height="124" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="658" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="687" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text x="1161" y="680" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ef7d22">Evidence</text>
+<text x="1171" y="708" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="708" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Exception report</text><text x="1171" y="740" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="740" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Handling record</text><text x="1171" y="772" font-family="Microsoft YaHei, Arial" font-size="16" fill="#10253f">•</text><text x="1193" y="772" font-family="Microsoft YaHei, Arial" font-size="16" font-weight="400" fill="#10253f">Improvement advice</text>
+</g>
+<rect x="1111" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#ef7d22" stroke-width="1.5"/>
+<text x="1157" y="720" font-family="Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#ef7d22">Output</text>
+<text x="1253" y="720" font-family="Microsoft YaHei, Arial" font-size="17" fill="#10253f">Exception inspection report</text>
+</g>
+<rect x="78" y="806" width="1444" height="58" rx="8" fill="#f7fbff" stroke="#9dcced"/>
+<text x="130" y="843" font-family="Microsoft YaHei, Arial" font-size="24" font-weight="700" fill="#0f4f8a">Overall Output</text>
+<text x="430" y="838" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">● Inspection execution records</text><text x="690" y="838" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">● Problem and rectification loop</text><text x="950" y="838" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">● Data trend analysis</text><text x="1210" y="838" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">● Traceable archive</text>
+<rect x="78" y="902" width="1444" height="48" rx="6" fill="#ffffff" stroke="#9dcced" stroke-dasharray="7 5"/>
+<text x="168" y="932" font-family="Microsoft YaHei, Arial" font-size="20" font-weight="700" fill="#0f4f8a">Principle</text>
+<text x="300" y="932" font-family="Microsoft YaHei, Arial" font-size="19" fill="#10253f">True, complete, traceable, measurable and acceptable.</text>
+</svg>

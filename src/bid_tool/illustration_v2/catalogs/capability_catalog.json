@@ -1,0 +1,32 @@
+{
+  "version": "0.1",
+  "engine": "illustration_v2",
+  "templates": [
+    {
+      "id": "arch.layered.v2",
+      "diagram_type": "architecture.layered",
+      "renderer": "template_svg",
+      "tier": 1,
+      "summary": "Frozen three-layer architecture SVG template for formal bid diagrams.",
+      "contract": "templates/architecture/layered/arch.layered.v2/contract.json",
+      "template": "templates/architecture/layered/arch.layered.v2/template.svg"
+    }
+  ],
+  "renderers": [
+    {
+      "id": "template_svg",
+      "tier": 1,
+      "summary": "Frozen SVG geometry with contract-first content injection."
+    },
+    {
+      "id": "structured_svg_fallback",
+      "tier": 2,
+      "summary": "Simple deterministic SVG fallback for content that misses template constraints."
+    },
+    {
+      "id": "free_svg_floor",
+      "tier": 3,
+      "summary": "Last-resort SVG floor output that requires human review."
+    }
+  ]
+}

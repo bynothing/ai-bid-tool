@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数据交互适配架构与接口关系</title>
+  <style>
+    :root {
+      --navy:#12324f; --blue:#1f5f8b; --teal:#00877c; --gold:#ba7000;
+      --red:#c9363e; --text:#1e293b; --sub:#526173; --line:#cbd8e6;
+      --wash:#f6f9fc; --soft:#eef5fb;
+      --primary:#1f5f8b; --primary-light:#f3f7fb;
+      --success:#3f7d62; --success-light:#f4faf7;
+      --warning:#9a6a24; --warning-light:#fbf8f1;
+      --purple:#5d6680; --purple-light:#f6f7fa;
+      --cyan:#456f96; --cyan-light:#f3f7fb;
+      --danger:#9b3434; --danger-light:#fbf4f4;
+      --teal2:#3b7280; --teal2-light:#f3f8fa;
+      --gold2:#8a7245; --gold2-light:#faf8f2;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; font-family:"Microsoft YaHei","Noto Sans SC",Arial,sans-serif; color:var(--text); }
+    .canvas { position:relative; width:1600px; min-height:960px; padding:0 42px 34px; background:#fff; overflow:hidden; }
+    .header { height:118px; margin:0 -42px 30px; padding:28px 52px; color:#fff; background:linear-gradient(90deg,var(--navy),#006ea8); border-bottom:4px solid #4db3d9; }
+    h1 { margin:0; font-size:38px; line-height:1.18; letter-spacing:0; }
+    .subtitle { margin-top:10px; font-size:20px; color:#e9f5ff; }
+    .doc { position:absolute; top:32px; right:52px; max-width:430px; text-align:right; font-size:16px; color:#d8ecfb; }
+    .note { margin-top:22px; padding:12px 16px; border:1px solid var(--line); border-radius:8px; color:var(--sub); font-size:16px; background:#fff; }
+    .watermark { position:absolute; right:68px; bottom:88px; font-size:48px; font-weight:700; color:#dcecf8; transform:rotate(-18deg); pointer-events:none; }
+    .grid { display:grid; gap:18px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 2px 8px rgba(7,59,114,.06); }
+    .card-h { padding:16px 20px; border-bottom:1px solid var(--line); background:var(--wash); font-size:22px; font-weight:700; color:var(--navy); }
+    .tone-primary { --tone:var(--primary); --tone-light:var(--primary-light); }
+    .tone-success { --tone:var(--success); --tone-light:var(--success-light); }
+    .tone-warning { --tone:var(--warning); --tone-light:var(--warning-light); }
+    .tone-purple { --tone:var(--purple); --tone-light:var(--purple-light); }
+    .tone-cyan { --tone:var(--cyan); --tone-light:var(--cyan-light); }
+    .tone-danger { --tone:var(--danger); --tone-light:var(--danger-light); }
+    .tone-teal { --tone:var(--teal2); --tone-light:var(--teal2-light); }
+    .tone-gold { --tone:var(--gold2); --tone-light:var(--gold2-light); }
+    .card.tone-primary, .card.tone-success, .card.tone-warning, .card.tone-purple, .card.tone-cyan, .card.tone-danger, .card.tone-teal, .card.tone-gold { border-color:var(--tone); }
+    .card.tone-primary .card-h, .card.tone-success .card-h, .card.tone-warning .card-h, .card.tone-purple .card-h, .card.tone-cyan .card-h, .card.tone-danger .card-h, .card.tone-teal .card-h, .card.tone-gold .card-h { background:linear-gradient(90deg,var(--tone),color-mix(in srgb,var(--tone) 72%,#fff)); color:#fff; }
+    .card-b { padding:18px 20px; }
+    .pill { display:inline-block; padding:6px 12px; border-radius:999px; background:var(--soft); color:var(--blue); font-weight:700; }
+    .muted { color:var(--sub); }
+    .bar-bg { height:28px; border-radius:999px; background:#edf3f9; overflow:hidden; }
+    .bar { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--blue),var(--teal)); }
+    .axis { display:grid; grid-template-columns:repeat(12,1fr); margin:10px 0 18px 260px; color:var(--sub); font-size:16px; }
+    .gantt-row { display:grid; grid-template-columns:240px 1fr; gap:20px; align-items:center; margin:16px 0; }
+    .risk-grid { display:grid; grid-template-columns:90px repeat(5,1fr); grid-template-rows:repeat(6,102px); gap:8px; }
+    .risk-cell { border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fbff; font-size:17px; }
+    .risk-head { display:flex; align-items:center; justify-content:center; color:var(--sub); font-weight:700; }
+    .risk-low { background:#e8fff3; } .risk-medium { background:#fff8e7; }
+    .risk-high { background:#fff0f0; } .risk-critical { background:#ffe6e8; border-color:#e89aa0; }
+    .compare { grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+    .compare ul { margin:0; padding-left:22px; font-size:22px; line-height:1.8; }
+    .milestones { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:28px; }
+    .milestone { min-height:220px; padding:22px; border-top:6px solid var(--blue); }
+    .milestone[class*="tone-"] { border-top-color:var(--tone); background:linear-gradient(180deg,var(--tone-light),#fff 46%); }
+    .num { width:38px; height:38px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; font-weight:700; margin-right:10px; }
+    [class*="tone-"] > .num, [class*="tone-"] .num { background:var(--tone); }
+    .imap { display:grid; grid-template-columns:540px 430px 540px; gap:20px; align-items:start; }
+    .platform { border:2px solid var(--blue); border-radius:8px; padding:14px 18px; background:#fbfdff; }
+    .platform.green { border-color:#6a9c56; background:#fbfff9; }
+    .platform-title { margin:-14px 0 18px; padding:14px; border-radius:0 0 6px 6px; text-align:center; color:#fff; font-size:25px; font-weight:700; background:linear-gradient(90deg,var(--blue),#2e88c2); }
+    .green .platform-title { background:linear-gradient(90deg,#6a9c56,#4f8440); }
+    .layer { margin:14px 0; padding:12px; border:1px solid #9bc3df; border-radius:8px; background:#fff; }
+    .green .layer { border-color:#abc99c; }
+    .layer-title { text-align:center; color:var(--navy); font-size:19px; font-weight:700; margin-bottom:12px; }
+    .green .layer-title { color:#2d6d31; }
+    .layer-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:10px; }
+    .mini { min-height:58px; display:flex; align-items:center; justify-content:center; padding:6px; border:1px solid #86b7d9; border-radius:7px; text-align:center; font-size:15px; line-height:1.25; background:#fff; }
+    .mini[class*="tone-"] { border-color:var(--tone); background:var(--tone-light); color:var(--text); }
+    .green .mini { border-color:#9fc394; }
+    .exchange { padding-top:54px; }
+    .flow { margin:16px 0 22px; text-align:center; }
+    .flow-title { font-size:18px; font-weight:700; margin-bottom:8px; }
+    .flow-line { position:relative; height:10px; border-radius:999px; background:var(--blue); }
+    .flow-line.left::before, .flow-line.right::after { content:""; position:absolute; top:-9px; border-top:14px solid transparent; border-bottom:14px solid transparent; }
+    .flow-line.right::after { right:-2px; border-left:24px solid currentColor; }
+    .flow-line.left::before { left:-2px; border-right:24px solid currentColor; }
+    .flow-sub { margin-top:9px; font-size:18px; }
+    .ack { margin-top:8px; border-top:2px dashed currentColor; color:#477a42; font-size:17px; padding-top:8px; }
+    .requirements { display:grid; grid-template-columns:150px repeat(6,1fr); gap:0; margin-top:22px; border:1px dashed #78a9c8; border-radius:8px; overflow:hidden; }
+    .req-title { display:flex; align-items:center; justify-content:center; padding:12px; background:#2f86bd; color:#fff; font-size:22px; font-weight:700; text-align:center; }
+    .req { min-height:106px; padding:14px; border-left:1px solid #d8e7f2; background:#fff; }
+    .req[class*="tone-"] { border-left:4px solid var(--tone); background:var(--tone-light); }
+    .req strong { display:block; color:var(--navy); font-size:18px; margin-bottom:8px; }
+    .explain { display:grid; grid-template-columns:1.3fr 1fr; gap:22px; margin-top:18px; }
+    .explain .card-b { font-size:18px; line-height:1.7; }
+    .conclusion { margin-top:14px; padding:12px; text-align:center; border:1px solid #9ecae1; border-radius:8px; background:#f1fbff; color:#1173a5; font-size:22px; font-weight:700; }
+    .bid-block { display:grid; gap:18px; }
+    .bid-cols-2 { grid-template-columns:1fr 1fr; }
+    .bid-cols-3 { grid-template-columns:repeat(3,1fr); }
+    .wide-panel { border:2px solid var(--blue); border-radius:8px; padding:14px 18px; background:#fbfdff; }
+    .panel-title { margin:-14px 0 16px; padding:12px; border-radius:0 0 6px 6px; text-align:center; color:#fff; font-size:22px; font-weight:700; background:linear-gradient(90deg,var(--blue),#2e88c2); }
+    .stage-line { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; align-items:stretch; }
+    .stage { position:relative; padding:16px; min-height:108px; border:1px solid #9bc3df; border-radius:8px; background:#fff; text-align:center; }
+    .stage[class*="tone-"] { border-color:var(--tone); background:var(--tone-light); }
+    .stage[class*="tone-"] strong { color:var(--tone); }
+    .stage strong { display:block; color:var(--navy); font-size:18px; margin-bottom:8px; }
+    .stage .muted { font-size:15px; line-height:1.45; }
+    .stage:not(:last-child)::after { content:""; position:absolute; right:-20px; top:45%; border-left:20px solid var(--blue); border-top:12px solid transparent; border-bottom:12px solid transparent; }
+    .domain-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
+    .domain { border:1px solid var(--line); border-radius:8px; background:#fff; overflow:hidden; }
+    .domain-title { padding:12px 16px; background:var(--wash); color:var(--navy); font-size:20px; font-weight:700; }
+    .domain[class*="tone-"] { border-color:var(--tone); }
+    .domain[class*="tone-"] .domain-title { background:linear-gradient(90deg,var(--tone),color-mix(in srgb,var(--tone) 72%,#fff)); color:#fff; }
+    .domain-body { padding:14px; display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <section class="header">
+      <h1>数据交互适配架构与接口关系</h1>
+      <div class="subtitle">业务平台与监管平台的接口链路</div>
+      <div class="doc">全图型测试 — 10种精美图表</div>
+    </section>
+    <section class='imap'><section class='platform'><div class='platform-title'>业务平台</div><div class='layer'><div class='layer-title'>业务应用层</div><div class='layer-items'><div class='mini tone-primary'>项目管理</div><div class='mini tone-cyan'>巡检填报</div><div class='mini tone-teal'>问题闭环</div></div></div><div class='layer'><div class='layer-title'>数据服务层</div><div class='layer-items'><div class='mini tone-primary'>数据清洗</div><div class='mini tone-cyan'>规则校验</div><div class='mini tone-teal'>接口封装</div></div></div><div class='layer'><div class='layer-title'>安全支撑层</div><div class='layer-items'><div class='mini tone-primary'>身份认证</div><div class='mini tone-cyan'>签名验签</div><div class='mini tone-teal'>日志审计</div></div></div></section><div class='exchange'><div class='flow' style='color:#1f5f8b'><div class='flow-title'>基础数据同步</div><div class='flow-line right'></div><div class='flow-sub'>HTTPS+JSON/每日增量</div><div class="ack">接收回执</div></div><div class='flow' style='color:#3b7280'><div class='flow-title'>巡检结果上报</div><div class='flow-line right'></div><div class='flow-sub'>API实时推送</div><div class="ack">校验反馈</div></div><div class='flow' style='color:#9a6a24'><div class='flow-title'>问题工单回传</div><div class='flow-line right'></div><div class='flow-sub'>状态变更事件</div><div class="ack">状态确认</div></div><div class='flow' style='color:#3f7d62'><div class='flow-title'>审计日志归档</div><div class='flow-line right'></div><div class='flow-sub'>签名文件+摘要</div><div class="ack">归档反馈</div></div></div><section class='platform green'><div class='platform-title'>监管平台</div><div class='layer'><div class='layer-title'>接口接入区</div><div class='layer-items'><div class='mini tone-primary'>HTTPS API</div><div class='mini tone-cyan'>批量文件</div><div class='mini tone-teal'>消息回执</div></div></div><div class='layer'><div class='layer-title'>数据核验区</div><div class='layer-items'><div class='mini tone-primary'>字段完整性</div><div class='mini tone-cyan'>规则一致性</div><div class='mini tone-teal'>时效校验</div></div></div><div class='layer'><div class='layer-title'>监管应用区</div><div class='layer-items'><div class='mini tone-primary'>综合看板</div><div class='mini tone-cyan'>问题督办</div><div class='mini tone-teal'>报表归档</div></div></div></section></section><section class='requirements'><div class='req-title'>通信与<br>安全要求</div><div class='req tone-primary'><strong>统一认证</strong><div class='muted'></div></div><div class='req tone-teal'><strong>字段校验</strong><div class='muted'></div></div><div class='req tone-warning'><strong>失败重试</strong><div class='muted'></div></div><div class='req tone-success'><strong>全链路审计</strong><div class='muted'></div></div></section><section class='explain'><div class='card'><div class='card-h'>说明</div><div class='card-b'><div>{&#x27;title&#x27;: &#x27;数据标准&#x27;, &#x27;icon&#x27;: &#x27;form&#x27;, &#x27;style&#x27;: &#x27;default&#x27;, &#x27;items&#x27;: [&#x27;统一编码&#x27;, &#x27;字段字典&#x27;]}</div><div>{&#x27;title&#x27;: &#x27;安全策略&#x27;, &#x27;icon&#x27;: &#x27;shield&#x27;, &#x27;style&#x27;: &#x27;success&#x27;, &#x27;items&#x27;: [&#x27;传输加密&#x27;, &#x27;签名验签&#x27;]}</div><div>{&#x27;title&#x27;: &#x27;异常处理&#x27;, &#x27;icon&#x27;: &#x27;alert&#x27;, &#x27;style&#x27;: &#x27;warning&#x27;, &#x27;items&#x27;: [&#x27;失败重试&#x27;, &#x27;人工复核&#x27;]}</div></div></div><div class='card'><div class='card-h'>图例</div><div class='card-b'></div></div></section><div class='conclusion'>所有数据交互均需留痕、可追溯、可审计</div>
+    <div class="note">注：接口关系图需同时体现方向、协议、回执、安全约束与异常补传机制。</div>
+    
+  </main>
+</body>
+</html>

@@ -31,14 +31,15 @@ STYLE_GUIDE = {
 
 
 def _load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
 
-def prepare(s3_data_dir=None, output_dir=None, project_name=None):
+def prepare(s3_data_dir=None, output_dir=None, project_name=None, tables_data_dir=None):
     """Render S5 illustration prompt with body text context."""
     s3_data_dir = Path(s3_data_dir) if s3_data_dir else Path.cwd() / 'output' / 's3_body'
     output_dir = Path(output_dir) if output_dir else Path.cwd() / 'output' / 's5_illustrations'
+    tables_data_dir = Path(tables_data_dir) if tables_data_dir else Path.cwd() / 'output' / 's5_tables'
     output_dir.mkdir(parents=True, exist_ok=True)
 
     prompt_template = PROMPT_FILE.read_text(encoding='utf-8')
@@ -50,9 +51,11 @@ def prepare(s3_data_dir=None, output_dir=None, project_name=None):
         body = _load_json(s3_body_path)
         body_context = f"\n### s3_body.json (摘要)\n```json\n{json.dumps(body, ensure_ascii=False, indent=2)[:5000]}\n```"
 
-    # Load schema
-    schema_path = SCHEMA_DIR / 's5_illustration.schema.json'
-    schema = json.loads(schema_path.read_text(encoding='utf-8'))
+    table_context = ''
+    table_plan_path = tables_data_dir / 'table_insertion_plan.json'
+    if table_plan_path.exists():
+        table_plan = _load_json(table_plan_path)
+        table_context = f"\n### 已规划表格（请避免生成重复插图）\n```json\n{json.dumps(table_plan, ensure_ascii=False, indent=2)[:12000]}\n```"
 
     rendered = f"""{prompt_template}
 
@@ -61,26 +64,20 @@ def prepare(s3_data_dir=None, output_dir=None, project_name=None):
 ## 正文内容（插图占位检测）
 {body_context}
 
+## 表格化内容计划
+{table_context or '未发现 table_insertion_plan.json；请仍优先避免把清单、对照、资源配置类内容画成图。'}
+
 ## 设计规范
 
 {json.dumps(STYLE_GUIDE, ensure_ascii=False, indent=2)}
 
 ---
 
-## 参考 JSON Schema
-
-```json
-{json.dumps(schema, ensure_ascii=False, indent=2)}
-```
-
----
-
 ## 输出指令
 
-请按以上 prompt 要求，为每个插图占位生成结构化描述。每个插图输出为一个独立的 JSON 文件（以 illu_id 命名）。
-
-然后运行 assemble 命令合并为统一的 s5_illustration.json：
-  python s5_illustrate.py assemble --data {output_dir}
+请按以上 prompt 要求，输出一份完整 Illustration Job v2 JSON（60张图左右）。
+将最终 JSON 保存为：
+  {output_dir / 's5_illustration_job.json'}
 
 项目名称: {project_name or '未命名项目'}
 """
@@ -88,8 +85,8 @@ def prepare(s3_data_dir=None, output_dir=None, project_name=None):
     prompt_out = output_dir / 's5_rendered_prompt.md'
     prompt_out.write_text(rendered, encoding='utf-8')
     print(f'[S5] Rendered prompt saved to: {prompt_out}')
-    print(f'[S5] Save individual illustration JSONs to: {output_dir}/')
-    print(f'[S5] After LLM completes, run: python s5_illustrate.py assemble --data {output_dir}')
+    print(f'[S5] Save LLM output to: {output_dir / "s5_illustration_job.json"}')
+    print(f'[S5] After LLM completes, run: bid-illustrate --job {output_dir / "s5_illustration_job.json"} --validate-only')
 
     return str(prompt_out)
 
@@ -143,6 +140,7 @@ def main():
     p_prepare.add_argument('--s3-data', help='Path to s3_body directory')
     p_prepare.add_argument('--output', help='Output directory')
     p_prepare.add_argument('--project', help='Project name')
+    p_prepare.add_argument('--tables-data', help='Path to s5_tables directory')
 
     p_assemble = sub.add_parser('assemble', help='Assemble individual JSONs into unified file')
     p_assemble.add_argument('--data', help='Path to s5_illustrations directory')
@@ -153,7 +151,7 @@ def main():
     args = parser.parse_args()
 
     if args.action == 'prepare':
-        prepare(args.s3_data, args.output, args.project)
+        prepare(args.s3_data, args.output, args.project, args.tables_data)
     elif args.action == 'assemble':
         assemble(args.data)
     elif args.action == 'validate':

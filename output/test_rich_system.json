@@ -1,0 +1,285 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "智能城市运营中心 — 总体架构设计",
+    "projectName": "智慧城市IOC项目"
+  },
+  "style": {
+    "theme": "formal_blue"
+  },
+  "illustrations": [
+    {
+      "id": "TEST-001",
+      "type": "architecture.layered",
+      "renderer": "auto",
+      "intent": "展示智能城市运营中心从终端感知到应用呈现的完整六层架构",
+      "insertion": {
+        "section": "3.1",
+        "caption": "图 3-1 智能城市运营中心总体架构图"
+      },
+      "data": {
+        "title": "智能城市运营中心总体架构图",
+        "subtitle": "端·边·云·数·智·用 六层协同体系",
+        "note": "红色虚线框为建设重点；本架构满足等保三级、密评合规要求，已通过省大数据局专家评审",
+        "actors": [
+          {
+            "title": "城市管理者",
+            "desc": "市长驾驶舱 · 区县分舱",
+            "icon": "users"
+          },
+          {
+            "title": "委办局用户",
+            "desc": "公安 · 交通 · 城管 · 应急",
+            "icon": "briefcase"
+          },
+          {
+            "title": "公众市民",
+            "desc": "随手拍 · 12345热线",
+            "icon": "smartphone"
+          },
+          {
+            "title": "上级平台",
+            "desc": "省级城市运管服平台数据对接",
+            "icon": "link"
+          }
+        ],
+        "layers": [
+          {
+            "label": "应用层 · 城市治理场景",
+            "en": "APPLICATION LAYER",
+            "columns": 5,
+            "style": "dark",
+            "items": [
+              {
+                "title": "城市运行监测",
+                "desc": "交通态势·环境质量·能源消耗",
+                "icon": "activity",
+                "style": "accent"
+              },
+              {
+                "title": "应急指挥调度",
+                "desc": "预案管理·资源调度·一键联动",
+                "icon": "alert_triangle",
+                "style": "danger"
+              },
+              {
+                "title": "社会治理协同",
+                "desc": "网格管理·事件流转·闭环考评",
+                "icon": "grid",
+                "style": "accent"
+              },
+              {
+                "title": "产业经济分析",
+                "desc": "企业画像·产业链图谱·招商推荐",
+                "icon": "trending_up"
+              },
+              {
+                "title": "公众服务门户",
+                "desc": "政务服务·便民查询·互动反馈",
+                "icon": "smartphone"
+              }
+            ]
+          },
+          {
+            "label": "数字平台层 · 能力中台",
+            "en": "PLATFORM LAYER",
+            "columns": 4,
+            "items": [
+              {
+                "title": "IoT 物联网平台",
+                "desc": "设备管理·协议适配·百万级并发",
+                "icon": "radio"
+              },
+              {
+                "title": "视频AI分析平台",
+                "desc": "人脸·车辆·行为·烟火检测",
+                "icon": "video"
+              },
+              {
+                "title": "地理信息服务",
+                "desc": "二维/三维GIS·空间分析·路径规划",
+                "icon": "map_pin"
+              },
+              {
+                "title": "大数据计算平台",
+                "desc": "实时流计算·离线批处理·数据治理",
+                "icon": "database",
+                "style": "success"
+              },
+              {
+                "title": "人工智能平台",
+                "desc": "模型训练·推理服务·算法市场",
+                "icon": "cpu",
+                "style": "success"
+              },
+              {
+                "title": "区块链存证平台",
+                "desc": "数据确权·溯源审计·智能合约",
+                "icon": "lock"
+              },
+              {
+                "title": "低代码开发平台",
+                "desc": "表单设计·流程编排·大屏搭建",
+                "icon": "code"
+              },
+              {
+                "title": "统一身份认证",
+                "desc": "单点登录·权限管理·审计日志",
+                "icon": "shield"
+              }
+            ]
+          },
+          {
+            "label": "数据资源层 · 城市大脑",
+            "en": "DATA LAYER",
+            "style": "dark",
+            "items": [
+              {
+                "title": "城市基础库",
+                "desc": "人口·法人·地理·宏观经济",
+                "icon": "database",
+                "style": "accent"
+              },
+              {
+                "title": "主题专题库",
+                "desc": "交通·环境·安全·民生",
+                "icon": "folder"
+              },
+              {
+                "title": "实时数据流",
+                "desc": "Kafka·Flink·百万条/秒",
+                "icon": "zap"
+              },
+              {
+                "title": "数据湖存储",
+                "desc": "HDFS·MinIO·百PB级",
+                "icon": "hard_drive"
+              },
+              {
+                "title": "数据治理中心",
+                "desc": "质量·标准·目录·血缘",
+                "icon": "settings"
+              }
+            ]
+          },
+          {
+            "label": "云基础设施层 · 多云纳管",
+            "en": "INFRASTRUCTURE LAYER",
+            "columns": 3,
+            "items": [
+              {
+                "title": "政务云（主中心）",
+                "desc": "鲲鹏/昇腾 · 信创适配",
+                "icon": "server",
+                "style": "success"
+              },
+              {
+                "title": "公有云（弹性）",
+                "desc": "阿里云/华为云 · 峰值扩容",
+                "icon": "cloud"
+              },
+              {
+                "title": "边缘计算节点",
+                "desc": "各区县下沉 · 低延迟处理",
+                "icon": "cpu"
+              },
+              {
+                "title": "5G 专网",
+                "desc": "高带宽 · 低时延 · 大连接",
+                "icon": "wifi"
+              },
+              {
+                "title": "网络安全防护",
+                "desc": "WAF·防火墙·态势感知·零信任",
+                "icon": "shield_off",
+                "style": "warning"
+              },
+              {
+                "title": "灾备中心",
+                "desc": "异地备份 · RPO<1min · RTO<15min",
+                "icon": "refresh_cw",
+                "style": "warning"
+              }
+            ]
+          },
+          {
+            "label": "感知层 · 城市神经元",
+            "en": "SENSING LAYER",
+            "columns": 5,
+            "items": [
+              {
+                "title": "视频监控",
+                "desc": "5万路 · AI解析",
+                "icon": "camera"
+              },
+              {
+                "title": "环境监测",
+                "desc": "空气质量·水质·噪声",
+                "icon": "thermometer"
+              },
+              {
+                "title": "交通感知",
+                "desc": "地磁·雷达·电子警察",
+                "icon": "truck"
+              },
+              {
+                "title": "物联终端",
+                "desc": "井盖·路灯·垃圾桶·消防栓",
+                "icon": "radio"
+              },
+              {
+                "title": "无人机巡检",
+                "desc": "违法建筑·河道巡查",
+                "icon": "send"
+              }
+            ]
+          }
+        ],
+        "integrations": [
+          {
+            "title": "省级城市运管服平台",
+            "desc": "数据上报 · 指令接收"
+          },
+          {
+            "title": "公安人口库",
+            "desc": "身份核验 · 重点人员"
+          },
+          {
+            "title": "交通委信号系统",
+            "desc": "信号灯控制 · 态势感知"
+          },
+          {
+            "title": "气象局预报接口",
+            "desc": "极端天气预警 · 小时级更新"
+          }
+        ],
+        "requirements": [
+          {
+            "title": "等保三级",
+            "desc": "安全计算环境+安全通信网络"
+          },
+          {
+            "title": "密码应用安全性评估",
+            "desc": "商用密码算法SM2/SM3/SM4"
+          },
+          {
+            "title": "数据安全法合规",
+            "desc": "分级分类 · 脱敏 · 审计"
+          },
+          {
+            "title": "可用性 >= 99.99%",
+            "desc": "双活数据中心 · 自动切换"
+          },
+          {
+            "title": "接口响应 <= 200ms",
+            "desc": "P95延迟 · 全链路监控"
+          },
+          {
+            "title": "信创适配",
+            "desc": "鲲鹏CPU · 麒麟OS · 达梦DB"
+          }
+        ]
+      }
+    }
+  ]
+}

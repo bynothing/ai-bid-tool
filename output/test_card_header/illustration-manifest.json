@@ -1,0 +1,181 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "全图型测试 — 10种精美图表",
+    "projectName": "渲染引擎能力验证",
+    "bidSection": "技术方案"
+  },
+  "sourceJob": "D:\\AI_native_change\\bid-tool\\output\\test_all_types_job.json",
+  "illustrations": [
+    {
+      "id": "T01_layered",
+      "type": "architecture.layered",
+      "renderer": "svg_native",
+      "section": "1.1",
+      "caption": "图1 系统总体架构图",
+      "purpose": "系统总体架构",
+      "outputs": {
+        "svg": "assets/svg/智慧水务平台总体架构图.svg",
+        "png": "assets/svg/png/智慧水务平台总体架构图.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 18, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=70, svg_native=165"
+      ]
+    },
+    {
+      "id": "T02_flowchart",
+      "type": "process.flowchart",
+      "renderer": "svg_native",
+      "section": "2.1",
+      "caption": "图2 业务流程",
+      "purpose": "完整审批流程",
+      "outputs": {
+        "svg": "assets/svg/涉水审批全流程.svg",
+        "png": "assets/svg/png/涉水审批全流程.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 通用框图; 元素 8, 连线 9, 分支 2, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=20, mermaid=0, svg_native=95"
+      ]
+    },
+    {
+      "id": "T03_capability",
+      "type": "capability.map",
+      "renderer": "html_css",
+      "section": "3.1",
+      "caption": "图3 能力矩阵",
+      "purpose": "项目管理能力矩阵",
+      "outputs": {
+        "html": "assets/html/T03_capability.html",
+        "png": "assets/html/T03_capability.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 15, 连线 0, 分支 0, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=80, svg_native=75"
+      ]
+    },
+    {
+      "id": "T04_swimlane",
+      "type": "process.swimlane",
+      "renderer": "html_css",
+      "section": "4.1",
+      "caption": "图4 设计变更流程",
+      "purpose": "四角色协同流程",
+      "outputs": {
+        "html": "assets/html/T04_swimlane.html",
+        "png": "assets/html/T04_swimlane.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图; 元素 6, 连线 5, 分支 0, 泳道 4",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=75, svg_native=70"
+      ]
+    },
+    {
+      "id": "T05_sequence",
+      "type": "interaction.sequence",
+      "renderer": "svg_native",
+      "section": "5.1",
+      "caption": "图5 支付接口时序",
+      "purpose": "接口调用时序",
+      "outputs": {
+        "svg": "assets/svg/第三方支付对接时序图.svg",
+        "png": "assets/svg/png/第三方支付对接时序图.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 6, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=90, mermaid=0, svg_native=140"
+      ]
+    },
+    {
+      "id": "T06_relationship",
+      "type": "relationship.domain",
+      "renderer": "svg_native",
+      "section": "6.1",
+      "caption": "图6 系统集成关系",
+      "purpose": "子系统关系图",
+      "outputs": {
+        "svg": "assets/svg/智慧工地系统集成关系图.svg",
+        "png": "assets/svg/png/智慧工地系统集成关系图.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 8, 连线 4, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 graphviz=0, html_css=80, svg_native=95"
+      ]
+    },
+    {
+      "id": "T07_interface",
+      "type": "integration.interface_map",
+      "renderer": "html_css",
+      "section": "7.1",
+      "caption": "图7 接口关系图",
+      "purpose": "双平台接口关系",
+      "outputs": {
+        "html": "assets/html/T07_interface.html",
+        "png": "assets/html/T07_interface.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 4, 连线 0, 分支 0, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=185, svg_native=140"
+      ]
+    },
+    {
+      "id": "T08_inspection",
+      "type": "operation.inspection_taxonomy",
+      "renderer": "svg_native",
+      "section": "8.1",
+      "caption": "图8 巡检分类",
+      "purpose": "巡检分类体系",
+      "outputs": {
+        "svg": "assets/svg/日常运维巡检体系分类.svg",
+        "png": "assets/svg/png/日常运维巡检体系分类.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、精确结构/复杂关系、接口/安全语义; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "选择 SVG：内容需要精确结构、矢量可编辑能力或复杂连线控制; 评分 html_css=70, svg_native=140"
+      ]
+    },
+    {
+      "id": "T09_incident",
+      "type": "operation.incident_response",
+      "renderer": "html_css",
+      "section": "9.1",
+      "caption": "图9 故障响应",
+      "purpose": "故障分级响应",
+      "outputs": {
+        "html": "assets/html/T09_incident.html",
+        "png": "assets/html/T09_incident.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 7, 连线 0, 分支 0, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=80, svg_native=50"
+      ]
+    },
+    {
+      "id": "T10_security",
+      "type": "architecture.security_ring",
+      "renderer": "html_css",
+      "section": "10.1",
+      "caption": "图10 安全体系",
+      "purpose": "安全体系环形图",
+      "outputs": {
+        "html": "assets/html/T10_security.html",
+        "png": "assets/html/T10_security.png"
+      },
+      "warnings": [],
+      "decision": [
+        "内容分析: 展示型标书图、接口/安全语义; 元素 0, 连线 0, 分支 0, 泳道 0",
+        "选择 HTML/CSS：内容偏正式标书展示，适合图3风格的标题栏、分区卡片、说明和结论条; 评分 html_css=80, svg_native=50"
+      ]
+    }
+  ]
+}

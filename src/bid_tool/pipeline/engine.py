@@ -87,13 +87,25 @@ STAGES = {
             'check': '人工签字确认：正文内容无误，文风达标，可进入图示化阶段'
         }
     },
+    's5_tables': {
+        'name': '表格内容规划',
+        'description': '基于冻结正文识别适合表格化表达的内容，生成表格插入计划',
+        'input': '阶段3正文+阶段4冻结确认',
+        'output_dir': 's5_tables',
+        'prompt': 's5_table_prompt.md',
+        'artifacts': ['table_insertion_plan.json'],
+        'gate': {
+            'validator': {'--stage': 's5_tables', '--data': 'output/s5_tables'},
+            'check': '表格计划通过Schema校验，表格位置、列数和行数据一致'
+        }
+    },
     's5': {
         'name': '插图描述',
         'description': '为所有插图占位生成结构化描述',
         'input': '阶段3正文+illustration_manifest',
         'output_dir': 's5_illustrations',
         'prompt': 's5_illustration_prompt.md',
-        'artifacts': ['s5_illustration.json'],
+        'artifacts': ['s5_illustration_job.json'],
         'gate': {
             'validator': {'--stage': 's5', '--data': 'output/s5_illustrations'},
             'check': '插图文案通过Schema校验，illu_id覆盖所有manifest中的ID'
@@ -105,7 +117,7 @@ STAGES = {
         'input': '阶段4冻结稿+阶段5插图',
         'output_dir': 's6_synthesis',
         'prompt': None,
-        'artifacts': ['synthesis_report.json', 'draft_full.md'],
+        'artifacts': ['s6_synthesis_report.json', 's6_combined_bid_document.md'],
         'gate': {
             'manual': True,
             'check': '所有插图占位已替换，图文编号一致，页码连续'
@@ -156,7 +168,7 @@ STAGES = {
     }
 }
 
-STAGE_ORDER = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9']
+STAGE_ORDER = ['s1', 's2', 's3', 's4', 's5_tables', 's5', 's6', 's7', 's8', 's9']
 
 
 # ============================================================
@@ -166,7 +178,11 @@ def load_state():
     state_path = _get_state_path()
     if state_path.exists():
         with open(state_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            state = json.load(f)
+        state.setdefault('stages', {})
+        for stage in STAGE_ORDER:
+            state['stages'].setdefault(stage, {'status': 'pending', 'completed_at': None, 'gate_pass': None})
+        return state
     return {
         'project': '',
         'current_stage': None,
@@ -323,14 +339,47 @@ def _run_stage_prepare(stage, out_dir, state):
         from .stages.s3_body import prepare as s3_prepare
         s3_prepare(str(s1_dir), str(s2_dir), str(out_dir), project_name)
 
+    elif stage == 's5_tables':
+        s1_dir = output_root / 's1_analysis'
+        s2_dir = output_root / 's2_outline'
+        s3_dir = output_root / 's3_body'
+        from .stages.s5_tables import prepare as s5_tables_prepare
+        s5_tables_prepare(str(s1_dir), str(s2_dir), str(s3_dir), str(out_dir), project_name)
+
     elif stage == 's5':
         s3_dir = output_root / 's3_body'
+        tables_dir = output_root / 's5_tables'
         from .stages.s5_illustrate import prepare as s5_prepare
-        s5_prepare(str(s3_dir), str(out_dir), project_name)
+        s5_prepare(str(s3_dir), str(out_dir), project_name, str(tables_dir))
 
     elif stage == 's7':
         from .stages.s7_verify import prepare as s7_prepare
         s7_prepare(str(output_root), str(out_dir), project_name)
+
+
+def _run_script_stage(stage, out_dir, state):
+    output_root = _get_output_dir()
+    if stage == 's6':
+        from .stages.s6_synthesize import render_v2_job, synthesize
+
+        s5_dir = output_root / 's5_illustrations'
+        images_dir = s5_dir / 'images'
+        manifest_path = render_v2_job(
+            s5_dir=s5_dir,
+            images_dir=images_dir,
+            png=True,
+            png_scale=2,
+            export_echarts=True,
+        )
+        synthesize(
+            s3_chapters_dir=output_root / 's3_body' / 'chapters',
+            s6_dir=out_dir,
+            toolkit_results_dir=images_dir,
+            manifest_path=manifest_path,
+            table_plan_path=output_root / 's5_tables' / 'table_insertion_plan.json',
+        )
+        return True
+    return False
 
 
 def run_stage(stage, state, skip_gate=False, verbose=False):
@@ -375,6 +424,13 @@ def run_stage(stage, state, skip_gate=False, verbose=False):
         return False  # 返回 False 表示等待 LLM 完成
     else:
         print(f'\n[MANUAL] 此阶段为人工/脚本化操作，不需要 LLM 参与')
+        try:
+            if _run_script_stage(stage, out_dir, state):
+                print(f'[DONE] 阶段 {stage} 脚本执行完成')
+                mark_stage(state, stage, 'in_progress')
+                return True
+        except Exception as e:
+            print(f'[WARN] 阶段 {stage} 脚本执行失败: {e}')
         print(f'[INFO] 完成后运行: python pipeline.py gate {stage} --continue')
         mark_stage(state, stage, 'in_progress')
         return False

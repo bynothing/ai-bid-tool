@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/illustration-job-v2.schema.json",
+  "title": "Bid Illustration Job v2",
+  "type": "object",
+  "required": ["version", "document", "illustrations"],
+  "properties": {
+    "version": { "const": "2.0" },
+    "document": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "projectName": { "type": "string" },
+        "bidSection": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "style": {
+      "type": "object",
+      "properties": {
+        "theme": { "type": "string" },
+        "tone": { "enum": ["formal_bid", "technical", "executive"] },
+        "preferredFormat": { "enum": ["svg", "png", "html", "both"] },
+        "palette": {
+          "enum": [
+            "engineering_blue",
+            "example_formal",
+            "data_cyan",
+            "security_green",
+            "risk_orange",
+            "executive_gold",
+            "ops_indigo",
+            "process_violet",
+            "infra_slate",
+            "service_emerald",
+            "innovation_royal",
+            "quality_mint"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "illustrations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/illustration" }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "insertion": {
+      "type": "object",
+      "required": ["section", "caption"],
+      "properties": {
+        "section": { "type": "string", "minLength": 1 },
+        "afterText": { "type": "string" },
+        "caption": { "type": "string", "minLength": 1 },
+        "purpose": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "visual": {
+      "type": "object",
+      "properties": {
+        "density": { "enum": ["compact", "standard", "spacious"] },
+        "tone": { "enum": ["formal_bid", "technical", "executive"] },
+        "emphasis": {
+          "enum": ["none", "key_nodes", "critical_path", "milestones", "risk_levels"]
+        },
+        "legend": { "type": "boolean" },
+        "numbering": { "type": "boolean" },
+        "badges": { "type": "boolean" },
+        "watermark": { "type": "string" },
+        "editableVector": { "type": "boolean" },
+        "preciseConnectors": { "type": "boolean" },
+        "rendererPreference": {
+          "enum": ["html_css", "svg_native", "echarts_html", "graphviz", "mermaid"]
+        },
+        "palette": {
+          "enum": [
+            "engineering_blue",
+            "example_formal",
+            "data_cyan",
+            "security_green",
+            "risk_orange",
+            "executive_gold",
+            "ops_indigo",
+            "process_violet",
+            "infra_slate",
+            "service_emerald",
+            "innovation_royal",
+            "quality_mint"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "illustration": {
+      "type": "object",
+      "required": ["id", "type", "renderer", "intent", "insertion", "data"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
+        "type": { "type": "string", "minLength": 1 },
+        "renderer": {
+          "enum": ["auto", "html_css", "svg_native", "echarts_html", "graphviz", "mermaid", "svg", "echarts"]
+        },
+        "intent": { "type": "string", "minLength": 1 },
+        "insertion": { "$ref": "#/$defs/insertion" },
+        "data": { "type": "object" },
+        "visual": { "$ref": "#/$defs/visual" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

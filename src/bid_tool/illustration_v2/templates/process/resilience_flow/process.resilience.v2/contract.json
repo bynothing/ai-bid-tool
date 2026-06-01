@@ -1,0 +1,13 @@
+{
+  "id": "process.resilience.v2",
+  "diagram_type": "process.resilience_flow",
+  "schema_kind": "resilience_flow",
+  "required_data_fields": ["steps", "exceptions", "mechanisms"],
+  "capacity": {
+    "steps": [4, 8],
+    "exceptions": [3, 7],
+    "mechanisms": [1, 4],
+    "sidePanels": [0, 2],
+    "assurance": [0, 5]
+  }
+}

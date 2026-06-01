@@ -1,13 +1,17 @@
-"""Stage 6: Synthesize diagrams into chapter markdown files.
+"""Stage 6: Render and synthesize illustration assets into chapter markdown.
 
-Two-phase process:
-  Phase A (convert): Read S5 illustration JSONs → unified job JSON for illustration toolkit
-  Phase B (synthesize): Read illustration-manifest.json → insert images into chapter markdown
+Default v2 process:
+  Phase A (render): Read s5_illustration_job.json -> illustration platform assets
+  Phase B (synthesize): Read illustration-manifest.json -> insert images into chapter markdown
+
+Legacy compatibility:
+  legacy-convert: Read old per-illustration S5 JSONs -> v1 unified job
 
 Usage:
-  python s6_synthesize.py convert                          # Phase A only
+  python s6_synthesize.py render                           # Render v2 job only
   python s6_synthesize.py synthesize                       # Phase B only
-  python s6_synthesize.py all                              # Both phases
+  python s6_synthesize.py all                              # Render v2 + synthesize
+  python s6_synthesize.py legacy-convert                   # Historical v1 conversion
 """
 import json
 import os
@@ -57,7 +61,7 @@ CHAPTER_NUM_MAP = {
 
 
 def _load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
 
@@ -65,6 +69,54 @@ def _save_json(data, path):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def render_v2_job(s5_dir=None, images_dir=None, png=True, png_scale=2, export_echarts=True):
+    """Render the S5 Illustration Job v2 through the standalone illustration API.
+
+    This is the main bid-tool integration path. It treats the illustration
+    platform as an external tool: S5 owns the v2 JSON, the platform owns
+    rendering, and S6/S8 consume only the returned manifest.
+    """
+
+    from bid_tool.illustration import api
+
+    s5_dir = Path(s5_dir) if s5_dir else Path.cwd() / 'output' / 's5_illustrations'
+    job_path = s5_dir / 's5_illustration_job.json'
+    if not job_path.exists():
+        raise FileNotFoundError(
+            f"未找到 Illustration Job v2: {job_path}\n"
+            "请先完成 S5，并将 AI 输出保存为 s5_illustration_job.json。"
+        )
+
+    images_dir = Path(images_dir) if images_dir else s5_dir / 'images'
+    job = api.load(job_path)
+    errors, warnings = api.validate(job)
+    if errors:
+        raise ValueError("S5 配图任务校验失败:\n" + "\n".join(f"- {item}" for item in errors))
+
+    if warnings:
+        print("[S6] 配图任务质量提示:")
+        for warning in warnings:
+            print(f"  - {warning}")
+
+    print(f"[S6] Rendering illustrations via independent platform API")
+    print(f"  Job:    {job_path}")
+    print(f"  Output: {images_dir}")
+    decisions = api.plan(job)
+    for decision in decisions:
+        print(f"  - {decision['id']}: {decision['type']} -> {decision['renderer']}")
+
+    records = api.render(
+        job,
+        images_dir,
+        png=png,
+        png_scale=png_scale,
+        export_echarts=export_echarts,
+    )
+    manifest_path = images_dir / 'illustration-manifest.json'
+    print(f"[S6] Illustration render complete: {manifest_path} ({len(records)} figures)")
+    return str(manifest_path)
 
 
 def _truncate(text, max_len):
@@ -506,12 +558,29 @@ def convert_s5_to_job(s5_dir, s5_validated_dir=None, s6_dir=None, chapter_sectio
 # ─── Phase B: Synthesize illustrations into chapter markdown ───
 
 def _parse_section(section_str):
-    match = re.match(r'(\d+)\s+.+?(?:\(第(\d+)节\))?$', section_str)
+    if not section_str:
+        return None, None
+    section_str = section_str.strip()
+    # Pattern: "CH-01" or "CH-01.2"
+    direct = re.match(r'^(CH-\d+)(?:[.\-](\d+))?$', section_str, re.IGNORECASE)
+    if direct:
+        return direct.group(1).upper(), direct.group(2)
+    # Pattern: "1.2 标题" or "1 标题" (dotted or spaced chapter number)
+    match = re.match(r'(\d+)(?:\.(\d+))?\s+', section_str)
     if match:
         ch_num = match.group(1)
         sub_sec = match.group(2)
         ch_key = CHAPTER_NUM_MAP.get(ch_num, f'CH-{int(ch_num):02d}')
         return ch_key, sub_sec
+    return None, None
+
+
+def _select_manifest_image(illu):
+    outputs = illu.get('outputs', {})
+    for key in ('png', 'svg', 'html', 'reviewHtml'):
+        value = outputs.get(key)
+        if value:
+            return key, value
     return None, None
 
 
@@ -537,8 +606,32 @@ def _find_insertion_point(lines, ch_key, sub_sec):
                         return j
                 return len(lines)
 
-        print(f"  WARNING: Section header '{target_header}' not found in chapter {ch_key}")
-        return None
+        # Exact match failed. Try finding a nearby subsection.
+        # Try the next higher subsection (e.g., 1.5 not found → try 1.4, 1.3...)
+        sub_num = int(sub_sec)
+        for fallback_sub in range(sub_num - 1, 0, -1):
+            fb_header = f'## {ch_num}.{fallback_sub} '
+            for i, line in enumerate(lines):
+                if line.startswith(fb_header):
+                    for j in range(i + 1, len(lines)):
+                        if lines[j].startswith('## ') and not lines[j].startswith('###'):
+                            return j
+                    return len(lines)
+
+        # Fallback: insert before the last ## heading in the chapter
+        last_h2 = None
+        for i, line in enumerate(lines):
+            if line.startswith(f'## {ch_num}.') and not line.startswith('###'):
+                last_h2 = i
+        if last_h2 is not None:
+            for j in range(last_h2 + 1, len(lines)):
+                if lines[j].startswith('## ') and not lines[j].startswith('###'):
+                    return j
+            return len(lines)
+
+        # Ultimate fallback: end of chapter
+        print(f"  WARNING: Section '{ch_num}.{sub_sec}' not found in {ch_key}, inserting at chapter end")
+        return len(lines)
     else:
         for i, line in enumerate(lines):
             if line.startswith('## ') and not line.startswith('###'):
@@ -550,59 +643,255 @@ def _build_image_markdown(illu, assets_rel_dir, figure_number):
     illu_id_orig = illu.get('_s5_illu_id', illu['id'].upper().replace('_', '-'))
     title = illu.get('title', '')
     caption_text = title if title else illu.get('caption', '')
-    png_file = os.path.basename(illu['outputs']['png'])
-    png_path = f"{assets_rel_dir}/{png_file}"
-    figure_label = f"**{figure_number}  {illu_id_orig}** {caption_text}"
+    asset_name = illu.get('outputs', {}).get('_s6_asset')
+    asset_kind = illu.get('outputs', {}).get('_s6_asset_kind')
+    if asset_name:
+        image_path = asset_name
+    else:
+        asset_kind, asset_name = _select_manifest_image(illu)
+        if not asset_name:
+            raise ValueError(f"{illu.get('id')}: manifest outputs 中缺少 png/svg/html")
+        image_path = f"{assets_rel_dir}/{os.path.basename(asset_name)}"
+    figure_label = f"{figure_number}  {illu_id_orig} {caption_text}"
+
+    if asset_kind == 'html' or str(image_path).lower().endswith(('.html', '.htm')):
+        return [
+            '',
+            f'[查看交互式图件：{caption_text}]({image_path})',
+            '',
+            f'*{figure_label}*',
+            '',
+        ]
 
     return [
         '',
-        f'![{caption_text}]({png_path})',
+        f'![{caption_text}]({image_path})',
         '',
         f'*{figure_label}*',
         '',
     ]
 
 
+def _copy_manifest_assets(manifest, manifest_path, assets_dir):
+    manifest_dir = Path(manifest_path).parent
+    # The manifest output paths may be relative to the project output directory
+    # rather than the manifest directory. Try multiple base paths.
+    output_root = manifest_dir
+    while output_root.name != 'output' and output_root.parent != output_root:
+        output_root = output_root.parent
+    base_candidates = [
+        manifest_dir,
+        output_root,  # e.g., output/
+        output_root.parent if output_root.name == 'output' else None,  # project root
+    ]
+    base_candidates = [p for p in base_candidates if p is not None]
+
+    assets_dir.mkdir(parents=True, exist_ok=True)
+    copied_count = 0
+
+    for illu in manifest.get('illustrations', []):
+        kind, rel_path = _select_manifest_image(illu)
+        if not rel_path:
+            print(f"  WARNING: {illu.get('id')} has no png/svg/html output, skipped")
+            continue
+
+        # Try each base path
+        src = None
+        for base in base_candidates:
+            candidate = base / rel_path
+            if candidate.exists():
+                src = candidate
+                break
+
+        if src is None:
+            print(f"  WARNING: asset missing for {illu.get('id')}: tried {[str(b / rel_path) for b in base_candidates]}")
+            continue
+        safe_id = re.sub(r'[^A-Za-z0-9_-]+', '_', illu.get('id', 'figure')).strip('_') or 'figure'
+        suffix = src.suffix or {'svg': '.svg', 'html': '.html'}.get(kind, '.png')
+        dst_name = f"{safe_id}_{src.stem}{suffix}"
+        dst = assets_dir / dst_name
+        shutil.copy2(src, dst)
+        outputs = illu.setdefault('outputs', {})
+        outputs['_s6_asset'] = f"assets/{dst_name}"
+        outputs['_s6_asset_kind'] = kind
+        copied_count += 1
+
+    return copied_count
+
+
+def _load_table_plan(table_plan_path=None):
+    if table_plan_path:
+        path = Path(table_plan_path)
+    else:
+        path = Path.cwd() / 'output' / 's5_tables' / 'table_insertion_plan.json'
+    if not path.exists():
+        return {"tables": []}
+    return _load_json(path)
+
+
+def _build_table_markdown(table, table_number):
+    columns = [str(col).strip() for col in table.get('columns', [])]
+    rows = table.get('rows', [])
+    title = table.get('title') or table.get('id', table_number)
+    title = re.sub(r'^表\s*\d+\s*[-－]\s*\d+\s*', '', str(title)).strip() or str(title)
+    purpose = table.get('purpose', '')
+    notes = table.get('notes', [])
+
+    lines = ['', f'*{table_number}  {title}*', '']
+    if purpose:
+        lines.extend([f'> {purpose}', ''])
+    lines.append('| ' + ' | '.join(columns) + ' |')
+    lines.append('| ' + ' | '.join(['---'] * len(columns)) + ' |')
+    for row in rows:
+        values = [str(value).replace('\n', '<br>') for value in row]
+        if len(values) < len(columns):
+            values.extend([''] * (len(columns) - len(values)))
+        if len(values) > len(columns):
+            values = values[:len(columns)]
+        lines.append('| ' + ' | '.join(values) + ' |')
+    if notes:
+        lines.append('')
+        lines.extend(f'> 注：{note}' for note in notes)
+    lines.append('')
+    return lines
+
+
+def _auto_discover_chapter_files(s3_chapters_dir):
+    """Auto-discover CH-XX_*.md files from the chapters directory.
+
+    Falls back to the parent directory if no CH-* files found in the given dir.
+    Returns a dict {CH-XX: filename} and the actual directory used.
+    """
+    chapters_dir = Path(s3_chapters_dir)
+    actual_dir = chapters_dir
+
+    def _scan(directory):
+        result = {}
+        for f in sorted(directory.glob('CH-*.md')):
+            m = re.match(r'(CH-\d+)', f.name, re.IGNORECASE)
+            if m:
+                result[m.group(1).upper()] = f.name
+        # Also scan lowercase ch_XX.md patterns
+        if not result:
+            for f in sorted(directory.glob('ch_*.md')):
+                m = re.match(r'(ch-\d+)', f.name, re.IGNORECASE)
+                if m:
+                    result[m.group(1).upper()] = f.name
+        return result
+
+    chapter_files = _scan(chapters_dir)
+    if not chapter_files:
+        # Fall back: try parent directory (s3_body directly, not s3_body/chapters)
+        parent = chapters_dir.parent
+        chapter_files = _scan(parent)
+        if chapter_files:
+            actual_dir = parent
+
+    if not chapter_files:
+        # Last resort: try parent's parent (e.g., s3_body without chapters subdir
+        # but chapters_dir was pointing to something else)
+        for ancestor in [chapters_dir.parent, chapters_dir.parent.parent]:
+            chapter_files = _scan(ancestor)
+            if chapter_files:
+                actual_dir = ancestor
+                break
+
+    return chapter_files, actual_dir
+
+
+def _resolve_manifest_path(s6_dir, toolkit_results_dir, s5_dir):
+    """Search for illustration-manifest.json in multiple locations."""
+    candidates = [
+        s6_dir / 'illustration-manifest.json',
+    ]
+    if toolkit_results_dir:
+        candidates.append(Path(toolkit_results_dir) / 'illustration-manifest.json')
+    if s5_dir:
+        candidates.append(Path(s5_dir) / 'images' / 'illustration-manifest.json')
+    # Also search output/s5_illustrations/images/
+    candidates.append(s6_dir.parent / 's5_illustrations' / 'images' / 'illustration-manifest.json')
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]  # Return primary path even if missing (will error with clear message)
+
+
+def _enrich_manifest_from_job(manifest, s5_job_path):
+    """If manifest entries lack section/caption, enrich from the S5 illustration job."""
+    if not s5_job_path or not Path(s5_job_path).exists():
+        return manifest
+
+    s5_job = _load_json(s5_job_path)
+    # Build a lookup from illu_id → {section, title, chapter_ref}
+    illu_lookup = {}
+    for ill in s5_job.get('illustrations', []):
+        illu_id = ill.get('id', '')
+        chapter_ref = ill.get('insertion', {}).get('section', '')
+        caption = ill.get('insertion', {}).get('caption', '')
+        if not chapter_ref:
+            chapter_ref = ill.get('_s5_chapter_ref', '')
+        if not caption:
+            caption = ill.get('_s5_illu_id', illu_id) + ' ' + ill.get('spec', {}).get('title', '')
+        illu_lookup[illu_id] = {
+            'section': chapter_ref,
+            'caption': caption,
+        }
+
+    for entry in manifest.get('illustrations', []):
+        eid = entry.get('id', '')
+        # Normalize: try TU-001, tu_001, TU_001 variations
+        info = illu_lookup.get(eid) or illu_lookup.get(eid.replace('-', '_').upper()) or illu_lookup.get(eid.replace('_', '-'))
+        if info:
+            if not entry.get('section'):
+                entry['section'] = info['section']
+            if not entry.get('caption'):
+                entry['caption'] = info['caption']
+            if not entry.get('purpose'):
+                entry['purpose'] = entry.get('intent', '')
+
+    return manifest
+
+
 def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
-               chapter_files=None, manifest_path=None):
+               chapter_files=None, manifest_path=None, table_plan_path=None,
+               s5_dir=None):
     """Insert illustrations into chapter markdown files and generate combined document.
 
     Args:
-        s3_chapters_dir: Path to s3_body/chapters directory
+        s3_chapters_dir: Path to s3_body/chapters directory (auto-discovered if None)
         s6_dir: Path to s6_synthesis output directory
         toolkit_results_dir: Path to illustration toolkit results directory
-        chapter_files: Dict mapping chapter IDs to filenames
-        manifest_path: Path to illustration-manifest.json (overrides default)
+        chapter_files: Dict mapping chapter IDs to filenames (auto-discovered if None)
+        manifest_path: Path to illustration-manifest.json (auto-discovered if None)
+        table_plan_path: Path to table_insertion_plan.json
+        s5_dir: Path to s5_illustrations directory (for job file enrichment)
     """
     output_dir = Path.cwd() / 'output'
     s3_chapters_dir = Path(s3_chapters_dir) if s3_chapters_dir else output_dir / 's3_body' / 'chapters'
     s6_dir = Path(s6_dir) if s6_dir else output_dir / 's6_synthesis'
 
     if chapter_files is None:
-        chapter_files = {
-            'CH-01': 'CH-01_项目理解与总体技术方案.md',
-            'CH-02': 'CH-02_资质保密与合规保障.md',
-            'CH-03': 'CH-03_总体集成通用技术方案.md',
-            'CH-04': 'CH-04_人机交互界面设计.md',
-            'CH-05': 'CH-05_数据库模块技术方案.md',
-            'CH-06': 'CH-06_材料设计模块技术方案.md',
-            'CH-07': 'CH-07_热环境确定模块技术方案.md',
-            'CH-08': 'CH-08_热环境响应评估模块技术方案.md',
-            'CH-09': 'CH-09_运行环境兼容性与离线部署方案.md',
-            'CH-10': 'CH-10_集成对接与数据贯通方案.md',
-            'CH-11': 'CH-11_项目实施与交付方案.md',
-            'CH-12': 'CH-12_测试验收与质量保障.md',
-            'CH-13': 'CH-13_售后服务与质保承诺.md',
-        }
+        chapter_files, s3_chapters_dir = _auto_discover_chapter_files(s3_chapters_dir)
+        if not chapter_files:
+            print("  WARNING: No CH-*.md chapter files found. Using empty mapping.")
+            chapter_files = {}
+        else:
+            print(f"  Auto-discovered {len(chapter_files)} chapter files in {s3_chapters_dir}")
+            for ch in sorted(chapter_files):
+                print(f"    {ch}: {chapter_files[ch]}")
 
     # Resolve manifest path
     if manifest_path:
         manifest_path = Path(manifest_path)
     else:
-        manifest_path = s6_dir / 'illustration-manifest.json'
-        if not manifest_path.exists() and toolkit_results_dir:
-            manifest_path = Path(toolkit_results_dir) / 'illustration-manifest.json'
+        s5_dir_resolved = Path(s5_dir) if s5_dir else output_dir / 's5_illustrations'
+        manifest_path = _resolve_manifest_path(s6_dir, toolkit_results_dir, s5_dir_resolved)
+    print(f"  Manifest: {manifest_path}")
     manifest = _load_json(manifest_path)
+
+    # Enrich manifest entries with section/caption from S5 job file if missing
+    s5_job_path = s6_dir.parent / 's5_illustrations' / 's5_illustration_job.json'
+    manifest = _enrich_manifest_from_job(manifest, s5_job_path)
 
     # Load id → s5_id mapping
     id_to_s5 = {}
@@ -619,21 +908,11 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
         for ill in html_entries['illustrations']:
             id_to_s5[ill['id']] = ill.get('_s5_illu_id', ill['id'].upper())
 
-    # Create assets directory and copy files
+    # Create assets directory and copy manifest-referenced files. S6 consumes
+    # only the public manifest contract; renderer-private folders stay hidden.
     assets_dir = s6_dir / 'assets'
-    assets_dir.mkdir(parents=True, exist_ok=True)
-
-    copied_count = 0
-    if toolkit_results_dir:
-        svg_assets_dir = Path(toolkit_results_dir) / 'assets' / 'svg'
-        if svg_assets_dir.exists():
-            for fname in os.listdir(svg_assets_dir):
-                if fname.endswith(('.svg', '.png')):
-                    src = svg_assets_dir / fname
-                    dst = assets_dir / fname
-                    shutil.copy2(src, dst)
-                    copied_count += 1
-            print(f"Refreshed {copied_count} asset files in {assets_dir}")
+    copied_count = _copy_manifest_assets(manifest, manifest_path, assets_dir)
+    print(f"Refreshed {copied_count} manifest asset files in {assets_dir}")
 
     # Group illustrations by chapter
     chapter_illus = defaultdict(list)
@@ -653,11 +932,27 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
     for ch_key in sorted(chapter_illus.keys()):
         print(f"  {ch_key}: {len(chapter_illus[ch_key])} illustrations")
 
+    table_plan = _load_table_plan(table_plan_path)
+    chapter_tables = defaultdict(list)
+    for table in table_plan.get('tables', []):
+        ch_key, sub_sec = _parse_section(table.get('section', ''))
+        if ch_key:
+            chapter_tables[ch_key].append({'table': table, 'sub_sec': sub_sec})
+        else:
+            print(f"  WARNING: Could not parse table section '{table.get('section', '')}' for {table.get('id')}")
+
+    if chapter_tables:
+        print(f"\nTables by chapter:")
+        for ch_key in sorted(chapter_tables.keys()):
+            print(f"  {ch_key}: {len(chapter_tables[ch_key])} tables")
+
     syn_chapters_dir = s6_dir / 'chapters'
     syn_chapters_dir.mkdir(parents=True, exist_ok=True)
 
     insertion_log = []
+    table_insertion_log = []
     total_inserted = 0
+    total_tables_inserted = 0
 
     for ch_key, ch_fname in chapter_files.items():
         ch_path = s3_chapters_dir / ch_fname
@@ -670,8 +965,9 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
 
         lines = content.split('\n')
         illus_list = chapter_illus.get(ch_key, [])
+        tables_list = chapter_tables.get(ch_key, [])
 
-        if not illus_list:
+        if not illus_list and not tables_list:
             syn_path = syn_chapters_dir / ch_fname
             with open(syn_path, 'w', encoding='utf-8') as f:
                 f.write(content)
@@ -686,8 +982,31 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
             except (ValueError, TypeError):
                 return (1, 999)
         sorted_illus = sorted(illus_list, key=_sort_key)
+        sorted_tables = sorted(tables_list, key=_sort_key)
 
         ch_num = int(ch_key.split('-')[1])
+
+        table_insertions = []
+        table_counter = 1
+        for item in sorted_tables:
+            table = item['table']
+            sub_sec = item['sub_sec']
+            insert_at = _find_insertion_point(lines, ch_key, sub_sec)
+            if insert_at is not None:
+                table_number = f'表 {ch_num}-{table_counter}'
+                table_lines = _build_table_markdown(table, table_number)
+                table_insertions.append((insert_at, table_lines, table.get('id', ''), table_number))
+                table_insertion_log.append({
+                    'chapter': ch_key,
+                    'table_id': table.get('id', ''),
+                    'table_number': table_number,
+                    'inserted_at_line': insert_at,
+                    'section_ref': table.get('section', ''),
+                })
+                total_tables_inserted += 1
+                table_counter += 1
+            else:
+                print(f"  WARNING: Could not insert table {table.get('id')} in {ch_key}")
 
         raw_insertions = []
         for item in sorted_illus:
@@ -721,8 +1040,12 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
         insertions = []
         for insert_at, s5_id, ill in raw_insertions:
             figure_number = fig_num_map[s5_id]
-            img_lines = _build_image_markdown(ill, 'assets', figure_number)
-            insertions.append((insert_at, img_lines, s5_id))
+            try:
+                img_lines = _build_image_markdown(ill, 'assets', figure_number)
+                insertions.append((insert_at, img_lines, s5_id))
+            except ValueError as exc:
+                print(f"  WARNING: Skipping {s5_id} — {exc}")
+                continue
             insertion_log.append({
                 'chapter': ch_key,
                 'illu_id': s5_id,
@@ -731,24 +1054,31 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
                 'section_ref': ill.get('section', ''),
             })
 
-        for insert_at, img_lines, s5_id in insertions:
-            for j, img_line in enumerate(img_lines):
-                lines.insert(insert_at + j, img_line)
+        combined_insertions = []
+        combined_insertions.extend((insert_at, 0, table_lines) for insert_at, table_lines, _, _ in table_insertions)
+        combined_insertions.extend((insert_at, 1, img_lines) for insert_at, img_lines, _ in insertions)
+        combined_insertions.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        for insert_at, _, block_lines in combined_insertions:
+            for j, block_line in enumerate(block_lines):
+                lines.insert(insert_at + j, block_line)
 
         syn_content = '\n'.join(lines)
         syn_path = syn_chapters_dir / ch_fname
         with open(syn_path, 'w', encoding='utf-8') as f:
             f.write(syn_content)
 
-        print(f"  {ch_key}: inserted {len(insertions)} illustrations → {syn_path}")
+        print(f"  {ch_key}: inserted {len(table_insertions)} tables, {len(insertions)} illustrations → {syn_path}")
 
     report = {
         'stage': 's6_synthesis',
         'total_illustrations': len(manifest['illustrations']),
+        'total_tables': len(table_plan.get('tables', [])),
+        'total_tables_inserted': total_tables_inserted,
         'total_inserted': total_inserted,
         'chapters_processed': len(chapter_files),
         'assets_copied': copied_count,
         'insertion_log': insertion_log,
+        'table_insertion_log': table_insertion_log,
         'chapter_files': {ch: str(syn_chapters_dir / fname) for ch, fname in chapter_files.items()},
     }
 
@@ -769,6 +1099,7 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
     print(f"Stage 6 Synthesis Complete")
     print(f"{'='*60}")
     print(f"  Illustrations: {len(manifest['illustrations'])}")
+    print(f"  Tables:        {total_tables_inserted}/{len(table_plan.get('tables', []))}")
     print(f"  Inserted:      {total_inserted}")
     print(f"  Assets copied: {copied_count}")
     print(f"  Chapters:      {len(chapter_files)}")
@@ -780,23 +1111,41 @@ def synthesize(s3_chapters_dir=None, s6_dir=None, toolkit_results_dir=None,
 
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(description='Stage 6: Synthesize illustrations into chapters')
+    parser = argparse.ArgumentParser(description='Stage 6: Render and synthesize illustrations into chapters')
     parser.add_argument('action', nargs='?', default='all',
-                        choices=['convert', 'synthesize', 'all'],
+                        choices=['render', 'synthesize', 'all', 'legacy-convert', 'convert'],
                         help='Which phase to run')
     parser.add_argument('--s5-dir', type=Path, help='S5 illustrations directory')
     parser.add_argument('--s5-validated-dir', type=Path, help='S5 validated directory')
     parser.add_argument('--s3-chapters-dir', type=Path, help='S3 chapters directory')
     parser.add_argument('--s6-dir', type=Path, help='S6 output directory')
     parser.add_argument('--toolkit-results', type=Path, help='Toolkit results directory')
+    parser.add_argument('--table-plan', type=Path, help='Table insertion plan JSON')
     parser.add_argument('--project', help='Project name')
+    parser.add_argument('--no-png', action='store_true', help='Do not export PNG previews during render')
+    parser.add_argument('--png-scale', type=int, choices=(1, 2, 3), default=2, help='PNG export scale')
+    parser.add_argument('--no-echarts-export', action='store_true',
+                        help='ECharts only generates local review pages')
     args = parser.parse_args()
 
     output_dir = Path.cwd() / 'output'
     s5_dir = args.s5_dir or output_dir / 's5_illustrations'
     s6_dir = args.s6_dir or output_dir / 's6_synthesis'
 
-    if args.action in ('convert', 'all'):
+    manifest_path = None
+
+    if args.action in ('render', 'all'):
+        manifest_path = render_v2_job(
+            s5_dir=s5_dir,
+            images_dir=args.toolkit_results or (s5_dir / 'images'),
+            png=not args.no_png,
+            png_scale=args.png_scale,
+            export_echarts=not args.no_echarts_export,
+        )
+
+    if args.action in ('legacy-convert', 'convert'):
+        if args.action == 'convert':
+            print("[WARN] action 'convert' is legacy. Prefer 'render' or 'all' for Illustration Job v2.")
         convert_s5_to_job(
             s5_dir=s5_dir,
             s5_validated_dir=args.s5_validated_dir,
@@ -808,5 +1157,7 @@ if __name__ == '__main__':
         synthesize(
             s3_chapters_dir=args.s3_chapters_dir,
             s6_dir=s6_dir,
-            toolkit_results_dir=args.toolkit_results,
+            toolkit_results_dir=args.toolkit_results or (s5_dir / 'images'),
+            manifest_path=manifest_path,
+            table_plan_path=args.table_plan,
         )

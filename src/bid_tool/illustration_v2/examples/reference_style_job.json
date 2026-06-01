@@ -1,0 +1,247 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "Radiation Monitoring Bid Technical Proposal",
+    "projectName": "Illustration V2 Reference Style Pilot"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "svg"
+  },
+  "illustrations": [
+    {
+      "id": "data_exchange_interface",
+      "type": "relationship.platform_interface",
+      "renderer": "auto",
+      "intent": "Show cross-platform data exchange interfaces and audit requirements.",
+      "insertion": {
+        "section": "3.2",
+        "caption": "Figure 3-2 Data Exchange Interface Relationship"
+      },
+      "data": {
+        "title": "2025 Data Exchange Interface Architecture",
+        "subtitle": "Bidirectional reporting, feedback, traceability and audit",
+        "left": {
+          "title": "Provincial Monitoring Platform",
+          "layers": [
+            {"label": "Application Services", "items": ["Source Mgmt", "Positioning", "Warning", "Statistics"]},
+            {"label": "Data Processing", "items": ["Parse", "Verify", "Deduplicate", "Cache"]},
+            {"label": "Interface Services", "items": ["Gateway", "Auth", "Signature", "Audit"]},
+            {"label": "Infrastructure", "items": ["Server", "Database", "Queue", "Logs"]}
+          ]
+        },
+        "right": {
+          "title": "National Online Monitoring Platform",
+          "layers": [
+            {"label": "Application Services", "items": ["Supervision", "Display", "Warning", "Assessment"]},
+            {"label": "Data Processing", "items": ["Inbound", "Fusion", "Linkage", "Archive"]},
+            {"label": "Interface Services", "items": ["Gateway", "Auth", "Signature", "Audit"]},
+            {"label": "Infrastructure", "items": ["Server", "Database", "Queue", "Logs"]}
+          ]
+        },
+        "flows": [
+          {"label": "Source Data Report", "protocol": "HTTPS JSON push", "color": "#1f78b4"},
+          {"label": "Location Data Push", "protocol": "MQTT / HTTPS JSON", "color": "#3f8f5f"},
+          {"label": "Warning Data Push", "protocol": "HTTPS JSON push", "color": "#ef7d22"},
+          {"label": "Handling Feedback", "protocol": "HTTPS JSON feedback", "direction": "right_to_left", "color": "#7357a6"}
+        ],
+        "requirementsTitle": "Security",
+        "requirementsSubtitle": "Controls",
+        "requirements": [
+          {"title": "Protocol", "desc": "HTTPS/MQTT TLS", "icon": "lock"},
+          {"title": "Auth", "desc": "CA and token", "icon": "id"},
+          {"title": "Signature", "desc": "HMAC SHA256", "icon": "sg"},
+          {"title": "Transport", "desc": "Encrypted channel", "icon": "sh"},
+          {"title": "Time Sync", "desc": "UTC timestamp", "icon": "tm"},
+          {"title": "Spec", "desc": "2025 fields", "icon": "doc"}
+        ],
+        "footer": "All data exchange remains traceable, auditable and recoverable"
+      }
+    },
+    {
+      "id": "report_resilience_flow",
+      "type": "process.resilience_flow",
+      "renderer": "auto",
+      "intent": "Explain fault-tolerant reporting, retry, compensation and audit closure.",
+      "insertion": {
+        "section": "3.3",
+        "caption": "Figure 3-3 Reporting Resilience Flow"
+      },
+      "data": {
+        "title": "Data Reporting Fault Tolerance Mechanism",
+        "subtitle": "Prevent missing report, wrong report and repeated report",
+        "normalTitle": "Normal Reporting Flow",
+        "steps": [
+          {"title": "Terminal", "desc": "Locate status warning"},
+          {"title": "Receive", "desc": "Raw message intake"},
+          {"title": "Parse", "desc": "Field and format check"},
+          {"title": "Dedup", "desc": "Unique index check"},
+          {"title": "Store", "desc": "Business library"},
+          {"title": "Detect", "desc": "Rule and value check"},
+          {"title": "Report", "desc": "HTTPS/MQTT"},
+          {"title": "Record", "desc": "Result status"}
+        ],
+        "exceptionTitle": "Exception Scenarios",
+        "exceptions": [
+          {"title": "Report Timeout", "desc": "Network or service unavailable"},
+          {"title": "Permission Error", "desc": "Certificate or account invalid"},
+          {"title": "Format Error", "desc": "Required field missing"},
+          {"title": "Server Error", "desc": "Upper platform 5xx"},
+          {"title": "Duplicate Data", "desc": "Same key reported repeatedly"},
+          {"title": "Offline Cache", "desc": "Terminal stores then reports"}
+        ],
+        "mechanismTitle": "Exception Handling And Compensation",
+        "mechanisms": [
+          {"title": "Capture", "desc": "Record reason time source"},
+          {"title": "Auto Retry", "desc": "Retry by policy"},
+          {"title": "Success?", "desc": "Verify compensation result"},
+          {"title": "Manual Review", "desc": "Repair and resubmit"}
+        ],
+        "sidePanels": [
+          {"title": "Dedup Logic", "bullets": ["Terminal ID", "Report timestamp", "Serial number", "Data type"]},
+          {"title": "Audit Closure", "bullets": ["Check content", "Check method", "Record issue", "Archive result"]}
+        ],
+        "assuranceTitle": "Key Guarantees",
+        "assurance": [
+          {"title": "No Missing", "desc": "Cache plus retry"},
+          {"title": "No Wrong", "desc": "Format plus rule"},
+          {"title": "No Repeat", "desc": "Unique index"},
+          {"title": "Traceable", "desc": "Full logs"},
+          {"title": "Verifiable", "desc": "Dual review"}
+        ]
+      }
+    },
+    {
+      "id": "inspection_taxonomy",
+      "type": "taxonomy.inspection_cards",
+      "renderer": "auto",
+      "intent": "Classify routine inspection mechanisms for operations and maintenance.",
+      "insertion": {
+        "section": "4.1",
+        "caption": "Figure 4-1 Inspection System Classification"
+      },
+      "data": {
+        "title": "Daily Operation Inspection Classification",
+        "summary": "Routine, special and exception-triggered inspections protect stable operation, data quality and online availability.",
+        "categories": [
+          {
+            "title": "Quarterly Patrol",
+            "subtitle": "Baseline requirement",
+            "triggerTitle": "Trigger Mode",
+            "trigger": "Executed by quarterly plan",
+            "sections": [
+              {"title": "Content", "bullets": ["Page access check", "Data receive and parse", "Report connectivity", "Server status"]},
+              {"title": "Check Points", "bullets": ["Upload rate", "Response delay", "Exception list", "Resource usage"]},
+              {"title": "Evidence", "bullets": ["Plan record", "Problem list", "Trend analysis"]}
+            ],
+            "outputTitle": "Output",
+            "output": "Quarterly patrol report"
+          },
+          {
+            "title": "Special Patrol",
+            "subtitle": "Interface/data/status",
+            "triggerTitle": "Trigger Mode",
+            "trigger": "By special plan or key work",
+            "sections": [
+              {"title": "Content", "bullets": ["Interface connectivity", "Data completeness", "Terminal online rate", "Warning linkage"]},
+              {"title": "Check Points", "bullets": ["Field mapping", "Signature rule", "Impact range", "Rectification tracking"]},
+              {"title": "Evidence", "bullets": ["Special report", "Analysis plan", "Trace record"]}
+            ],
+            "outputTitle": "Output",
+            "output": "Special inspection report"
+          },
+          {
+            "title": "Exception Patrol",
+            "subtitle": "Fast response",
+            "triggerTitle": "Trigger Mode",
+            "trigger": "Triggered by alarm or event",
+            "sections": [
+              {"title": "Content", "bullets": ["Targeted event check", "Link trace check", "Service linkage", "Emergency validation"]},
+              {"title": "Check Points", "bullets": ["Recurrence", "Root cause", "Measure effect", "Prevention advice"]},
+              {"title": "Evidence", "bullets": ["Exception report", "Handling record", "Improvement advice"]}
+            ],
+            "outputTitle": "Output",
+            "output": "Exception inspection report"
+          }
+        ],
+        "outputTitle": "Overall Output",
+        "outputs": ["Inspection execution records", "Problem and rectification loop", "Data trend analysis", "Traceable archive"],
+        "principleTitle": "Principle",
+        "principle": "True, complete, traceable, measurable and acceptable."
+      }
+    },
+    {
+      "id": "severity_closure_process",
+      "type": "process.severity_closure",
+      "renderer": "auto",
+      "intent": "Define fault severity response and issue closure workflow.",
+      "insertion": {
+        "section": "5.2",
+        "caption": "Figure 5-2 Fault Severity Response And Closure"
+      },
+      "data": {
+        "title": "Fault Severity Response And Issue Closure",
+        "matrixTitle": "Severity Response Standard",
+        "levels": [
+          {"title": "Level 1", "definition": "Major issue", "scenarios": ["Business interruption", "Large data outage", "Security incident"], "response": "2h response", "handling": "4h plan", "service": "7x24 onsite", "escalation": "Scope expands"},
+          {"title": "Level 2", "definition": "General fault", "scenarios": ["Module exception", "Data delay", "Interface error"], "response": "1 workday", "handling": "2 workdays", "service": "Remote support", "escalation": "Upgrade to L1"},
+          {"title": "Level 3", "definition": "Common item", "scenarios": ["Consultation", "UI advice", "Log check"], "response": "2 workdays", "handling": "5 workdays", "service": "Ticket support", "escalation": "May upgrade"}
+        ],
+        "processTitle": "Issue Closure Process",
+        "steps": [
+          {"title": "Discover", "desc": "Alarm patrol feedback"},
+          {"title": "Register", "desc": "Issue ticket"},
+          {"title": "Classify", "desc": "Severity and owner"},
+          {"title": "Resolve", "desc": "Plan and repair"},
+          {"title": "Verify", "desc": "Recover check"},
+          {"title": "Archive", "desc": "Ticket and logs"},
+          {"title": "Improve", "desc": "Analysis and optimization"}
+        ],
+        "measureTitle": "Key Guarantees",
+        "measures": [
+          {"title": "Owner", "desc": "Clear contact"},
+          {"title": "Tracking", "desc": "Status visible"},
+          {"title": "Trace", "desc": "Full record"},
+          {"title": "Audit", "desc": "Compliance"},
+          {"title": "Data", "desc": "Driven improvement"}
+        ]
+      }
+    },
+    {
+      "id": "data_security_loop",
+      "type": "security.closed_loop",
+      "renderer": "auto",
+      "intent": "Show five data security controls and management closed loop.",
+      "insertion": {
+        "section": "6.1",
+        "caption": "Figure 6-1 Data Security Confidentiality System"
+      },
+      "data": {
+        "title": "Data Security Confidentiality System",
+        "subtitle": "Five core controls, multi-layer protection, full-process closed loop",
+        "center": {
+          "title": "Security Assurance System",
+          "desc": "Compliance based, technology shield, management net",
+          "icon": "SC"
+        },
+        "controls": [
+          {"title": "Account Access", "bullets": ["Unified identity", "Least privilege", "MFA", "Permission review"]},
+          {"title": "Export Control", "bullets": ["Approval by level", "Desensitization", "Batch limit", "Watermark trace"]},
+          {"title": "Interface Security", "bullets": ["JWT/HMAC", "TLS encryption", "Anti replay", "Whitelist control"]},
+          {"title": "Audit Trace", "bullets": ["Full operation log", "Export audit", "Tamper proof", "Realtime warning"]},
+          {"title": "Leakage Prevention", "bullets": ["Data classification", "Encrypted storage", "External control", "Baseline scan"]}
+        ],
+        "loopTitle": "Management Closed Loop",
+        "loop": [
+          {"title": "Policy", "desc": "Clear duty"},
+          {"title": "Protection", "desc": "Technical controls"},
+          {"title": "Monitor", "desc": "Realtime audit"},
+          {"title": "Risk", "desc": "Rectify"},
+          {"title": "Optimize", "desc": "Improve"}
+        ],
+        "footer": "Compliance basis: classified protection, data security law, personal information protection law and supervision requirements."
+      }
+    }
+  ]
+}

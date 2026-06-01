@@ -1,0 +1,34 @@
+[
+  {
+    "title": "2025数据交互规则适配架构与接口关系",
+    "type": "interface_map",
+    "placement": "-",
+    "theme": "净白蓝·高对比",
+    "svg": "01_2025数据交互规则适配架构与接口关系.svg",
+    "png": "01_2025数据交互规则适配架构与接口关系.png"
+  },
+  {
+    "title": "日常运维巡检体系分类",
+    "type": "inspection_taxonomy",
+    "placement": "-",
+    "theme": "净白蓝·高对比",
+    "svg": "02_日常运维巡检体系分类.svg",
+    "png": "02_日常运维巡检体系分类.png"
+  },
+  {
+    "title": "故障分级响应与问题闭环流程",
+    "type": "incident_response",
+    "placement": "-",
+    "theme": "净白蓝·高对比",
+    "svg": "03_故障分级响应与问题闭环流程.svg",
+    "png": "03_故障分级响应与问题闭环流程.png"
+  },
+  {
+    "title": "数据安全保密保障体系架构",
+    "type": "security_ring",
+    "placement": "-",
+    "theme": "净白蓝·高对比",
+    "svg": "04_数据安全保密保障体系架构.svg",
+    "png": "04_数据安全保密保障体系架构.png"
+  }
+]
