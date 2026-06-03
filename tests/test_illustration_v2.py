@@ -70,3 +70,32 @@ def test_illustration_v2_reference_style_templates_render(tmp_path):
     assert all((tmp_path / record.outputs["svg"]).exists() for record in records)
     assert all((tmp_path / record.outputs["png"]).exists() for record in records)
     assert all(record.warnings == [] for record in records)
+
+    report_svg = tmp_path / "assets" / "svg" / "report_resilience_flow.svg"
+    assert 'data-fit="false"' not in report_svg.read_text(encoding="utf-8")
+
+
+def test_text_measure_uses_cjk_strategy_for_chinese():
+    from bid_tool.illustration_v2.core.text_measure import TextSlot, fit_text
+
+    layout = fit_text(
+        "数据上报容错补传机制保障完整准确可追溯",
+        TextSlot(id="cn", x=0, y=0, w=120, h=72, font_max=18, font_min=12, max_lines=3),
+    )
+
+    assert layout.strategy == "cjk"
+    assert layout.ok is True
+    assert len(layout.lines) >= 2
+
+
+def test_text_measure_uses_latin_strategy_for_english():
+    from bid_tool.illustration_v2.core.text_measure import TextSlot, fit_text
+
+    layout = fit_text(
+        "Fault tolerance prevents repeated reporting",
+        TextSlot(id="en", x=0, y=0, w=150, h=72, font_max=18, font_min=12, max_lines=3),
+    )
+
+    assert layout.strategy == "latin"
+    assert layout.ok is True
+    assert all("tolera" not in line or "tolerance" in line for line in layout.lines)

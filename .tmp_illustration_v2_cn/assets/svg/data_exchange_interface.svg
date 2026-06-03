@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+<defs><marker id="arrow-0" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#1f78b4"/></marker>
+<marker id="arrow-dash-0" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#1f78b4"/></marker><marker id="arrow-1" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#3f8f5f"/></marker>
+<marker id="arrow-dash-1" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#3f8f5f"/></marker><marker id="arrow-2" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#ef7d22"/></marker>
+<marker id="arrow-dash-2" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#ef7d22"/></marker><marker id="arrow-3" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#7357a6"/></marker>
+<marker id="arrow-dash-3" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#7357a6"/></marker><marker id="arrow-4" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#2c7a7b"/></marker>
+<marker id="arrow-dash-4" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,4 L0,8 Z" fill="#2c7a7b"/></marker></defs>
+<rect width="1600" height="980" fill="#ffffff"/>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="48.3" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="37" font-weight="800" fill="#10253f"><tspan x="800.0" dy="0.0">2025 数据交互接口架构</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="75.2" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="700" fill="#2379b7"><tspan x="800.0" dy="0.0">双向上报、反馈确认、全程留痕与审计</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="1540.0" y="45.0" text-anchor="end" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#55708c"><tspan x="1540.0" dy="0.0">放射源在线监管系统投标技术方案</tspan></text>
+<g>
+<rect x="28" y="130" width="540" height="612" rx="6" fill="#fbfdff" stroke="#2b7fc8" stroke-width="2"/>
+<rect x="50" y="130" width="496" height="48" rx="5" fill="#2b7fc8"/>
+<text data-fit="true" data-strategy="cjk" x="298.0" y="164.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff"><tspan x="298.0" dy="0.0">省级放射源在线监管平台</tspan></text>
+<g>
+<rect x="50" y="200" width="496" height="113" rx="5" fill="#fbfdff" stroke="#2b7fc8" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="298.0" y="231.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#2b7fc8"><tspan x="298.0" dy="0.0">应用服务层</tspan></text>
+<rect x="66" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="120.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="120.0" dy="0.0">源项管理</tspan></text><rect x="184" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="238.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="238.0" dy="0.0">定位监控</tspan></text><rect x="302" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="356.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="356.0" dy="0.0">预警处置</tspan></text><rect x="420" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="474.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="474.0" dy="0.0">统计分析</tspan></text>
+</g><g>
+<rect x="50" y="331" width="496" height="113" rx="5" fill="#fbfdff" stroke="#2b7fc8" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="298.0" y="362.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#2b7fc8"><tspan x="298.0" dy="0.0">数据处理层</tspan></text>
+<rect x="66" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="120.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="120.0" dy="0.0">解析映射</tspan></text><rect x="184" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="238.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="238.0" dy="0.0">数据校验</tspan></text><rect x="302" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="356.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="356.0" dy="0.0">去重处理</tspan></text><rect x="420" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="474.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="474.0" dy="0.0">缓存补传</tspan></text>
+</g><g>
+<rect x="50" y="462" width="496" height="113" rx="5" fill="#fbfdff" stroke="#2b7fc8" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="298.0" y="493.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#2b7fc8"><tspan x="298.0" dy="0.0">接口服务层</tspan></text>
+<rect x="66" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="120.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="120.0" dy="0.0">接口网关</tspan></text><rect x="184" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="238.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="238.0" dy="0.0">认证授权</tspan></text><rect x="302" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="356.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="356.0" dy="0.0">签名验签</tspan></text><rect x="420" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="474.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="474.0" dy="0.0">日志审计</tspan></text>
+</g><g>
+<rect x="50" y="593" width="496" height="113" rx="5" fill="#fbfdff" stroke="#2b7fc8" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="298.0" y="624.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#2b7fc8"><tspan x="298.0" dy="0.0">基础设施层</tspan></text>
+<rect x="66" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="120.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="120.0" dy="0.0">应用服务器</tspan></text><rect x="184" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="238.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="238.0" dy="0.0">数据库</tspan></text><rect x="302" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="356.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="356.0" dy="0.0">消息队列</tspan></text><rect x="420" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#2b7fc8" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="474.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="474.0" dy="0.0">日志存储</tspan></text>
+</g>
+</g>
+<g>
+<rect x="1032" y="130" width="540" height="612" rx="6" fill="#fbfdff" stroke="#5a8f45" stroke-width="2"/>
+<rect x="1054" y="130" width="496" height="48" rx="5" fill="#5a8f45"/>
+<text data-fit="true" data-strategy="cjk" x="1302.0" y="164.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff"><tspan x="1302.0" dy="0.0">国家在线监管平台</tspan></text>
+<g>
+<rect x="1054" y="200" width="496" height="113" rx="5" fill="#fbfdff" stroke="#5a8f45" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="1302.0" y="231.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#5a8f45"><tspan x="1302.0" dy="0.0">应用服务层</tspan></text>
+<rect x="1070" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1124.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1124.0" dy="0.0">源项监管</tspan></text><rect x="1188" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1242.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1242.0" dy="0.0">定位展示</tspan></text><rect x="1306" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1360.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1360.0" dy="0.0">预警接收</tspan></text><rect x="1424" y="252" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1478.0" y="285.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1478.0" dy="0.0">统计评估</tspan></text>
+</g><g>
+<rect x="1054" y="331" width="496" height="113" rx="5" fill="#fbfdff" stroke="#5a8f45" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="1302.0" y="362.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#5a8f45"><tspan x="1302.0" dy="0.0">数据处理层</tspan></text>
+<rect x="1070" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1124.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1124.0" dy="0.0">数据入库</tspan></text><rect x="1188" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1242.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1242.0" dy="0.0">融合共享</tspan></text><rect x="1306" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1360.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1360.0" dy="0.0">联动分析</tspan></text><rect x="1424" y="383" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1478.0" y="416.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1478.0" dy="0.0">归档留存</tspan></text>
+</g><g>
+<rect x="1054" y="462" width="496" height="113" rx="5" fill="#fbfdff" stroke="#5a8f45" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="1302.0" y="493.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#5a8f45"><tspan x="1302.0" dy="0.0">接口服务层</tspan></text>
+<rect x="1070" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1124.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1124.0" dy="0.0">服务网关</tspan></text><rect x="1188" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1242.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1242.0" dy="0.0">鉴权服务</tspan></text><rect x="1306" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1360.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1360.0" dy="0.0">签名验签</tspan></text><rect x="1424" y="514" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1478.0" y="547.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1478.0" dy="0.0">审计服务</tspan></text>
+</g><g>
+<rect x="1054" y="593" width="496" height="113" rx="5" fill="#fbfdff" stroke="#5a8f45" opacity="0.9"/>
+<text data-fit="true" data-strategy="cjk" x="1302.0" y="624.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="19" font-weight="700" fill="#5a8f45"><tspan x="1302.0" dy="0.0">基础设施层</tspan></text>
+<rect x="1070" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1124.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1124.0" dy="0.0">应用服务器</tspan></text><rect x="1188" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1242.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1242.0" dy="0.0">数据库</tspan></text><rect x="1306" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1360.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1360.0" dy="0.0">消息队列</tspan></text><rect x="1424" y="645" width="108" height="55" rx="6" fill="#ffffff" stroke="#5a8f45" opacity="0.95"/>
+<text data-fit="true" data-strategy="cjk" x="1478.0" y="678.9" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="15" font-weight="400" fill="#10253f"><tspan x="1478.0" dy="0.0">日志存储</tspan></text>
+</g>
+</g>
+<g>
+<text x="800" y="208" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#1f78b4">1. 放射源信息上报</text>
+<line x1="600" y1="230" x2="1000" y2="230" stroke="#1f78b4" stroke-width="6" marker-end="url(#arrow-0)"/>
+<text x="800" y="268" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">HTTPS JSON 推送</text>
+<line x1="1000" y1="284" x2="600" y2="284" stroke="#1f78b4" stroke-width="2" stroke-dasharray="8 7" marker-end="url(#arrow-dash-0)"/>
+</g><g>
+<text x="800" y="312" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#3f8f5f">2. 定位信息推送</text>
+<line x1="600" y1="334" x2="1000" y2="334" stroke="#3f8f5f" stroke-width="6" marker-end="url(#arrow-1)"/>
+<text x="800" y="372" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">MQTT / HTTPS JSON</text>
+<line x1="1000" y1="388" x2="600" y2="388" stroke="#3f8f5f" stroke-width="2" stroke-dasharray="8 7" marker-end="url(#arrow-dash-1)"/>
+</g><g>
+<text x="800" y="416" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#ef7d22">3. 预警信息推送</text>
+<line x1="600" y1="438" x2="1000" y2="438" stroke="#ef7d22" stroke-width="6" marker-end="url(#arrow-2)"/>
+<text x="800" y="476" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">HTTPS JSON 推送</text>
+<line x1="1000" y1="492" x2="600" y2="492" stroke="#ef7d22" stroke-width="2" stroke-dasharray="8 7" marker-end="url(#arrow-dash-2)"/>
+</g><g>
+<text x="800" y="520" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#7357a6">4. 处置结果反馈</text>
+<line x1="1000" y1="542" x2="600" y2="542" stroke="#7357a6" stroke-width="6" marker-end="url(#arrow-3)"/>
+<text x="800" y="580" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="18" fill="#10253f">HTTPS JSON 反馈</text>
+<line x1="600" y1="596" x2="1000" y2="596" stroke="#7357a6" stroke-width="2" stroke-dasharray="8 7" marker-end="url(#arrow-dash-3)"/>
+</g>
+<rect x="28" y="782" width="1544" height="112" rx="8" fill="#f7fbff" stroke="#c9d8e8" stroke-dasharray="4 4"/>
+<rect x="44" y="802" width="102" height="72" rx="6" fill="#2379b7"/>
+<text x="95" y="832" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#ffffff">安全</text>
+<text x="95" y="858" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#ffffff">要求</text>
+<g>
+<circle cx="186" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="186" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">TX</text>
+<text x="224" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">通信协议</text>
+<text x="224" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">HTTPS/MQTT TLS</text>
+</g><g>
+<circle cx="402" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="402" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">CA</text>
+<text x="440" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">认证鉴权</text>
+<text x="440" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">CA 证书与令牌</text>
+</g><g>
+<circle cx="618" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="618" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">QM</text>
+<text x="656" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">数据签名</text>
+<text x="656" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">HMAC SHA256</text>
+</g><g>
+<circle cx="834" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="834" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">AQ</text>
+<text x="872" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">传输安全</text>
+<text x="872" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">加密通道</text>
+</g><g>
+<circle cx="1050" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="1050" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">SJ</text>
+<text x="1088" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">时间同步</text>
+<text x="1088" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">UTC 时间戳</text>
+</g><g>
+<circle cx="1266" cy="842" r="23" fill="#ffffff" stroke="#2379b7" stroke-width="3"/>
+<text x="1266" y="850" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#2379b7">GF</text>
+<text x="1304" y="833" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#0f4f8a">接口规范</text>
+<text x="1304" y="861" font-family="Microsoft YaHei, Arial" font-size="15" fill="#55708c">2025 字段要求</text>
+</g>
+<rect x="616" y="916" width="368" height="38" rx="6" fill="#eef8ff" stroke="#9dcced"/>
+<text x="800" y="941" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="#2379b7">所有数据交互均需留痕、可追溯、可审计</text>
+</svg>

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+<rect width="1600" height="980" fill="#ffffff"/>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="44.3" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="37" font-weight="800" fill="#10253f"><tspan x="800.0" dy="0.0">日常运维巡检体系分类</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="71.2" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="20" font-weight="700" fill="#1f7ac6"><tspan x="800.0" dy="0.0">分类说明日常运维巡检体系。</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="1540.0" y="41.0" text-anchor="end" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#55708c"><tspan x="1540.0" dy="0.0">放射源在线监管系统投标技术方案</tspan></text>
+<rect x="168" y="112" width="1264" height="64" rx="8" fill="#f7fbff" stroke="#95bce5"/>
+<text x="800" y="152" text-anchor="middle" font-family="Microsoft YaHei, Arial" font-size="23" font-weight="700" fill="#10253f">通过例行巡检、专项巡检和异常触发巡检，保障系统稳定运行、数据质量达标、接口畅通和终端在线。</text>
+<line x1="800" y1="176" x2="800" y2="210" stroke="#0f4f8a" stroke-width="2"/>
+<g>
+<rect x="39" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#2fa45a" stroke-width="2"/>
+<rect x="39" y="220" width="478" height="86" rx="10" fill="#2fa45a"/>
+<rect x="39" y="292" width="478" height="18" fill="#2fa45a"/>
+<circle cx="131" cy="250" r="20" fill="#ffffff"/>
+<text x="131" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#2fa45a">1</text>
+<text data-fit="true" data-strategy="cjk" x="325.0" y="258.0" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="25" font-weight="800" fill="#ffffff"><tspan x="325.0" dy="0.0">季度例行巡检</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="325.0" y="286.5" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff"><tspan x="325.0" dy="0.0">底线要求</tspan></text>
+<rect x="109" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#2fa45a" stroke-dasharray="5 4"/>
+<text data-fit="true" data-strategy="cjk" x="278.0" y="348.1" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2fa45a"><tspan x="278.0" dy="0.0">触发方式</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="278.0" y="370.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="16" font-weight="400" fill="#10253f"><tspan x="278.0" dy="0.0">按季度计划执行</tspan></text>
+<g>
+<rect x="79" y="405" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="417" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="446" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text data-fit="true" data-strategy="cjk" x="117.0" y="440.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2fa45a"><tspan x="117.0" dy="0.0">巡检内容</tspan></text>
+<text x="127" y="461" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="463.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">页面访问检查</tspan></text><text x="127" y="485" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="487.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">数据接收解析</tspan></text><text x="127" y="509" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="511.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">上报连通性</tspan></text>
+</g><g>
+<rect x="79" y="501" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="513" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="542" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text data-fit="true" data-strategy="cjk" x="117.0" y="536.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2fa45a"><tspan x="117.0" dy="0.0">核查要点</tspan></text>
+<text x="127" y="557" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="559.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">数据上传率</tspan></text><text x="127" y="581" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="583.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">接口成功率</tspan></text><text x="127" y="605" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="607.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">异常清单</tspan></text>
+</g><g>
+<rect x="79" y="597" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="59" y="609" width="38" height="44" rx="6" fill="#2fa45a"/>
+<text x="78" y="638" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text data-fit="true" data-strategy="cjk" x="117.0" y="632.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2fa45a"><tspan x="117.0" dy="0.0">输出成果</tspan></text>
+<text x="127" y="653" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="655.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">巡检报告</tspan></text><text x="127" y="677" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="679.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">问题清单</tspan></text><text x="127" y="701" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="149.0" y="703.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="149.0" dy="0.0">趋势分析</tspan></text>
+</g>
+<rect x="67" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#2fa45a" stroke-width="1.5"/>
+<text data-fit="true" data-strategy="cjk" x="113.0" y="725.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2fa45a"><tspan x="113.0" dy="0.0">输出</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="209.0" y="724.1" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="400" fill="#10253f"><tspan x="209.0" dy="0.0">季度巡检报告</tspan></text>
+</g><g>
+<rect x="561" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#2777bf" stroke-width="2"/>
+<rect x="561" y="220" width="478" height="86" rx="10" fill="#2777bf"/>
+<rect x="561" y="292" width="478" height="18" fill="#2777bf"/>
+<circle cx="653" cy="250" r="20" fill="#ffffff"/>
+<text x="653" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#2777bf">2</text>
+<text data-fit="true" data-strategy="cjk" x="847.0" y="258.0" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="25" font-weight="800" fill="#ffffff"><tspan x="847.0" dy="0.0">专项巡检</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="847.0" y="286.5" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff"><tspan x="847.0" dy="0.0">接口数据状态</tspan></text>
+<rect x="631" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#2777bf" stroke-dasharray="5 4"/>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="348.1" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#2777bf"><tspan x="800.0" dy="0.0">触发方式</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="800.0" y="370.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="16" font-weight="400" fill="#10253f"><tspan x="800.0" dy="0.0">按专项计划执行</tspan></text>
+<g>
+<rect x="601" y="405" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="417" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="446" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text data-fit="true" data-strategy="cjk" x="639.0" y="440.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2777bf"><tspan x="639.0" dy="0.0">巡检内容</tspan></text>
+<text x="649" y="461" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="463.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">接口连通性</tspan></text><text x="649" y="485" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="487.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">数据完整性</tspan></text><text x="649" y="509" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="511.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">终端在线率</tspan></text>
+</g><g>
+<rect x="601" y="501" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="513" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="542" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text data-fit="true" data-strategy="cjk" x="639.0" y="536.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2777bf"><tspan x="639.0" dy="0.0">核查要点</tspan></text>
+<text x="649" y="557" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="559.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">字段映射</tspan></text><text x="649" y="581" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="583.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">签名规则</tspan></text><text x="649" y="605" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="607.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">影响范围</tspan></text>
+</g><g>
+<rect x="601" y="597" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="581" y="609" width="38" height="44" rx="6" fill="#2777bf"/>
+<text x="600" y="638" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text data-fit="true" data-strategy="cjk" x="639.0" y="632.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2777bf"><tspan x="639.0" dy="0.0">输出成果</tspan></text>
+<text x="649" y="653" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="655.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">专项报告</tspan></text><text x="649" y="677" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="679.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">分析方案</tspan></text><text x="649" y="701" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="671.0" y="703.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="671.0" dy="0.0">追踪记录</tspan></text>
+</g>
+<rect x="589" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#2777bf" stroke-width="1.5"/>
+<text data-fit="true" data-strategy="cjk" x="635.0" y="725.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#2777bf"><tspan x="635.0" dy="0.0">输出</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="731.0" y="724.1" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="400" fill="#10253f"><tspan x="731.0" dy="0.0">专项巡检报告</tspan></text>
+</g><g>
+<rect x="1083" y="220" width="478" height="546" rx="10" fill="#fbfffb" stroke="#ef7d22" stroke-width="2"/>
+<rect x="1083" y="220" width="478" height="86" rx="10" fill="#ef7d22"/>
+<rect x="1083" y="292" width="478" height="18" fill="#ef7d22"/>
+<circle cx="1175" cy="250" r="20" fill="#ffffff"/>
+<text x="1175" y="258" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#ef7d22">3</text>
+<text data-fit="true" data-strategy="cjk" x="1369.0" y="258.0" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="25" font-weight="800" fill="#ffffff"><tspan x="1369.0" dy="0.0">异常触发巡检</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="1369.0" y="286.5" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff"><tspan x="1369.0" dy="0.0">快速响应</tspan></text>
+<rect x="1153" y="324" width="338" height="54" rx="6" fill="#ffffff" stroke="#ef7d22" stroke-dasharray="5 4"/>
+<text data-fit="true" data-strategy="cjk" x="1322.0" y="348.1" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="700" fill="#ef7d22"><tspan x="1322.0" dy="0.0">触发方式</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="1322.0" y="370.8" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="16" font-weight="400" fill="#10253f"><tspan x="1322.0" dy="0.0">由告警事件触发</tspan></text>
+<g>
+<rect x="1123" y="405" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="417" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="446" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">1</text>
+<text data-fit="true" data-strategy="cjk" x="1161.0" y="440.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ef7d22"><tspan x="1161.0" dy="0.0">巡检内容</tspan></text>
+<text x="1171" y="461" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="463.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">事件定向检查</tspan></text><text x="1171" y="485" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="487.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">链路追踪核查</tspan></text><text x="1171" y="509" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="511.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">服务联动检查</tspan></text>
+</g><g>
+<rect x="1123" y="501" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="513" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="542" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">2</text>
+<text data-fit="true" data-strategy="cjk" x="1161.0" y="536.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ef7d22"><tspan x="1161.0" dy="0.0">核查要点</tspan></text>
+<text x="1171" y="557" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="559.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">异常复现</tspan></text><text x="1171" y="581" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="583.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">根因分析</tspan></text><text x="1171" y="605" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="607.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">处置验证</tspan></text>
+</g><g>
+<rect x="1123" y="597" width="406" height="84" rx="5" fill="#ffffff" stroke="#ccd9d0"/>
+<rect x="1103" y="609" width="38" height="44" rx="6" fill="#ef7d22"/>
+<text x="1122" y="638" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#ffffff">3</text>
+<text data-fit="true" data-strategy="cjk" x="1161.0" y="632.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ef7d22"><tspan x="1161.0" dy="0.0">输出成果</tspan></text>
+<text x="1171" y="653" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="655.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">异常报告</tspan></text><text x="1171" y="677" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="679.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">处置记录</tspan></text><text x="1171" y="701" font-family="Microsoft YaHei, Arial" font-size="14" fill="#10253f">-</text><text data-fit="true" data-strategy="cjk" x="1193.0" y="703.9" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="14" font-weight="400" fill="#10253f"><tspan x="1193.0" dy="0.0">改进建议</tspan></text>
+</g>
+<rect x="1111" y="690" width="422" height="48" rx="7" fill="#ffffff" stroke="#ef7d22" stroke-width="1.5"/>
+<text data-fit="true" data-strategy="cjk" x="1157.0" y="725.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="700" fill="#ef7d22"><tspan x="1157.0" dy="0.0">输出</tspan></text>
+<text data-fit="true" data-strategy="cjk" x="1253.0" y="724.1" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="17" font-weight="400" fill="#10253f"><tspan x="1253.0" dy="0.0">异常巡检报告</tspan></text>
+</g>
+<rect x="78" y="806" width="1444" height="58" rx="8" fill="#f7fbff" stroke="#9dcced"/>
+<text x="130" y="843" font-family="Microsoft YaHei, Arial" font-size="24" font-weight="700" fill="#0f4f8a">总体输出</text>
+<text data-fit="true" data-strategy="cjk" x="430.0" y="843.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="400" fill="#10253f"><tspan x="430.0" dy="0.0">- 巡检执行记录</tspan></text><text data-fit="true" data-strategy="cjk" x="690.0" y="843.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="400" fill="#10253f"><tspan x="690.0" dy="0.0">- 问题整改闭环</tspan></text><text data-fit="true" data-strategy="cjk" x="950.0" y="843.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="400" fill="#10253f"><tspan x="950.0" dy="0.0">- 指标趋势分析</tspan></text><text data-fit="true" data-strategy="cjk" x="1210.0" y="843.5" text-anchor="start" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" font-size="18" font-weight="400" fill="#10253f"><tspan x="1210.0" dy="0.0">- 巡检归档追溯</tspan></text>
+<rect x="78" y="902" width="1444" height="48" rx="6" fill="#ffffff" stroke="#9dcced" stroke-dasharray="7 5"/>
+<text x="168" y="932" font-family="Microsoft YaHei, Arial" font-size="20" font-weight="700" fill="#0f4f8a">原则要求</text>
+<text x="300" y="932" font-family="Microsoft YaHei, Arial" font-size="19" fill="#10253f">真实完整、可追溯、可量化、可验收。</text>
+</svg>

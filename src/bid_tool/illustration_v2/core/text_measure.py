@@ -22,6 +22,7 @@ class TextSlot:
     line_height: float = 1.28
     max_lines: int | None = None
     color: str = "#10253f"
+    language: str = "auto"
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,6 +32,7 @@ class TextLayout:
     ok: bool
     width: float
     height: float
+    strategy: str = "auto"
 
 
 class MeasureEngine:
@@ -65,25 +67,26 @@ DEFAULT_MEASURE = MeasureEngine()
 
 def fit_text(text: Any, slot: TextSlot, measure: MeasureEngine = DEFAULT_MEASURE) -> TextLayout:
     value = _normalize_text(text)
+    strategy = _resolve_strategy(value, slot.language)
     for size in range(slot.font_max, slot.font_min - 1, -max(1, slot.font_step)):
-        lines = _wrap(value, slot.w, size, slot.weight, measure)
+        lines = _wrap(value, slot.w, size, slot.weight, measure, strategy)
         if slot.max_lines is not None and len(lines) > slot.max_lines:
             continue
         line_height = size * slot.line_height
         height = len(lines) * line_height
         width = max((measure.width(line, size, slot.weight) for line in lines), default=0.0)
         if height <= slot.h and width <= slot.w:
-            return TextLayout(tuple(lines), size, True, width, height)
+            return TextLayout(tuple(lines), size, True, width, height, strategy)
 
     size = slot.font_min
-    lines = _wrap(value, slot.w, size, slot.weight, measure)
+    lines = _wrap(value, slot.w, size, slot.weight, measure, strategy)
     if slot.max_lines is not None and len(lines) > slot.max_lines:
         lines = lines[: slot.max_lines]
         if lines:
             lines[-1] = _ellipsize(lines[-1], slot.w, size, slot.weight, measure)
     line_height = size * slot.line_height
     width = max((measure.width(line, size, slot.weight) for line in lines), default=0.0)
-    return TextLayout(tuple(lines), size, False, width, len(lines) * line_height)
+    return TextLayout(tuple(lines), size, False, width, len(lines) * line_height, strategy)
 
 
 def emit_text(text: Any, slot: TextSlot, measure: MeasureEngine = DEFAULT_MEASURE) -> str:
@@ -109,7 +112,7 @@ def emit_text(text: Any, slot: TextSlot, measure: MeasureEngine = DEFAULT_MEASUR
         tspans.append(f'<tspan x="{x:.1f}" dy="{dy:.1f}">{xml_escape(line)}</tspan>')
     fit_attr = "true" if layout.ok else "false"
     return (
-        f'<text data-fit="{fit_attr}" x="{x:.1f}" y="{baseline:.1f}" '
+        f'<text data-fit="{fit_attr}" data-strategy="{layout.strategy}" x="{x:.1f}" y="{baseline:.1f}" '
         f'text-anchor="{anchor}" font-family="Microsoft YaHei, Noto Sans CJK SC, Arial, sans-serif" '
         f'font-size="{layout.size}" font-weight="{slot.weight}" fill="{slot.color}">'
         f'{"".join(tspans)}</text>'
@@ -126,8 +129,15 @@ def xml_escape(value: Any) -> str:
     )
 
 
-def _wrap(text: str, max_w: float, size: int, weight: int, measure: MeasureEngine) -> list[str]:
-    tokens = _tokenize(text)
+def _wrap(
+    text: str,
+    max_w: float,
+    size: int,
+    weight: int,
+    measure: MeasureEngine,
+    strategy: str,
+) -> list[str]:
+    tokens = _tokenize_cjk(text) if strategy == "cjk" else _tokenize_latin(text)
     lines: list[str] = []
     current = ""
     for token in tokens:
@@ -152,7 +162,7 @@ def _wrap(text: str, max_w: float, size: int, weight: int, measure: MeasureEngin
     return lines or [""]
 
 
-def _tokenize(text: str) -> list[str]:
+def _tokenize_cjk(text: str) -> list[str]:
     tokens: list[str] = []
     buffer = ""
     for ch in text:
@@ -171,10 +181,41 @@ def _tokenize(text: str) -> list[str]:
                 tokens.append(buffer)
                 buffer = ""
             tokens.append(" ")
+        elif _is_cjk_punctuation(ch):
+            if buffer:
+                tokens.append(buffer)
+                buffer = ""
+            tokens.append(ch)
         elif ch in {"/", "-", ":", "(", ")", ","}:
             buffer += ch
             tokens.append(buffer)
             buffer = ""
+        else:
+            buffer += ch
+    if buffer:
+        tokens.append(buffer)
+    return tokens
+
+
+def _tokenize_latin(text: str) -> list[str]:
+    tokens: list[str] = []
+    buffer = ""
+    for ch in text:
+        if ch == "\n":
+            if buffer:
+                tokens.append(buffer)
+                buffer = ""
+            tokens.append("\n")
+        elif ch.isspace():
+            if buffer:
+                tokens.append(buffer)
+                buffer = ""
+            tokens.append(" ")
+        elif _is_cjk(ch):
+            if buffer:
+                tokens.append(buffer)
+                buffer = ""
+            tokens.append(ch)
         else:
             buffer += ch
     if buffer:
@@ -193,7 +234,20 @@ def _ellipsize(text: str, max_w: float, size: int, weight: int, measure: Measure
 
 
 def _normalize_text(text: Any) -> str:
-    return " ".join(str(text or "").replace("\r", "\n").split())
+    lines = str(text or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    return "\n".join(" ".join(line.split()) for line in lines)
+
+
+def _resolve_strategy(text: str, requested: str) -> str:
+    if requested in {"cjk", "latin"}:
+        return requested
+    cjk = sum(1 for ch in text if _is_cjk(ch))
+    latin = sum(1 for ch in text if ch.isascii() and ch.isalpha())
+    if cjk == 0:
+        return "latin"
+    if latin == 0:
+        return "cjk"
+    return "cjk" if cjk >= latin * 0.35 else "latin"
 
 
 def _is_cjk(ch: str) -> bool:
@@ -203,6 +257,10 @@ def _is_cjk(ch: str) -> bool:
         or 0x4E00 <= code <= 0x9FFF
         or 0xF900 <= code <= 0xFAFF
     )
+
+
+def _is_cjk_punctuation(ch: str) -> bool:
+    return ch in "，。；：、（）《》【】“”‘’！？"
 
 
 def _fallback_char_width(ch: str, size: int) -> float:

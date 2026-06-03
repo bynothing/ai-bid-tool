@@ -8,6 +8,7 @@ from typing import Any
 from ..core.catalog import build_capability_catalog
 from ..core.models import AssetRecord, IllustrationJob, PlanDecision, Template
 from ..core.text_measure import TextSlot, emit_text, xml_escape
+from . import components as ui
 
 
 WIDTH = 1600
@@ -209,6 +210,7 @@ def _render_resilience_flow(decision: PlanDecision, job: IllustrationJob, theme_
     item = decision.item
     data = item.data
     theme = _theme(theme_name, _template_theme(decision))
+    component_theme = ui.Theme.from_dict(theme)
     steps = _as_list(data.get("steps"))[:8]
     exceptions = _as_list(data.get("exceptions"))[:6]
     mechanisms = _as_list(data.get("mechanisms"))[:4]
@@ -217,47 +219,39 @@ def _render_resilience_flow(decision: PlanDecision, job: IllustrationJob, theme_
     step_svg = []
     for index, step in enumerate(steps):
         x = 32 + index * 187
-        step_svg.append(_flow_step(step, index + 1, x, 150, 154, 82, theme, "#2b7fc8"))
+        step_svg.append(ui.flow_step(step, index + 1, x, 150, 154, 82, theme=component_theme, color="#2b7fc8"))
         if index < len(steps) - 1:
-            step_svg.append(_arrow(x + 154, 191, x + 184, 191, "#2b7fc8"))
+            step_svg.append(ui.connector([(x + 154, 191), (x + 184, 191)], color="#2b7fc8", width=3))
     exception_svg = []
     for index, ex in enumerate(exceptions):
         y = 310 + index * 80
-        exception_svg.append(_small_alert(ex, 28, y, 290, 64, "#d64b3b", theme))
-    mech_svg = []
-    positions = [(390, 360), (610, 286), (860, 360), (650, 500)]
-    for index, mech in enumerate(mechanisms):
-        x, y = positions[index % len(positions)]
-        mech_svg.append(_process_node(mech, x, y, 180, 86, colors=["#f6a126", "#41a56a", "#7357a6", "#2b7fc8"][index % 4], theme=theme))
+        exception_svg.append(ui.exception_card(ex, 36, y, 286, 64, theme=component_theme, color="#d64b3b"))
+    mech_svg = _resilience_loop_components(mechanisms, component_theme)
     side_svg = []
     for index, panel in enumerate(side_panels):
-        side_svg.append(_info_panel(panel, 1240, 298 + index * 190, 306, 154, ["#3f8f5f", "#7357a6"][index % 2], theme))
+        side_svg.append(ui.info_panel(panel, 1240, 298 + index * 190, 306, 154, color=["#3f8f5f", "#7357a6"][index % 2], theme=component_theme))
     ass_svg = []
     for index, item_data in enumerate(assurance):
         x = 260 + index * 270
-        ass_svg.append(_assurance_chip(item_data, x, 842, theme))
+        ass_svg.append(ui.assurance_chip(item_data, x, 842, theme=component_theme))
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}">
 {_defs(["#2b7fc8", "#d64b3b", "#f6a126", "#41a56a", "#7357a6"])}
 <rect width="{WIDTH}" height="{HEIGHT}" fill="#ffffff"/>
 {_title_block(data, item, job, theme)}
-<rect x="22" y="126" width="1556" height="126" rx="8" fill="#f7fbff" stroke="#9db8d6"/>
-<rect x="30" y="116" width="250" height="42" rx="6" fill="{theme["primary_alt"]}"/>
-{_text(data.get("normalTitle", "Normal Flow"), 42, 124, 226, 26, 20, "#ffffff", align="center", weight=700, min_size=14, max_lines=1)}
+{ui.panel(22, 126, 1556, 126, fill="#f7fbff", stroke="#9db8d6")}
+{ui.tab_label(data.get("normalTitle", "Normal Flow"), 30, 116, 250, 42, color=theme["primary_alt"], size=20)}
 {''.join(step_svg)}
-<rect x="24" y="286" width="312" height="478" rx="10" fill="#fffafa" stroke="#efb4a7"/>
-<rect x="40" y="270" width="220" height="44" rx="5" fill="#f0523d"/>
-{_text(data.get("exceptionTitle", "Exception Scenarios"), 52, 278, 196, 28, 20, "#ffffff", align="center", weight=700, min_size=14, max_lines=1)}
+{ui.panel(24, 286, 312, 478, fill="#fffafa", stroke="#efb4a7", rx=10)}
+{ui.tab_label(data.get("exceptionTitle", "Exception Scenarios"), 40, 270, 220, 44, color="#f0523d", size=20)}
 {''.join(exception_svg)}
-<rect x="370" y="286" width="820" height="478" rx="10" fill="#fffdf8" stroke="#efcc84"/>
-<rect x="388" y="270" width="368" height="44" rx="5" fill="#f59b23"/>
-{_text(data.get("mechanismTitle", "Handling And Compensation"), 402, 278, 340, 28, 19, "#ffffff", align="center", weight=700, min_size=12, max_lines=1)}
+{ui.panel(370, 286, 820, 478, fill="#fffdf8", stroke="#efcc84", rx=10)}
+{ui.tab_label(data.get("mechanismTitle", "Handling And Compensation"), 388, 270, 368, 44, color="#f59b23", size=19)}
 {''.join(mech_svg)}
-{_arrow(570, 404, 610, 340, "#41a56a")}{_arrow(790, 340, 860, 404, "#41a56a")}{_arrow(950, 446, 860, 540, "#d64b3b")}{_arrow(650, 540, 570, 446, "#7357a6")}
 {''.join(side_svg)}
-<rect x="24" y="812" width="1552" height="76" rx="4" fill="#f7fbff" stroke="#9dcced"/>
-<text x="58" y="856" font-family="Microsoft YaHei, Arial" font-size="19" font-weight="700" fill="{theme["primary"]}">{_xml(data.get("assuranceTitle", "Assurance Points"))}</text>
+{ui.panel(24, 812, 1552, 76, fill="#f7fbff", stroke="#9dcced", rx=4)}
+{_text(data.get("assuranceTitle", "Assurance Points"), 58, 832, 170, 34, 19, theme["primary"], weight=700, min_size=13, max_lines=1)}
 {''.join(ass_svg)}
-<text x="60" y="938" font-family="Microsoft YaHei, Arial" font-size="15" fill="{theme["muted"]}">{_xml(data.get("legend", "Solid line: normal flow / dashed line: exception and retry flow"))}</text>
+{_text(data.get("legend", "实线：正常流程；虚线：异常与重试流程"), 60, 918, 900, 28, 15, theme["muted"], min_size=11, max_lines=1)}
 </svg>'''
 
 
@@ -292,6 +286,43 @@ def _render_inspection_cards(decision: PlanDecision, job: IllustrationJob, theme
 <text x="168" y="932" font-family="Microsoft YaHei, Arial" font-size="20" font-weight="700" fill="{theme["primary"]}">{_xml(data.get("principleTitle", "Principle"))}</text>
 <text x="300" y="932" font-family="Microsoft YaHei, Arial" font-size="19" fill="{theme["text"]}">{_xml(data.get("principle", ""))}</text>
 </svg>'''
+
+
+def _resilience_loop_components(mechanisms: list[Any], theme: ui.Theme) -> str:
+    defaults = [
+        {"title": "异常捕获", "desc": "记录原因时间来源"},
+        {"title": "自动重试", "desc": "按策略重试上报"},
+        {"title": "补传成功？", "desc": "核验补传结果"},
+        {"title": "人工复核", "desc": "修正后重新提交"},
+    ]
+    nodes = [(item if isinstance(item, dict) else {}) for item in mechanisms[:4]]
+    while len(nodes) < 4:
+        nodes.append(defaults[len(nodes)])
+
+    colors = ["#f59b23", "#41a56a", "#7357a6", "#2b7fc8"]
+    slots = [
+        (488, 432, 188, 92),
+        (690, 330, 188, 92),
+        (894, 432, 188, 92),
+        (690, 562, 188, 92),
+    ]
+    parts = [
+        ui.loop_connector(505, 358, 560, 280, color="#8aa7c8", marker_id="arrow-dash-0"),
+    ]
+    for index, node in enumerate(nodes):
+        x, y, w, h = slots[index]
+        parts.append(ui.process_node(node, x, y, w, h, color=colors[index], theme=theme))
+
+    parts.extend(
+        [
+            ui.connector([(676, 468), (690, 390)], color="#41a56a", marker_id="arrow-3", width=4),
+            ui.connector([(878, 390), (894, 468)], color="#41a56a", marker_id="arrow-3", width=4),
+            ui.connector([(988, 524), (878, 608)], color="#d64b3b", marker_id="arrow-1", width=4),
+            ui.connector([(690, 608), (676, 508)], color="#7357a6", marker_id="arrow-4", width=4),
+            ui.connector([(600, 524), (600, 676), (784, 676), (784, 654)], color="#2b7fc8", marker_id="arrow-0", width=3, dashed=True),
+        ]
+    )
+    return "".join(parts)
 
 
 def _render_severity_closure(decision: PlanDecision, job: IllustrationJob, theme_name: str) -> str:
@@ -771,6 +802,7 @@ def _text(
     min_size: int | None = None,
     max_lines: int | None = None,
     line_height: float = 1.28,
+    language: str = "auto",
 ) -> str:
     return emit_text(
         value,
@@ -787,6 +819,7 @@ def _text(
             line_height=line_height,
             max_lines=max_lines,
             color=color,
+            language=language,
         ),
     )
 

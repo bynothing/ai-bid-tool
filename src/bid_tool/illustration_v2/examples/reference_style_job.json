@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "document": {
-    "title": "Radiation Monitoring Bid Technical Proposal",
-    "projectName": "Illustration V2 Reference Style Pilot"
+    "title": "放射源在线监管系统投标技术方案",
+    "projectName": "配图 V2 中文参考风格试点"
   },
   "style": {
     "theme": "formal_blue",
@@ -14,101 +14,101 @@
       "id": "data_exchange_interface",
       "type": "relationship.platform_interface",
       "renderer": "auto",
-      "intent": "Show cross-platform data exchange interfaces and audit requirements.",
+      "intent": "展示省级平台与国家平台之间的数据上报、反馈、追溯和审计关系。",
       "insertion": {
         "section": "3.2",
-        "caption": "Figure 3-2 Data Exchange Interface Relationship"
+        "caption": "图 3-2 数据交互接口关系"
       },
       "data": {
-        "title": "2025 Data Exchange Interface Architecture",
-        "subtitle": "Bidirectional reporting, feedback, traceability and audit",
+        "title": "2025 数据交互接口架构",
+        "subtitle": "双向上报、反馈确认、全程留痕与审计",
         "left": {
-          "title": "Provincial Monitoring Platform",
+          "title": "省级放射源在线监管平台",
           "layers": [
-            {"label": "Application Services", "items": ["Source Mgmt", "Positioning", "Warning", "Statistics"]},
-            {"label": "Data Processing", "items": ["Parse", "Verify", "Deduplicate", "Cache"]},
-            {"label": "Interface Services", "items": ["Gateway", "Auth", "Signature", "Audit"]},
-            {"label": "Infrastructure", "items": ["Server", "Database", "Queue", "Logs"]}
+            {"label": "应用服务层", "items": ["源项管理", "定位监控", "预警处置", "统计分析"]},
+            {"label": "数据处理层", "items": ["解析映射", "数据校验", "去重处理", "缓存补传"]},
+            {"label": "接口服务层", "items": ["接口网关", "认证授权", "签名验签", "日志审计"]},
+            {"label": "基础设施层", "items": ["应用服务器", "数据库", "消息队列", "日志存储"]}
           ]
         },
         "right": {
-          "title": "National Online Monitoring Platform",
+          "title": "国家在线监管平台",
           "layers": [
-            {"label": "Application Services", "items": ["Supervision", "Display", "Warning", "Assessment"]},
-            {"label": "Data Processing", "items": ["Inbound", "Fusion", "Linkage", "Archive"]},
-            {"label": "Interface Services", "items": ["Gateway", "Auth", "Signature", "Audit"]},
-            {"label": "Infrastructure", "items": ["Server", "Database", "Queue", "Logs"]}
+            {"label": "应用服务层", "items": ["源项监管", "定位展示", "预警接收", "统计评估"]},
+            {"label": "数据处理层", "items": ["数据入库", "融合共享", "联动分析", "归档留存"]},
+            {"label": "接口服务层", "items": ["服务网关", "鉴权服务", "签名验签", "审计服务"]},
+            {"label": "基础设施层", "items": ["应用服务器", "数据库", "消息队列", "日志存储"]}
           ]
         },
         "flows": [
-          {"label": "Source Data Report", "protocol": "HTTPS JSON push", "color": "#1f78b4"},
-          {"label": "Location Data Push", "protocol": "MQTT / HTTPS JSON", "color": "#3f8f5f"},
-          {"label": "Warning Data Push", "protocol": "HTTPS JSON push", "color": "#ef7d22"},
-          {"label": "Handling Feedback", "protocol": "HTTPS JSON feedback", "direction": "right_to_left", "color": "#7357a6"}
+          {"label": "放射源信息上报", "protocol": "HTTPS JSON 推送", "color": "#1f78b4"},
+          {"label": "定位信息推送", "protocol": "MQTT / HTTPS JSON", "color": "#3f8f5f"},
+          {"label": "预警信息推送", "protocol": "HTTPS JSON 推送", "color": "#ef7d22"},
+          {"label": "处置结果反馈", "protocol": "HTTPS JSON 反馈", "direction": "right_to_left", "color": "#7357a6"}
         ],
-        "requirementsTitle": "Security",
-        "requirementsSubtitle": "Controls",
+        "requirementsTitle": "安全",
+        "requirementsSubtitle": "要求",
         "requirements": [
-          {"title": "Protocol", "desc": "HTTPS/MQTT TLS", "icon": "lock"},
-          {"title": "Auth", "desc": "CA and token", "icon": "id"},
-          {"title": "Signature", "desc": "HMAC SHA256", "icon": "sg"},
-          {"title": "Transport", "desc": "Encrypted channel", "icon": "sh"},
-          {"title": "Time Sync", "desc": "UTC timestamp", "icon": "tm"},
-          {"title": "Spec", "desc": "2025 fields", "icon": "doc"}
+          {"title": "通信协议", "desc": "HTTPS/MQTT TLS", "icon": "tx"},
+          {"title": "认证鉴权", "desc": "CA 证书与令牌", "icon": "ca"},
+          {"title": "数据签名", "desc": "HMAC SHA256", "icon": "qm"},
+          {"title": "传输安全", "desc": "加密通道", "icon": "aq"},
+          {"title": "时间同步", "desc": "UTC 时间戳", "icon": "sj"},
+          {"title": "接口规范", "desc": "2025 字段要求", "icon": "gf"}
         ],
-        "footer": "All data exchange remains traceable, auditable and recoverable"
+        "footer": "所有数据交互均需留痕、可追溯、可审计"
       }
     },
     {
       "id": "report_resilience_flow",
       "type": "process.resilience_flow",
       "renderer": "auto",
-      "intent": "Explain fault-tolerant reporting, retry, compensation and audit closure.",
+      "intent": "说明数据上报的容错、重试、补传、去重和核查闭环机制。",
       "insertion": {
         "section": "3.3",
-        "caption": "Figure 3-3 Reporting Resilience Flow"
+        "caption": "图 3-3 数据上报容错补传流程"
       },
       "data": {
-        "title": "Data Reporting Fault Tolerance Mechanism",
-        "subtitle": "Prevent missing report, wrong report and repeated report",
-        "normalTitle": "Normal Reporting Flow",
+        "title": "数据上报容错补传机制",
+        "subtitle": "防漏报、防错报、防重复上报",
+        "normalTitle": "正常上报流程",
         "steps": [
-          {"title": "Terminal", "desc": "Locate status warning"},
-          {"title": "Receive", "desc": "Raw message intake"},
-          {"title": "Parse", "desc": "Field and format check"},
-          {"title": "Dedup", "desc": "Unique index check"},
-          {"title": "Store", "desc": "Business library"},
-          {"title": "Detect", "desc": "Rule and value check"},
-          {"title": "Report", "desc": "HTTPS/MQTT"},
-          {"title": "Record", "desc": "Result status"}
+          {"title": "终端上报", "desc": "定位状态预警"},
+          {"title": "接收服务", "desc": "原始报文接收"},
+          {"title": "解析校验", "desc": "字段格式校验"},
+          {"title": "去重校验", "desc": "唯一索引判断"},
+          {"title": "本地入库", "desc": "业务库轨迹库"},
+          {"title": "异常检测", "desc": "规则阈值判断"},
+          {"title": "上级上报", "desc": "HTTPS/MQTT"},
+          {"title": "结果记录", "desc": "结果状态记录"}
         ],
-        "exceptionTitle": "Exception Scenarios",
+        "exceptionTitle": "异常场景",
         "exceptions": [
-          {"title": "Report Timeout", "desc": "Network or service unavailable"},
-          {"title": "Permission Error", "desc": "Certificate or account invalid"},
-          {"title": "Format Error", "desc": "Required field missing"},
-          {"title": "Server Error", "desc": "Upper platform 5xx"},
-          {"title": "Duplicate Data", "desc": "Same key reported repeatedly"},
-          {"title": "Offline Cache", "desc": "Terminal stores then reports"}
+          {"title": "上报超时", "desc": "网络或服务不可用"},
+          {"title": "权限异常", "desc": "证书或账号失效"},
+          {"title": "格式异常", "desc": "必填字段缺失"},
+          {"title": "服务异常", "desc": "上级平台 5xx"},
+          {"title": "数据重复", "desc": "同一数据多次上报"},
+          {"title": "离线缓存", "desc": "终端缓存后补报"}
         ],
-        "mechanismTitle": "Exception Handling And Compensation",
+        "mechanismTitle": "异常处理与补传机制",
         "mechanisms": [
-          {"title": "Capture", "desc": "Record reason time source"},
-          {"title": "Auto Retry", "desc": "Retry by policy"},
-          {"title": "Success?", "desc": "Verify compensation result"},
-          {"title": "Manual Review", "desc": "Repair and resubmit"}
+          {"title": "异常捕获", "desc": "记录原因时间来源"},
+          {"title": "自动重试", "desc": "按策略重试上报"},
+          {"title": "补传成功？", "desc": "核验补传结果"},
+          {"title": "人工复核", "desc": "修正后重新提交"}
         ],
         "sidePanels": [
-          {"title": "Dedup Logic", "bullets": ["Terminal ID", "Report timestamp", "Serial number", "Data type"]},
-          {"title": "Audit Closure", "bullets": ["Check content", "Check method", "Record issue", "Archive result"]}
+          {"title": "去重逻辑", "bullets": ["终端编号", "报文时间戳", "流水序号", "数据类型"]},
+          {"title": "核查闭环", "bullets": ["核查内容", "核查方式", "问题记录", "闭环归档"]}
         ],
-        "assuranceTitle": "Key Guarantees",
+        "assuranceTitle": "关键保障点",
         "assurance": [
-          {"title": "No Missing", "desc": "Cache plus retry"},
-          {"title": "No Wrong", "desc": "Format plus rule"},
-          {"title": "No Repeat", "desc": "Unique index"},
-          {"title": "Traceable", "desc": "Full logs"},
-          {"title": "Verifiable", "desc": "Dual review"}
+          {"title": "不漏报", "desc": "缓存加重试"},
+          {"title": "不错报", "desc": "格式加规则"},
+          {"title": "不重复", "desc": "唯一索引"},
+          {"title": "可追溯", "desc": "全链路日志"},
+          {"title": "可核查", "desc": "双重复核"}
         ]
       }
     },
@@ -116,95 +116,95 @@
       "id": "inspection_taxonomy",
       "type": "taxonomy.inspection_cards",
       "renderer": "auto",
-      "intent": "Classify routine inspection mechanisms for operations and maintenance.",
+      "intent": "分类说明日常运维巡检体系。",
       "insertion": {
         "section": "4.1",
-        "caption": "Figure 4-1 Inspection System Classification"
+        "caption": "图 4-1 日常运维巡检体系分类"
       },
       "data": {
-        "title": "Daily Operation Inspection Classification",
-        "summary": "Routine, special and exception-triggered inspections protect stable operation, data quality and online availability.",
+        "title": "日常运维巡检体系分类",
+        "summary": "通过例行巡检、专项巡检和异常触发巡检，保障系统稳定运行、数据质量达标、接口畅通和终端在线。",
         "categories": [
           {
-            "title": "Quarterly Patrol",
-            "subtitle": "Baseline requirement",
-            "triggerTitle": "Trigger Mode",
-            "trigger": "Executed by quarterly plan",
+            "title": "季度例行巡检",
+            "subtitle": "底线要求",
+            "triggerTitle": "触发方式",
+            "trigger": "按季度计划执行",
             "sections": [
-              {"title": "Content", "bullets": ["Page access check", "Data receive and parse", "Report connectivity", "Server status"]},
-              {"title": "Check Points", "bullets": ["Upload rate", "Response delay", "Exception list", "Resource usage"]},
-              {"title": "Evidence", "bullets": ["Plan record", "Problem list", "Trend analysis"]}
+              {"title": "巡检内容", "bullets": ["页面访问检查", "数据接收解析", "上报连通性"]},
+              {"title": "核查要点", "bullets": ["数据上传率", "接口成功率", "异常清单"]},
+              {"title": "输出成果", "bullets": ["巡检报告", "问题清单", "趋势分析"]}
             ],
-            "outputTitle": "Output",
-            "output": "Quarterly patrol report"
+            "outputTitle": "输出",
+            "output": "季度巡检报告"
           },
           {
-            "title": "Special Patrol",
-            "subtitle": "Interface/data/status",
-            "triggerTitle": "Trigger Mode",
-            "trigger": "By special plan or key work",
+            "title": "专项巡检",
+            "subtitle": "接口数据状态",
+            "triggerTitle": "触发方式",
+            "trigger": "按专项计划执行",
             "sections": [
-              {"title": "Content", "bullets": ["Interface connectivity", "Data completeness", "Terminal online rate", "Warning linkage"]},
-              {"title": "Check Points", "bullets": ["Field mapping", "Signature rule", "Impact range", "Rectification tracking"]},
-              {"title": "Evidence", "bullets": ["Special report", "Analysis plan", "Trace record"]}
+              {"title": "巡检内容", "bullets": ["接口连通性", "数据完整性", "终端在线率"]},
+              {"title": "核查要点", "bullets": ["字段映射", "签名规则", "影响范围"]},
+              {"title": "输出成果", "bullets": ["专项报告", "分析方案", "追踪记录"]}
             ],
-            "outputTitle": "Output",
-            "output": "Special inspection report"
+            "outputTitle": "输出",
+            "output": "专项巡检报告"
           },
           {
-            "title": "Exception Patrol",
-            "subtitle": "Fast response",
-            "triggerTitle": "Trigger Mode",
-            "trigger": "Triggered by alarm or event",
+            "title": "异常触发巡检",
+            "subtitle": "快速响应",
+            "triggerTitle": "触发方式",
+            "trigger": "由告警事件触发",
             "sections": [
-              {"title": "Content", "bullets": ["Targeted event check", "Link trace check", "Service linkage", "Emergency validation"]},
-              {"title": "Check Points", "bullets": ["Recurrence", "Root cause", "Measure effect", "Prevention advice"]},
-              {"title": "Evidence", "bullets": ["Exception report", "Handling record", "Improvement advice"]}
+              {"title": "巡检内容", "bullets": ["事件定向检查", "链路追踪核查", "服务联动检查"]},
+              {"title": "核查要点", "bullets": ["异常复现", "根因分析", "处置验证"]},
+              {"title": "输出成果", "bullets": ["异常报告", "处置记录", "改进建议"]}
             ],
-            "outputTitle": "Output",
-            "output": "Exception inspection report"
+            "outputTitle": "输出",
+            "output": "异常巡检报告"
           }
         ],
-        "outputTitle": "Overall Output",
-        "outputs": ["Inspection execution records", "Problem and rectification loop", "Data trend analysis", "Traceable archive"],
-        "principleTitle": "Principle",
-        "principle": "True, complete, traceable, measurable and acceptable."
+        "outputTitle": "总体输出",
+        "outputs": ["巡检执行记录", "问题整改闭环", "指标趋势分析", "巡检归档追溯"],
+        "principleTitle": "原则要求",
+        "principle": "真实完整、可追溯、可量化、可验收。"
       }
     },
     {
       "id": "severity_closure_process",
       "type": "process.severity_closure",
       "renderer": "auto",
-      "intent": "Define fault severity response and issue closure workflow.",
+      "intent": "定义故障分级响应标准与问题闭环处理流程。",
       "insertion": {
         "section": "5.2",
-        "caption": "Figure 5-2 Fault Severity Response And Closure"
+        "caption": "图 5-2 故障分级响应与闭环流程"
       },
       "data": {
-        "title": "Fault Severity Response And Issue Closure",
-        "matrixTitle": "Severity Response Standard",
+        "title": "故障分级响应与问题闭环",
+        "matrixTitle": "故障分级响应标准",
         "levels": [
-          {"title": "Level 1", "definition": "Major issue", "scenarios": ["Business interruption", "Large data outage", "Security incident"], "response": "2h response", "handling": "4h plan", "service": "7x24 onsite", "escalation": "Scope expands"},
-          {"title": "Level 2", "definition": "General fault", "scenarios": ["Module exception", "Data delay", "Interface error"], "response": "1 workday", "handling": "2 workdays", "service": "Remote support", "escalation": "Upgrade to L1"},
-          {"title": "Level 3", "definition": "Common item", "scenarios": ["Consultation", "UI advice", "Log check"], "response": "2 workdays", "handling": "5 workdays", "service": "Ticket support", "escalation": "May upgrade"}
+          {"title": "一级", "definition": "重大问题", "scenarios": ["业务中断", "大量数据中断", "安全事件"], "response": "2小时响应", "handling": "4小时方案", "service": "7x24现场", "escalation": "影响扩大"},
+          {"title": "二级", "definition": "一般故障", "scenarios": ["模块异常", "数据延迟", "接口报错"], "response": "1个工作日", "handling": "2个工作日", "service": "远程支持", "escalation": "升级一级"},
+          {"title": "三级", "definition": "普通事项", "scenarios": ["操作咨询", "界面建议", "日志核对"], "response": "2个工作日", "handling": "5个工作日", "service": "工单处理", "escalation": "必要升级"}
         ],
-        "processTitle": "Issue Closure Process",
+        "processTitle": "问题闭环处理流程",
         "steps": [
-          {"title": "Discover", "desc": "Alarm patrol feedback"},
-          {"title": "Register", "desc": "Issue ticket"},
-          {"title": "Classify", "desc": "Severity and owner"},
-          {"title": "Resolve", "desc": "Plan and repair"},
-          {"title": "Verify", "desc": "Recover check"},
-          {"title": "Archive", "desc": "Ticket and logs"},
-          {"title": "Improve", "desc": "Analysis and optimization"}
+          {"title": "问题发现", "desc": "告警巡检反馈"},
+          {"title": "问题登记", "desc": "形成问题工单"},
+          {"title": "分类定位", "desc": "确定级别责任"},
+          {"title": "处理解决", "desc": "制定方案修复"},
+          {"title": "复核验证", "desc": "确认恢复正常"},
+          {"title": "关闭归档", "desc": "工单日志归档"},
+          {"title": "总结改进", "desc": "分析优化流程"}
         ],
-        "measureTitle": "Key Guarantees",
+        "measureTitle": "关键保障措施",
         "measures": [
-          {"title": "Owner", "desc": "Clear contact"},
-          {"title": "Tracking", "desc": "Status visible"},
-          {"title": "Trace", "desc": "Full record"},
-          {"title": "Audit", "desc": "Compliance"},
-          {"title": "Data", "desc": "Driven improvement"}
+          {"title": "专人负责", "desc": "明确责任人"},
+          {"title": "全程跟踪", "desc": "状态可视"},
+          {"title": "留痕追溯", "desc": "过程记录"},
+          {"title": "合规审计", "desc": "满足要求"},
+          {"title": "数据支撑", "desc": "驱动改进"}
         ]
       }
     },
@@ -212,35 +212,35 @@
       "id": "data_security_loop",
       "type": "security.closed_loop",
       "renderer": "auto",
-      "intent": "Show five data security controls and management closed loop.",
+      "intent": "展示数据安全保密保障体系的五项控制措施和管理闭环。",
       "insertion": {
         "section": "6.1",
-        "caption": "Figure 6-1 Data Security Confidentiality System"
+        "caption": "图 6-1 数据安全保密保障体系"
       },
       "data": {
-        "title": "Data Security Confidentiality System",
-        "subtitle": "Five core controls, multi-layer protection, full-process closed loop",
+        "title": "数据安全保密保障体系",
+        "subtitle": "五大核心措施、多层协同防护、全流程闭环管理",
         "center": {
-          "title": "Security Assurance System",
-          "desc": "Compliance based, technology shield, management net",
-          "icon": "SC"
+          "title": "安全保密保障体系",
+          "desc": "合规为基、技术为盾、管理为网",
+          "icon": "安"
         },
         "controls": [
-          {"title": "Account Access", "bullets": ["Unified identity", "Least privilege", "MFA", "Permission review"]},
-          {"title": "Export Control", "bullets": ["Approval by level", "Desensitization", "Batch limit", "Watermark trace"]},
-          {"title": "Interface Security", "bullets": ["JWT/HMAC", "TLS encryption", "Anti replay", "Whitelist control"]},
-          {"title": "Audit Trace", "bullets": ["Full operation log", "Export audit", "Tamper proof", "Realtime warning"]},
-          {"title": "Leakage Prevention", "bullets": ["Data classification", "Encrypted storage", "External control", "Baseline scan"]}
+          {"title": "账号权限", "bullets": ["统一身份认证", "最小权限授权", "多因素认证", "定期权限复核"]},
+          {"title": "导出控制", "bullets": ["分级审批", "敏感数据脱敏", "批量导出限制", "水印标识追溯"]},
+          {"title": "接口安全", "bullets": ["JWT/HMAC", "TLS 加密", "防重放", "白名单控制"]},
+          {"title": "审计追溯", "bullets": ["操作日志", "导出审计", "防篡改留存", "异常告警"]},
+          {"title": "防外泄", "bullets": ["数据分类", "加密存储", "外发管控", "基线扫描"]}
         ],
-        "loopTitle": "Management Closed Loop",
+        "loopTitle": "管理闭环",
         "loop": [
-          {"title": "Policy", "desc": "Clear duty"},
-          {"title": "Protection", "desc": "Technical controls"},
-          {"title": "Monitor", "desc": "Realtime audit"},
-          {"title": "Risk", "desc": "Rectify"},
-          {"title": "Optimize", "desc": "Improve"}
+          {"title": "制度规范", "desc": "明确责任"},
+          {"title": "技术防护", "desc": "落地实施"},
+          {"title": "监测审计", "desc": "实时感知"},
+          {"title": "风险处置", "desc": "整改加固"},
+          {"title": "评估优化", "desc": "持续改进"}
         ],
-        "footer": "Compliance basis: classified protection, data security law, personal information protection law and supervision requirements."
+        "footer": "合规依据：等保要求、数据安全法、个人信息保护法及行业监管要求。"
       }
     }
   ]

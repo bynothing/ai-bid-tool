@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "document": {
-    "title": "Example Bid Technical Proposal",
-    "projectName": "Illustration V2 Pilot"
+    "title": "投标技术方案示例",
+    "projectName": "配图 V2 模板试点"
   },
   "style": {
     "theme": "formal_blue",
@@ -14,41 +14,41 @@
       "id": "overall_architecture",
       "type": "architecture.layered",
       "renderer": "auto",
-      "intent": "Show the overall system architecture with stable bid-document styling.",
+      "intent": "展示系统总体架构，并保持投标文件中的稳定版式。",
       "insertion": {
         "section": "3.1",
-        "caption": "Figure 3-1 Overall System Architecture"
+        "caption": "图 3-1 系统总体架构"
       },
       "visual": {
         "rendererPreference": "template_svg"
       },
       "data": {
-        "title": "Overall System Architecture",
-        "subtitle": "Fixed three-layer SVG geometry",
-        "note": "All text is validated against the template contract before rendering.",
+        "title": "系统总体架构",
+        "subtitle": "固定三层 SVG 模板版式",
+        "note": "所有文字先经过模板契约校验，再注入固定槽位渲染。",
         "layers": [
           {
-            "label": "Application Layer",
+            "label": "应用服务层",
             "items": [
-              {"title": "Unified Portal", "desc": "Role-based access and workbench", "icon": "users", "style": "accent"},
-              {"title": "Monitoring", "desc": "Alerts, status and trend views", "icon": "monitor"},
-              {"title": "Reports", "desc": "Exportable bid evidence", "icon": "chart"}
+              {"title": "统一门户", "desc": "角色访问与业务工作台", "icon": "users", "style": "accent"},
+              {"title": "运行监测", "desc": "告警状态与趋势展示", "icon": "monitor"},
+              {"title": "统计报表", "desc": "可导出的投标佐证", "icon": "chart"}
             ]
           },
           {
-            "label": "Service Layer",
+            "label": "业务服务层",
             "items": [
-              {"title": "API Gateway", "desc": "Routing and authentication", "icon": "server", "style": "success"},
-              {"title": "Workflow", "desc": "Approval and closed-loop tasks", "icon": "activity"},
-              {"title": "Integration", "desc": "External platform adapters", "icon": "link"}
+              {"title": "接口网关", "desc": "统一路由与身份认证", "icon": "server", "style": "success"},
+              {"title": "流程引擎", "desc": "审批闭环与任务协同", "icon": "activity"},
+              {"title": "系统集成", "desc": "外部平台适配接入", "icon": "link"}
             ]
           },
           {
-            "label": "Data Layer",
+            "label": "数据支撑层",
             "items": [
-              {"title": "Data Store", "desc": "Project and trace data", "icon": "database", "style": "cyan"},
-              {"title": "Audit", "desc": "Logs and evidence chain", "icon": "shield"},
-              {"title": "Runtime", "desc": "Deployment and operations", "icon": "cloud"}
+              {"title": "数据存储", "desc": "项目数据与追溯数据", "icon": "database", "style": "cyan"},
+              {"title": "审计留痕", "desc": "日志与证据链管理", "icon": "shield"},
+              {"title": "运行环境", "desc": "部署运行与运维支撑", "icon": "cloud"}
             ]
           }
         ]

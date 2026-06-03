@@ -1,0 +1,161 @@
+{
+  "version": "2.0",
+  "engine": "illustration_v2",
+  "document": {
+    "title": "放射源在线监管系统投标技术方案",
+    "projectName": "配图 V2 中文参考风格试点"
+  },
+  "sourceJob": "src\\bid_tool\\illustration_v2\\examples\\reference_style_job.json",
+  "illustrations": [
+    {
+      "id": "data_exchange_interface",
+      "type": "relationship.platform_interface",
+      "renderer": "template_svg",
+      "section": "3.2",
+      "caption": "图 3-2 数据交互接口关系",
+      "outputs": {
+        "svg": "assets/svg/data_exchange_interface.svg",
+        "png": "assets/png/data_exchange_interface.png"
+      },
+      "template": "platform.interface.v2",
+      "theme": "formal_blue",
+      "fit_score": 1.0,
+      "tier": 1,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 1,
+        "template": "platform.interface.v2",
+        "renderer": "template_svg",
+        "theme": "formal_blue",
+        "fit_score": 1.0,
+        "reasons": [
+          "Tier 1 selected: item fits a frozen SVG template contract.",
+          "Template platform.interface.v2 contract violations: 0."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "report_resilience_flow",
+      "type": "process.resilience_flow",
+      "renderer": "template_svg",
+      "section": "3.3",
+      "caption": "图 3-3 数据上报容错补传流程",
+      "outputs": {
+        "svg": "assets/svg/report_resilience_flow.svg",
+        "png": "assets/png/report_resilience_flow.png"
+      },
+      "template": "process.resilience.v2",
+      "theme": "formal_blue",
+      "fit_score": 1.0,
+      "tier": 1,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 1,
+        "template": "process.resilience.v2",
+        "renderer": "template_svg",
+        "theme": "formal_blue",
+        "fit_score": 1.0,
+        "reasons": [
+          "Tier 1 selected: item fits a frozen SVG template contract.",
+          "Template process.resilience.v2 contract violations: 0."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "inspection_taxonomy",
+      "type": "taxonomy.inspection_cards",
+      "renderer": "template_svg",
+      "section": "4.1",
+      "caption": "图 4-1 日常运维巡检体系分类",
+      "outputs": {
+        "svg": "assets/svg/inspection_taxonomy.svg",
+        "png": "assets/png/inspection_taxonomy.png"
+      },
+      "template": "inspection.cards.v2",
+      "theme": "formal_blue",
+      "fit_score": 1.0,
+      "tier": 1,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 1,
+        "template": "inspection.cards.v2",
+        "renderer": "template_svg",
+        "theme": "formal_blue",
+        "fit_score": 1.0,
+        "reasons": [
+          "Tier 1 selected: item fits a frozen SVG template contract.",
+          "Template inspection.cards.v2 contract violations: 0."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "severity_closure_process",
+      "type": "process.severity_closure",
+      "renderer": "template_svg",
+      "section": "5.2",
+      "caption": "图 5-2 故障分级响应与闭环流程",
+      "outputs": {
+        "svg": "assets/svg/severity_closure_process.svg",
+        "png": "assets/png/severity_closure_process.png"
+      },
+      "template": "severity.closure.v2",
+      "theme": "formal_blue",
+      "fit_score": 1.0,
+      "tier": 1,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 1,
+        "template": "severity.closure.v2",
+        "renderer": "template_svg",
+        "theme": "formal_blue",
+        "fit_score": 1.0,
+        "reasons": [
+          "Tier 1 selected: item fits a frozen SVG template contract.",
+          "Template severity.closure.v2 contract violations: 0."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "data_security_loop",
+      "type": "security.closed_loop",
+      "renderer": "template_svg",
+      "section": "6.1",
+      "caption": "图 6-1 数据安全保密保障体系",
+      "outputs": {
+        "svg": "assets/svg/data_security_loop.svg",
+        "png": "assets/png/data_security_loop.png"
+      },
+      "template": "security.loop.v2",
+      "theme": "formal_blue",
+      "fit_score": 1.0,
+      "tier": 1,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 1,
+        "template": "security.loop.v2",
+        "renderer": "template_svg",
+        "theme": "formal_blue",
+        "fit_score": 1.0,
+        "reasons": [
+          "Tier 1 selected: item fits a frozen SVG template contract.",
+          "Template security.loop.v2 contract violations: 0."
+        ],
+        "needs_human_review": false
+      }
+    }
+  ]
+}
