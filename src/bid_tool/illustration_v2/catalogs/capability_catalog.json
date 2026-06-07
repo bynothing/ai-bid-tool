@@ -19,6 +19,11 @@
       "summary": "Frozen SVG geometry with contract-first content injection."
     },
     {
+      "id": "drawio",
+      "tier": 2,
+      "summary": "Editable Draw.io source with optional SVG/PNG export through local Draw.io CLI."
+    },
+    {
       "id": "structured_svg_fallback",
       "tier": 2,
       "summary": "Simple deterministic SVG fallback for content that misses template constraints."

@@ -10,7 +10,8 @@ from .core.decision import plan_job
 from .core.manifest import write_manifest
 from .core.models import AssetRecord, IllustrationJob
 from .core.validator import validate_job
-from .renderers.template_svg import render_decision
+from .renderers.drawio import render_decision as render_drawio_decision
+from .renderers.template_svg import render_decision as render_template_decision
 
 
 def load_job(path: str | Path) -> IllustrationJob:
@@ -19,6 +20,9 @@ def load_job(path: str | Path) -> IllustrationJob:
     source = Path(path)
     raw = json.loads(source.read_text(encoding="utf-8"))
     return IllustrationJob.from_raw(raw, source=source)
+
+
+load = load_job
 
 
 def validate(path_or_job: str | Path | IllustrationJob) -> tuple[list[str], list[str]]:
@@ -43,6 +47,7 @@ def render(
     theme: str = "formal_blue",
     png: bool = False,
     png_scale: int = 2,
+    export_echarts: bool = True,
 ) -> list[AssetRecord]:
     """Render a job through the isolated v2 engine."""
 
@@ -54,7 +59,7 @@ def render(
     output_dir = Path(output).resolve()
     decisions = plan_job(job, build_capability_catalog())
     records = [
-        render_decision(job, decision, output_dir, theme=theme, png=png, png_scale=png_scale)
+        _render_decision(job, decision, output_dir, theme=theme, png=png, png_scale=png_scale)
         for decision in decisions
     ]
     if warnings and records:
@@ -67,6 +72,35 @@ def list_capabilities() -> dict[str, Any]:
     """Return the template and renderer capability catalog."""
 
     return build_capability_catalog().to_dict()
+
+
+def list_drawing_tools() -> list[dict[str, Any]]:
+    """Return renderer capabilities in a drawing-tool friendly shape."""
+
+    return [
+        {
+            "name": renderer["id"],
+            "kind": "external_cli" if renderer["id"] == "drawio" else "v2_renderer",
+            "tier": renderer["tier"],
+            "strengths": renderer["strengths"],
+            "weaknesses": renderer["weaknesses"],
+        }
+        for renderer in list_capabilities()["renderers"]
+    ]
+
+
+def _render_decision(
+    job: IllustrationJob,
+    decision,
+    output_dir: Path,
+    *,
+    theme: str,
+    png: bool,
+    png_scale: int,
+) -> AssetRecord:
+    if decision.renderer == "drawio":
+        return render_drawio_decision(job, decision, output_dir, theme=theme, png=png, png_scale=png_scale)
+    return render_template_decision(job, decision, output_dir, theme=theme, png=png, png_scale=png_scale)
 
 
 def _ensure_job(value: str | Path | IllustrationJob) -> IllustrationJob:

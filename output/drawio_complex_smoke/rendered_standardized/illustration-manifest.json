@@ -1,0 +1,198 @@
+{
+  "version": "2.0",
+  "engine": "illustration_v2",
+  "document": {
+    "title": "Draw.io 高复杂度典型图测试",
+    "projectName": "bid-tool 绘图工具复杂场景验证",
+    "scenario": "复杂系统方案投标图示"
+  },
+  "sourceJob": "output\\drawio_complex_smoke\\job.json",
+  "illustrations": [
+    {
+      "id": "complex_layered_architecture",
+      "type": "architecture.layered",
+      "renderer": "drawio",
+      "section": "1.1",
+      "caption": "复杂分层系统架构图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_layered_architecture.drawio",
+        "svg": "assets/drawio/complex_layered_architecture.svg",
+        "png": "assets/drawio/complex_layered_architecture.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "complex_deployment_topology",
+      "type": "architecture.deployment",
+      "renderer": "drawio",
+      "section": "1.2",
+      "caption": "复杂部署拓扑图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_deployment_topology.drawio",
+        "svg": "assets/drawio/complex_deployment_topology.svg",
+        "png": "assets/drawio/complex_deployment_topology.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "complex_integration_interface_map",
+      "type": "integration.interface_map",
+      "renderer": "drawio",
+      "section": "1.3",
+      "caption": "复杂接口集成关系图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_integration_interface_map.drawio",
+        "svg": "assets/drawio/complex_integration_interface_map.svg",
+        "png": "assets/drawio/complex_integration_interface_map.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "complex_incident_flowchart",
+      "type": "process.flowchart",
+      "renderer": "drawio",
+      "section": "1.4",
+      "caption": "复杂事件闭环处置流程图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_incident_flowchart.drawio",
+        "svg": "assets/drawio/complex_incident_flowchart.svg",
+        "png": "assets/drawio/complex_incident_flowchart.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "complex_network_topology",
+      "type": "network.topology",
+      "renderer": "drawio",
+      "section": "1.5",
+      "caption": "复杂网络拓扑图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_network_topology.drawio",
+        "svg": "assets/drawio/complex_network_topology.svg",
+        "png": "assets/drawio/complex_network_topology.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    },
+    {
+      "id": "complex_capability_matrix",
+      "type": "capability.matrix",
+      "renderer": "drawio",
+      "section": "1.6",
+      "caption": "复杂能力矩阵关系图",
+      "outputs": {
+        "drawio": "assets/drawio/complex_capability_matrix.drawio",
+        "svg": "assets/drawio/complex_capability_matrix.svg",
+        "png": "assets/drawio/complex_capability_matrix.png"
+      },
+      "template": null,
+      "theme": "formal_blue",
+      "fit_score": 0.9,
+      "tier": 2,
+      "degraded_from": null,
+      "needs_human_review": false,
+      "warnings": [],
+      "decision": {
+        "tier": 2,
+        "template": null,
+        "renderer": "drawio",
+        "theme": "formal_blue",
+        "fit_score": 0.9,
+        "reasons": [
+          "Tier 2 selected: explicit Draw.io renderer requested.",
+          "Output keeps editable .drawio source and optional SVG/PNG exports."
+        ],
+        "needs_human_review": false
+      }
+    }
+  ]
+}

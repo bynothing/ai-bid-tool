@@ -21,8 +21,8 @@ full = ["bid-tool[png,echarts_export]"]
 
 [project.scripts]
 bid-tool = "bid_tool.cli:main"
-bid-illustrate = "bid_tool.illustration.toolkit:main"
-bid-illustration-bundle = "bid_tool.illustration.standalone:main"
+bid-illustrate = "bid_tool.illustration_v2.toolkit:main"
+bid-illustration-bundle = "bid_tool.illustration_v2.standalone:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -30,5 +30,4 @@ where = ["src"]
 [tool.setuptools.package-data]
 "bid_tool.schemas" = ["*.json", "*.md"]
 "bid_tool.prompts" = ["*.md"]
-"bid_tool.illustration" = ["*.md", "echarts_workbench/**/*"]
 "bid_tool.illustration_v2" = ["**/*.md", "**/*.json", "**/*.svg", "**/.gitkeep"]

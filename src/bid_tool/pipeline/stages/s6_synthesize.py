@@ -79,7 +79,7 @@ def render_v2_job(s5_dir=None, images_dir=None, png=True, png_scale=2, export_ec
     rendering, and S6/S8 consume only the returned manifest.
     """
 
-    from bid_tool.illustration import api
+    from bid_tool.illustration_v2 import api
 
     s5_dir = Path(s5_dir) if s5_dir else Path.cwd() / 'output' / 's5_illustrations'
     job_path = s5_dir / 's5_illustration_job.json'

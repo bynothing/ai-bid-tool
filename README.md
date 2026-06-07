@@ -10,11 +10,13 @@
 
 | 文档 | 定位 |
 |------|------|
-| [src/bid_tool/illustration/ILLUSTRATION_CLI_USAGE.md](src/bid_tool/illustration/ILLUSTRATION_CLI_USAGE.md) | **配图工具使用** — 外部系统或本地单独调用配图工具的标准操作 |
-| [src/bid_tool/illustration/ILLUSTRATION_EXTERNAL_INTERFACE.md](src/bid_tool/illustration/ILLUSTRATION_EXTERNAL_INTERFACE.md) | **独立绘图接口** — 独立工具边界、CLI/API、输入输出契约 |
+| [src/bid_tool/illustration_v2/toolkit.py](src/bid_tool/illustration_v2/toolkit.py) | **配图工具入口** — 当前 `bid-illustrate` 命令入口与参数契约 |
 | [src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md](src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md) | **AI 配图接口** — AI 输出结构化 JSON 配图任务的协议规范 |
-| [src/bid_tool/illustration/ILLUSTRATION_PLATFORM_DESIGN.md](src/bid_tool/illustration/ILLUSTRATION_PLATFORM_DESIGN.md) | **平台设计方案** — v2 架构、渲染器选型逻辑、配色体系 |
-| [src/bid_tool/illustration/ILLUSTRATION_SOFTWARE_ARCHITECTURE.md](src/bid_tool/illustration/ILLUSTRATION_SOFTWARE_ARCHITECTURE.md) | **软件实现架构** — 分层结构、模块解耦、扩展机制 |
+| [WORKSPACE.md](WORKSPACE.md) | **持续开发入口** — 项目记忆系统、当前主线、工作区纪律 |
+| [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) | **文件结构说明** — 顶层目录、文档归位、源码归位规则 |
+| [docs/architecture/illustration-v2/current-architecture.md](docs/architecture/illustration-v2/current-architecture.md) | **平台设计方案** — v2 架构、渲染器选型逻辑、配色体系 |
+| [docs/standards/illustration/drawing-content-standard.md](docs/standards/illustration/drawing-content-standard.md) | **绘图内容规范** — 节点文字、箭头标签、复杂度、配色和布局约束 |
+| [docs/standards/illustration/drawio-integration.md](docs/standards/illustration/drawio-integration.md) | **Draw.io 集成** — 可编辑 `.drawio` 源文件、CLI 导出与 lint 规则 |
 | [src/bid_tool/pipeline/stages/BID_WRITING_ILLUSTRATION_STRATEGY.md](src/bid_tool/pipeline/stages/BID_WRITING_ILLUSTRATION_STRATEGY.md) | **配图策略** — S2/S3/S5/S6/S8 中的配图规划与审查流程 |
 | [src/bid_tool/pipeline/stages/BID_TOOL_ILLUSTRATION_ADAPTER.md](src/bid_tool/pipeline/stages/BID_TOOL_ILLUSTRATION_ADAPTER.md) | **调用方适配** — bid-tool 如何调用独立绘图工具 |
 | [CHANGELOG.md](./CHANGELOG.md) | 修改历史 |

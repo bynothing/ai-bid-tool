@@ -1,0 +1,351 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "Draw.io 高复杂度典型图测试",
+    "projectName": "bid-tool 绘图工具复杂场景验证",
+    "scenario": "复杂系统方案投标图示"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "palette": "engineering_blue",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "complex_layered_architecture",
+      "type": "architecture.layered",
+      "renderer": "drawio",
+      "intent": "验证多层、多节点、多链路分层架构图，表达从用户入口到数据治理、AI 能力、运维安全的完整系统。",
+      "insertion": {
+        "section": "1.1",
+        "caption": "复杂分层系统架构图"
+      },
+      "data": {
+        "title": "复杂分层系统架构图",
+        "layers": [
+          {
+            "title": "用户接入与展示层",
+            "items": [
+              { "id": "portal", "title": "统一门户", "description": "多端访问" },
+              { "id": "mobile", "title": "移动工作台", "description": "现场填报" },
+              { "id": "dashboard", "title": "态势大屏", "description": "综合展示" },
+              { "id": "open_api", "title": "开放接口", "description": "第三方接入" }
+            ]
+          },
+          {
+            "title": "业务协同与流程层",
+            "items": [
+              { "id": "workflow", "title": "流程编排", "description": "审批闭环" },
+              { "id": "task_center", "title": "任务中心", "description": "派发跟踪" },
+              { "id": "case_center", "title": "事件中心", "description": "问题处置" },
+              { "id": "rule_engine", "title": "规则引擎", "description": "自动分级" }
+            ]
+          },
+          {
+            "title": "服务能力与集成层",
+            "items": [
+              { "id": "gateway", "title": "API 网关", "description": "鉴权限流" },
+              { "id": "service_mesh", "title": "服务网格", "description": "弹性治理" },
+              { "id": "message_bus", "title": "消息总线", "description": "异步解耦" },
+              { "id": "adapter_hub", "title": "适配中心", "description": "协议转换" }
+            ]
+          },
+          {
+            "title": "数据治理与智能层",
+            "items": [
+              { "id": "data_lake", "title": "数据湖仓", "description": "统一汇聚" },
+              { "id": "quality", "title": "质量校验", "description": "规则核查" },
+              { "id": "knowledge", "title": "知识库", "description": "标准沉淀" },
+              { "id": "ai_engine", "title": "智能分析", "description": "预测预警" }
+            ]
+          },
+          {
+            "title": "运行支撑与安全层",
+            "items": [
+              { "id": "monitor", "title": "监控告警", "description": "指标日志" },
+              { "id": "audit", "title": "审计追踪", "description": "全链路留痕" },
+              { "id": "iam", "title": "统一身份", "description": "权限控制" },
+              { "id": "backup", "title": "备份容灾", "description": "高可用" }
+            ]
+          }
+        ],
+        "edges": [
+          { "from": "portal", "to": "workflow", "label": "发起业务" },
+          { "from": "mobile", "to": "task_center", "label": "现场任务" },
+          { "from": "dashboard", "to": "case_center", "label": "态势钻取" },
+          { "from": "open_api", "to": "gateway", "label": "外部调用" },
+          { "from": "workflow", "to": "gateway", "label": "服务编排" },
+          { "from": "task_center", "to": "message_bus", "label": "任务事件" },
+          { "from": "case_center", "to": "adapter_hub", "label": "联动处置" },
+          { "from": "rule_engine", "to": "ai_engine", "label": "规则模型" },
+          { "from": "gateway", "to": "data_lake", "label": "数据写入" },
+          { "from": "service_mesh", "to": "monitor", "label": "运行指标" },
+          { "from": "message_bus", "to": "quality", "label": "数据校验" },
+          { "from": "adapter_hub", "to": "knowledge", "label": "标准映射" },
+          { "from": "data_lake", "to": "backup", "label": "归档备份" },
+          { "from": "audit", "to": "iam", "label": "权限审计" }
+        ]
+      }
+    },
+    {
+      "id": "complex_deployment_topology",
+      "type": "architecture.deployment",
+      "renderer": "drawio",
+      "intent": "验证多区域部署拓扑，包含互联网区、接入区、应用区、数据区、运维安全区之间的跨区链路。",
+      "insertion": {
+        "section": "1.2",
+        "caption": "复杂部署拓扑图"
+      },
+      "data": {
+        "title": "复杂部署拓扑图",
+        "zones": [
+          {
+            "id": "internet",
+            "title": "互联网与外部单位区",
+            "nodes": [
+              { "id": "user_client", "title": "用户终端", "description": "PC/移动端" },
+              { "id": "third_system", "title": "外部系统", "description": "数据交换" },
+              { "id": "sms_mail", "title": "短信邮件", "description": "通知服务" }
+            ]
+          },
+          {
+            "id": "dmz",
+            "title": "边界接入区",
+            "nodes": [
+              { "id": "waf", "title": "WAF", "description": "攻击防护" },
+              { "id": "slb", "title": "负载均衡", "description": "流量分发" },
+              { "id": "api_edge", "title": "边界网关", "description": "接入鉴权" }
+            ]
+          },
+          {
+            "id": "app",
+            "title": "应用服务区",
+            "nodes": [
+              { "id": "app_cluster", "title": "应用集群", "description": "横向扩展" },
+              { "id": "job_cluster", "title": "调度集群", "description": "批处理" },
+              { "id": "mq_cluster", "title": "消息集群", "description": "削峰解耦" },
+              { "id": "cache_cluster", "title": "缓存集群", "description": "热点加速" }
+            ]
+          },
+          {
+            "id": "data",
+            "title": "数据资源区",
+            "nodes": [
+              { "id": "db_primary", "title": "主数据库", "description": "事务存储" },
+              { "id": "db_standby", "title": "备数据库", "description": "容灾切换" },
+              { "id": "object_store", "title": "对象存储", "description": "附件归档" },
+              { "id": "search_engine", "title": "检索引擎", "description": "全文检索" }
+            ]
+          },
+          {
+            "id": "ops",
+            "title": "运维安全区",
+            "nodes": [
+              { "id": "bastion", "title": "堡垒机", "description": "运维审计" },
+              { "id": "log_center", "title": "日志中心", "description": "集中留痕" },
+              { "id": "monitor_center", "title": "监控中心", "description": "告警联动" },
+              { "id": "backup_center", "title": "备份中心", "description": "定时备份" }
+            ]
+          }
+        ],
+        "edges": [
+          { "from": "user_client", "to": "waf", "label": "HTTPS" },
+          { "from": "third_system", "to": "api_edge", "label": "专线/API" },
+          { "from": "waf", "to": "slb", "label": "清洗流量" },
+          { "from": "slb", "to": "app_cluster", "label": "业务请求" },
+          { "from": "api_edge", "to": "mq_cluster", "label": "交换消息" },
+          { "from": "app_cluster", "to": "cache_cluster", "label": "缓存读写" },
+          { "from": "app_cluster", "to": "db_primary", "label": "事务读写" },
+          { "from": "job_cluster", "to": "object_store", "label": "归档文件" },
+          { "from": "mq_cluster", "to": "search_engine", "label": "索引更新" },
+          { "from": "db_primary", "to": "db_standby", "label": "同步复制" },
+          { "from": "log_center", "to": "monitor_center", "label": "指标告警" },
+          { "from": "bastion", "to": "app_cluster", "label": "受控运维" },
+          { "from": "backup_center", "to": "db_standby", "label": "备份校验" },
+          { "from": "sms_mail", "to": "monitor_center", "label": "告警通知" }
+        ]
+      }
+    },
+    {
+      "id": "complex_integration_interface_map",
+      "type": "integration.interface_map",
+      "renderer": "drawio",
+      "intent": "验证多系统接口集成关系，包含网关、适配、目标平台、审计、重试与异常回补路径。",
+      "insertion": {
+        "section": "1.3",
+        "caption": "复杂接口集成关系图"
+      },
+      "data": {
+        "title": "复杂接口集成关系图",
+        "nodes": [
+          { "id": "business", "title": "业务系统", "description": "主数据发起方" },
+          { "id": "gateway", "title": "集成网关", "description": "签名鉴权/限流" },
+          { "id": "adapter", "title": "协议适配器", "description": "字段映射/协议转换" },
+          { "id": "target", "title": "目标平台", "description": "接口接收方" },
+          { "id": "audit", "title": "审计中心", "description": "流水留痕" },
+          { "id": "retry", "title": "重试补偿", "description": "失败回补" },
+          { "id": "quality_gate", "title": "质量闸口", "description": "规则校验" },
+          { "id": "data_catalog", "title": "数据目录", "description": "标准口径" }
+        ],
+        "edges": [
+          { "from": "business", "to": "gateway", "label": "业务请求" },
+          { "from": "gateway", "to": "adapter", "label": "统一协议" },
+          { "from": "adapter", "to": "target", "label": "目标接口" },
+          { "from": "adapter", "to": "quality_gate", "label": "质量校验" },
+          { "from": "quality_gate", "to": "data_catalog", "label": "口径匹配" },
+          { "from": "gateway", "to": "audit", "label": "调用日志" },
+          { "from": "target", "to": "audit", "label": "响应结果" },
+          { "from": "target", "to": "retry", "label": "异常失败" },
+          { "from": "retry", "to": "adapter", "label": "补偿重放" }
+        ]
+      }
+    },
+    {
+      "id": "complex_incident_flowchart",
+      "type": "process.flowchart",
+      "renderer": "drawio",
+      "intent": "验证复杂闭环流程图，包含发现、判断、分级、并行处置、复核、归档和复盘。",
+      "insertion": {
+        "section": "1.4",
+        "caption": "复杂事件闭环处置流程图"
+      },
+      "data": {
+        "title": "复杂事件闭环处置流程图",
+        "steps": [
+          { "id": "start", "title": "开始：监测发现", "description": "自动告警/人工上报" },
+          { "id": "verify", "title": "判断：真实性核验", "description": "去重、过滤、确认" },
+          { "id": "grade", "title": "判断：影响分级", "description": "范围、时效、风险" },
+          { "id": "dispatch", "title": "处置派单", "description": "责任组与时限" },
+          { "id": "handle", "title": "现场处置", "description": "定位、修复、反馈" },
+          { "id": "coordinate", "title": "跨部门协同", "description": "升级联动" },
+          { "id": "review", "title": "复核验收", "description": "效果确认" },
+          { "id": "archive", "title": "归档闭环", "description": "证据留存" },
+          { "id": "retrospective", "title": "复盘优化", "description": "规则改进" }
+        ],
+        "edges": [
+          { "from": "start", "to": "verify", "label": "告警进入" },
+          { "from": "verify", "to": "grade", "label": "确认有效" },
+          { "from": "grade", "to": "dispatch", "label": "一般/严重" },
+          { "from": "dispatch", "to": "handle", "label": "派发任务" },
+          { "from": "dispatch", "to": "coordinate", "label": "需要协同" },
+          { "from": "handle", "to": "review", "label": "处理完成" },
+          { "from": "coordinate", "to": "review", "label": "协同反馈" },
+          { "from": "review", "to": "archive", "label": "通过" },
+          { "from": "archive", "to": "retrospective", "label": "沉淀知识" },
+          { "from": "review", "to": "dispatch", "label": "不通过退回" }
+        ]
+      }
+    },
+    {
+      "id": "complex_network_topology",
+      "type": "network.topology",
+      "renderer": "drawio",
+      "intent": "验证复杂网络拓扑图，包含核心、汇聚、接入、安全、管理等区域以及多条链路。",
+      "insertion": {
+        "section": "1.5",
+        "caption": "复杂网络拓扑图"
+      },
+      "data": {
+        "title": "复杂网络拓扑图",
+        "zones": [
+          {
+            "title": "核心交换区",
+            "devices": [
+              { "id": "core_a", "title": "核心交换 A", "description": "主链路" },
+              { "id": "core_b", "title": "核心交换 B", "description": "备链路" }
+            ]
+          },
+          {
+            "title": "安全边界区",
+            "devices": [
+              { "id": "fw_a", "title": "防火墙 A", "description": "南北向防护" },
+              { "id": "ids", "title": "入侵检测", "description": "威胁识别" },
+              { "id": "vpn", "title": "VPN 网关", "description": "远程接入" }
+            ]
+          },
+          {
+            "title": "业务接入区",
+            "devices": [
+              { "id": "access_1", "title": "接入交换 1", "description": "办公接入" },
+              { "id": "access_2", "title": "接入交换 2", "description": "终端接入" },
+              { "id": "iot_gateway", "title": "物联接入", "description": "设备采集" }
+            ]
+          },
+          {
+            "title": "服务器区",
+            "devices": [
+              { "id": "compute_pool", "title": "计算资源池", "description": "虚拟化集群" },
+              { "id": "storage_pool", "title": "存储资源池", "description": "块/对象存储" },
+              { "id": "backup_net", "title": "备份网络", "description": "隔离备份" }
+            ]
+          },
+          {
+            "title": "管理监控区",
+            "devices": [
+              { "id": "nms", "title": "网管平台", "description": "拓扑监测" },
+              { "id": "log_audit", "title": "日志审计", "description": "安全留痕" },
+              { "id": "jump_server", "title": "运维跳板", "description": "受控访问" }
+            ]
+          }
+        ],
+        "edges": [
+          { "from": "core_a", "to": "core_b", "label": "堆叠/VRRP" },
+          { "from": "fw_a", "to": "core_a", "label": "主链路" },
+          { "from": "fw_a", "to": "core_b", "label": "备链路" },
+          { "from": "ids", "to": "fw_a", "label": "镜像流量" },
+          { "from": "vpn", "to": "fw_a", "label": "远程隧道" },
+          { "from": "core_a", "to": "access_1", "label": "办公 VLAN" },
+          { "from": "core_b", "to": "access_2", "label": "终端 VLAN" },
+          { "from": "access_2", "to": "iot_gateway", "label": "采集专网" },
+          { "from": "core_a", "to": "compute_pool", "label": "业务流量" },
+          { "from": "core_b", "to": "storage_pool", "label": "存储流量" },
+          { "from": "backup_net", "to": "storage_pool", "label": "备份链路" },
+          { "from": "nms", "to": "core_a", "label": "SNMP/Telemetry" },
+          { "from": "log_audit", "to": "fw_a", "label": "安全日志" },
+          { "from": "jump_server", "to": "compute_pool", "label": "运维访问" }
+        ]
+      }
+    },
+    {
+      "id": "complex_capability_matrix",
+      "type": "capability.matrix",
+      "renderer": "drawio",
+      "intent": "验证通用复杂关系图，表达多能力域、支撑组件和治理闭环。",
+      "insertion": {
+        "section": "1.6",
+        "caption": "复杂能力矩阵关系图"
+      },
+      "data": {
+        "title": "复杂能力矩阵关系图",
+        "nodes": [
+          { "id": "planning", "title": "方案规划", "description": "目标拆解" },
+          { "id": "data_govern", "title": "数据治理", "description": "标准/质量/血缘" },
+          { "id": "service_ops", "title": "服务运营", "description": "工单/监控/评价" },
+          { "id": "risk_control", "title": "风险控制", "description": "预警/应急/闭环" },
+          { "id": "security", "title": "安全合规", "description": "身份/审计/加密" },
+          { "id": "delivery", "title": "交付管理", "description": "计划/质量/验收" },
+          { "id": "knowledge_base", "title": "知识沉淀", "description": "标准模板" },
+          { "id": "metric_center", "title": "指标中心", "description": "量化评价" },
+          { "id": "automation", "title": "自动化执行", "description": "任务编排" },
+          { "id": "ai_assist", "title": "智能辅助", "description": "推荐/预测" },
+          { "id": "open_ecosystem", "title": "开放生态", "description": "API/插件" },
+          { "id": "continuous_improve", "title": "持续改进", "description": "复盘优化" }
+        ],
+        "edges": [
+          { "from": "planning", "to": "delivery", "label": "计划落地" },
+          { "from": "delivery", "to": "metric_center", "label": "进度质量" },
+          { "from": "data_govern", "to": "ai_assist", "label": "可信数据" },
+          { "from": "service_ops", "to": "risk_control", "label": "异常识别" },
+          { "from": "security", "to": "open_ecosystem", "label": "安全开放" },
+          { "from": "automation", "to": "service_ops", "label": "自动执行" },
+          { "from": "knowledge_base", "to": "automation", "label": "规则模板" },
+          { "from": "metric_center", "to": "continuous_improve", "label": "评价反馈" },
+          { "from": "risk_control", "to": "continuous_improve", "label": "复盘整改" },
+          { "from": "ai_assist", "to": "planning", "label": "智能建议" },
+          { "from": "open_ecosystem", "to": "data_govern", "label": "数据回流" },
+          { "from": "continuous_improve", "to": "knowledge_base", "label": "沉淀知识" }
+        ]
+      }
+    }
+  ]
+}

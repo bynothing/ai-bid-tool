@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="bid-tool" modified="2026-06-06T02:05:32+00:00" agent="bid-tool drawio renderer" version="30.0.4">
+  <diagram id="complex_integration_interface_map" name="复杂接口集成关系图">
+    <mxGraphModel dx="1180" dy="560" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1180" pageHeight="560" background="#f7fafc" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#0f2f57;strokeColor=#0f2f57;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1110" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;复杂接口集成关系图&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;Draw.io 高复杂度典型图测试&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=24;fontStyle=1;fontColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=16;" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="1060" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="C_interface_left" value="调用方与网关" style="rounded=1;whiteSpace=wrap;html=1;container=1;pointerEvents=0;arcSize=4;fillColor=#f3f8ff;strokeColor=#2563eb;fontStyle=1;fontSize=14;fontColor=#1e3a5f;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="130" width="430" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="C_interface_right" value="目标平台与审计闭环" style="rounded=1;whiteSpace=wrap;html=1;container=1;pointerEvents=0;arcSize=4;fillColor=#f8fbff;strokeColor=#64748b;fontStyle=1;fontSize=14;fontColor=#1e3a5f;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="70" width="440" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="business" value="&lt;b&gt;业务系统&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;主数据发起方&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#eaf3ff;strokeColor=#2563eb;" vertex="1" parent="1">
+          <mxGeometry x="80" y="250" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" value="&lt;b&gt;集成网关&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;签名鉴权/限流&lt;/font&gt;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#fff7ed;strokeColor=#f97316;" vertex="1" parent="1">
+          <mxGeometry x="300" y="160" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="adapter" value="&lt;b&gt;协议适配器&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;字段映射/协议转换&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#f8fafc;strokeColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="520" y="250" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="target" value="&lt;b&gt;目标平台&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;接口接收方&lt;/font&gt;" style="rounded=1;arcSize=10;dashed=1;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#f8fafc;strokeColor=#94a3b8;" vertex="1" parent="1">
+          <mxGeometry x="740" y="160" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" value="&lt;b&gt;审计中心&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;流水留痕&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#eff6ff;strokeColor=#3b82f6;" vertex="1" parent="1">
+          <mxGeometry x="960" y="90" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="retry" value="&lt;b&gt;重试补偿&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;失败回补&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#f1f5f9;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="960" y="330" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="quality_gate" value="&lt;b&gt;质量闸口&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;规则校验&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#eaf3ff;strokeColor=#2563eb;" vertex="1" parent="1">
+          <mxGeometry x="300" y="570" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="data_catalog" value="&lt;b&gt;数据目录&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;标准口径&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontSize=13;fontColor=#1f3654;spacing=10;shadow=0;fillColor=#eef6ff;strokeColor=#1d4ed8;" vertex="1" parent="1">
+          <mxGeometry x="520" y="570" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;" edge="1" parent="1" source="business" target="gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="288" />
+              <mxPoint x="280" y="198" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E2" value="统一协议" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="gateway" target="adapter">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="198" />
+              <mxPoint x="500" y="288" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E3" value="目标接口" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.72;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="adapter" target="target">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="288" />
+              <mxPoint x="720" y="198" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E4" value="质量校验" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.18;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="adapter" target="quality_gate">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="608" y="450" />
+              <mxPoint x="388" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E5" value="口径匹配" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="quality_gate" target="data_catalog">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E6" value="调用日志" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.28;exitDx=0;exitDy=0;entryX=0;entryY=0.28;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="gateway" target="audit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E7" value="响应结果" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="target" target="audit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E8" value="异常失败" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.72;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="target" target="retry">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="198" />
+              <mxPoint x="940" y="368" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E9" value="补偿重放" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.18;entryDx=0;entryDy=0;strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;endArrow=block;endFill=1;labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;" edge="1" parent="1" source="retry" target="adapter">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="368" />
+              <mxPoint x="830" y="288" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

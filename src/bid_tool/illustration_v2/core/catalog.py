@@ -264,6 +264,16 @@ def build_capability_catalog() -> CapabilityCatalog:
                 weaknesses=("only registered templates", "strict capacity limits"),
             ),
             RendererCapability(
+                id="drawio",
+                tier=2,
+                strengths=(
+                    "editable .drawio source",
+                    "architecture and topology containers",
+                    "optional SVG/PNG export through Draw.io CLI",
+                ),
+                weaknesses=("requires Draw.io CLI for image export", "less template-strict than frozen SVG"),
+            ),
+            RendererCapability(
                 id="structured_svg_fallback",
                 tier=2,
                 strengths=("always local", "safe simple layout", "works without browser tools"),

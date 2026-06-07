@@ -36,7 +36,7 @@ def cmd_gate(args):
 
 
 def cmd_illustrate(args):
-    from .illustration.toolkit import main as illustrate_main
+    from .illustration_v2.toolkit import main as illustrate_main
     # Patch sys.argv for the illustration toolkit's argparse
     original_argv = sys.argv
     try:
@@ -62,7 +62,7 @@ def cmd_illustrate(args):
 
 
 def cmd_illustration_bundle(args):
-    from .illustration.standalone import build_bundle
+    from .illustration_v2.standalone import build_bundle
 
     output = build_bundle(
         args.output,

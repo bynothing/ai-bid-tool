@@ -21,6 +21,47 @@
 
 ---
 
+## 2026-06-07 — v1.3.0
+
+**类型**：重大重构 + 功能修改 + Schema 更新 + 文档更新
+
+### 修改内容
+
+**1. 配图工具主线迁移到 `illustration_v2`**
+
+- 用户可见的 `bid-illustrate` 和 `bid-illustration-bundle` 入口切换到 `bid_tool.illustration_v2`。
+- 旧版 `src/bid_tool/illustration/` 从主线中移除，后续新能力以 `illustration_v2` 为入口。
+- `illustration_v2` 增加 Draw.io 渲染器、standalone 构建入口、toolkit CLI 与能力目录更新。
+
+**2. 配图决策与接口契约增强**
+
+- 更新 `illustration_job_v2.schema.json` 与 `AI_ILLUSTRATION_API_V2.md`。
+- `illustration_v2` 决策层、能力目录和 API 支持更清晰的 renderer/tier/fallback 记录方向。
+- S6 合成阶段适配 v2 配图 manifest 和渲染调用。
+
+**3. 项目记忆系统与文件结构整理**
+
+- 新增 `WORKSPACE.md` 和 `docs/workspace/`，用于记录状态、路线图、决策、知识地图和交接信息。
+- 新增 `docs/PROJECT_STRUCTURE.md`，明确项目级文档、源码、测试、输出产物的归位规则。
+- 长期架构文档迁移到 `docs/architecture/illustration-v2/`。
+- 配图内容标准和 Draw.io 集成规范迁移到 `docs/standards/illustration/`。
+
+### 影响范围
+
+- `src/bid_tool/illustration_v2/`
+- `src/bid_tool/illustration/`
+- `src/bid_tool/cli.py`
+- `src/bid_tool/pipeline/stages/s6_synthesize.py`
+- `src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md`
+- `src/bid_tool/schemas/illustration_job_v2.schema.json`
+- `tests/`
+- `README.md`
+- `WORKSPACE.md`
+- `docs/`
+- `entrypoint/ENTRYPOINT.md`
+
+---
+
 ## 2026-05-30 — v1.2.0
 
 **类型**：功能新增 + 流水线调整 + Schema 更新

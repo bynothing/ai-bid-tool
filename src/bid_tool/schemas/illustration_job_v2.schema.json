@@ -75,7 +75,7 @@
         "editableVector": { "type": "boolean" },
         "preciseConnectors": { "type": "boolean" },
         "rendererPreference": {
-          "enum": ["html_css", "svg_native", "echarts_html", "graphviz", "mermaid"]
+          "enum": ["html_css", "svg_native", "echarts_html", "graphviz", "mermaid", "drawio"]
         },
         "palette": {
           "enum": [
@@ -103,7 +103,7 @@
         "id": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$" },
         "type": { "type": "string", "minLength": 1 },
         "renderer": {
-          "enum": ["auto", "html_css", "svg_native", "echarts_html", "graphviz", "mermaid", "svg", "echarts"]
+          "enum": ["auto", "html_css", "svg_native", "echarts_html", "graphviz", "mermaid", "drawio", "svg", "echarts"]
         },
         "intent": { "type": "string", "minLength": 1 },
         "insertion": { "$ref": "#/$defs/insertion" },

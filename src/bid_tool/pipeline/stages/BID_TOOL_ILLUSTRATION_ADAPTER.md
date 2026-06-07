@@ -3,7 +3,7 @@
 本文只描述 bid-tool 作为调用方时如何接入独立绘图工具。绘图工具自身接口见：
 
 ```text
-src/bid_tool/illustration/ILLUSTRATION_EXTERNAL_INTERFACE.md
+src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md
 ```
 
 ## 1. 推荐链路
@@ -11,9 +11,9 @@ src/bid_tool/illustration/ILLUSTRATION_EXTERNAL_INTERFACE.md
 ```text
 S2/S3 章节与插图占位
   -> S5 生成 Illustration Job v2
-  -> illustration.api.validate(job)
-  -> illustration.api.plan(job)
-  -> illustration.api.render(job, output/s5_illustrations/images, png=True)
+  -> illustration_v2.api.validate(job)
+  -> illustration_v2.api.plan(job)
+  -> illustration_v2.api.render(job, output/s5_illustrations/images, png=True)
   -> 读取 illustration-manifest.json
   -> S6/S8 按 manifest.outputs 插入文档
 ```
@@ -59,7 +59,7 @@ S5 不生成：
 Python API：
 
 ```python
-from bid_tool.illustration import api
+from bid_tool.illustration_v2 import api
 
 job = api.load("output/s5_illustrations/s5_illustration_job.json")
 errors, warnings = api.validate(job)

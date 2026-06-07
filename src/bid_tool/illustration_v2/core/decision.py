@@ -11,6 +11,20 @@ def plan_job(job: IllustrationJob, catalog: CapabilityCatalog) -> list[PlanDecis
 
 
 def _plan_item(item: IllustrationItem, catalog: CapabilityCatalog, theme: str) -> PlanDecision:
+    if item.renderer in {"drawio", "draw.io"} or item.visual.get("rendererPreference") == "drawio":
+        return PlanDecision(
+            item=item,
+            tier=2,
+            renderer="drawio",
+            template_id=None,
+            theme=theme,
+            fit_score=0.9,
+            reasons=[
+                "Tier 2 selected: explicit Draw.io renderer requested.",
+                "Output keeps editable .drawio source and optional SVG/PNG exports.",
+            ],
+        )
+
     candidates = [template for template in catalog.templates if template.diagram_type == item.type]
     best_template, best_score, best_issues = _best_template(item, candidates)
 

@@ -212,13 +212,14 @@ bid-tool illustrate --job examples/示例_配图平台v2任务.json --no-echarts
 ### 5.3 Python API 接口
 
 ```python
-from bid_tool.illustration import api
+from bid_tool.illustration_v2 import api
 
 job = api.load("job.json")
 errors, warnings = api.validate(job)
 decisions = api.plan(job)
 records = api.render(job, "output/illustrations", png=True)
-types = api.list_diagram_types()
+catalog = api.list_capabilities()
+tools = api.list_drawing_tools()
 ```
 
 ### 5.4 输出 Manifest 接口

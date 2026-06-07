@@ -1,11 +1,8 @@
-"""Isolated illustration v2 package.
+"""Illustration v2 public package.
 
-This package is intentionally separate from ``bid_tool.illustration``.  It is a
-fresh implementation of the template-first illustration architecture described
-in ``src/bid_tool/devlop-plan/illustration_refactor_plan.md``.
+This is the active illustration engine for bid-tool.
 """
 
-from .api import list_capabilities, load_job, plan, render, validate
+from .api import list_capabilities, list_drawing_tools, load, load_job, plan, render, validate
 
-__all__ = ["list_capabilities", "load_job", "plan", "render", "validate"]
-
+__all__ = ["list_capabilities", "list_drawing_tools", "load", "load_job", "plan", "render", "validate"]

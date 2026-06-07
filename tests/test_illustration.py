@@ -1,205 +1,129 @@
-"""Test illustration subsystem."""
-
-import pytest
-
-
-def test_icons_module():
-    """icons module should have 46+ icons."""
-    from bid_tool.illustration.icons import ICONS
-
-    assert len(ICONS) >= 46
-    for key, (label, svg_path) in ICONS.items():
-        assert isinstance(key, str)
-        assert isinstance(label, str)
-        assert isinstance(svg_path, str)
-        assert "<path" in svg_path or "<circle" in svg_path or "<rect" in svg_path
+"""Compatibility tests for the active illustration_v2 drawing interfaces."""
+from pathlib import Path
 
 
-def test_themes_module():
-    """themes module should have 4 legacy SVG themes with expected color keys."""
-    from bid_tool.illustration.themes import THEMES
-
-    expected_themes = {"clarity_blue", "navy_teal", "royal_gold", "slate_emerald"}
-    assert set(THEMES.keys()) == expected_themes
-
-    for name, theme in THEMES.items():
-        for key in ("bg", "header_a", "header_b", "accent", "text"):
-            assert key in theme, f"{name} missing {key!r}"
-
-
-def test_v2_job_model_rejects_v1_jobs():
-    """The public illustration platform should no longer accept v1 jobs."""
-    from bid_tool.illustration.core.job import IllustrationJob
-
-    with pytest.raises(ValueError, match="version '2.0'"):
-        IllustrationJob.from_raw({
-            "version": "1.0",
-            "document": {"title": "Test"},
-            "illustrations": [],
-        })
-
-
-def test_svg_renderer_imports():
-    """svg_renderer should import without errors."""
-    from bid_tool.illustration.svg_renderer import ICONS, RENDERERS, WIDTH
-
-    assert ICONS
-    assert len(RENDERERS) >= 6
-    assert WIDTH > 0
-
-
-def test_svg_renderer_has_all_diagram_types():
-    """svg_renderer should support the core native diagram types."""
-    from bid_tool.illustration.svg_renderer import RENDERERS
-
-    expected = {
-        "layered_architecture",
-        "flowchart",
-        "sequence_diagram",
-        "swimlane_flowchart",
-        "capability_map",
-        "relationship_map",
-    }
-    assert expected.issubset(set(RENDERERS.keys()))
-
-
-def test_echarts_workbench_files():
-    """echarts_workbench should have required files."""
-    from bid_tool.illustration.toolkit import WEB_RUNTIME_DIR
-
-    for fname in ("index.html", "app.js", "styles.css"):
-        assert (WEB_RUNTIME_DIR / fname).exists(), f"Missing: {fname}"
-    assert (WEB_RUNTIME_DIR / "vendor" / "echarts.min.js").exists()
-
-
-def test_platform_registry_contains_bid_diagrams():
-    """Platform registry should expose semantic bid diagram types."""
-    from bid_tool.illustration.core.registry import get_registry
-
-    registry = get_registry()
-    assert registry["architecture.layered"].default_renderer == "html_css"
-    assert registry["timeline.gantt"].default_renderer == "html_css"
-    assert registry["matrix.risk"].default_renderer == "html_css"
-    assert registry["integration.interface_map"].default_renderer == "html_css"
-    assert "mermaid" in registry["process.flowchart"].renderers
-    assert registry["network.topology"].default_renderer == "graphviz"
-    assert registry["chart.bar_line"].default_renderer == "echarts_html"
-
-
-def test_platform_supports_mermaid_and_graphviz_renderers():
-    """Platform should expose concrete adapters for Mermaid and Graphviz."""
-    from bid_tool.illustration.platform import SUPPORTED_RENDERERS
-
-    assert "mermaid" in SUPPORTED_RENDERERS
-    assert "graphviz" in SUPPORTED_RENDERERS
-
-
-def test_platform_routes_svg_aliases():
-    """Router should still map SVG-native diagram ids to platform renderers."""
-    from bid_tool.illustration.core.job import IllustrationItem
-    from bid_tool.illustration.core.router import route_item
-
-    item = IllustrationItem(
-        id="arch",
-        type="layered_architecture",
-        renderer="auto",
-        insertion={"caption": "Figure 1 Architecture"},
-        data={"title": "Architecture"},
-    )
-    route = route_item(item)
-    assert route.type == "architecture.layered"
-    assert route.renderer == "html_css"
-    assert route.legacy_type == "layered_architecture"
-
-
-def test_platform_decides_svg_for_dense_or_precise_frames():
-    """Auto routing should preserve SVG for dense or precise vector diagrams."""
-    from bid_tool.illustration.core.job import IllustrationItem
-    from bid_tool.illustration.core.router import route_item
-
-    item = IllustrationItem(
-        id="dense_arch",
-        type="architecture.layered",
-        renderer="auto",
-        insertion={"caption": "Dense architecture"},
-        data={
-            "title": "Dense architecture",
-            "layers": [
-                {"label": "L1", "items": [{"title": f"N{i}"} for i in range(13)]},
-                {"label": "L2", "items": [{"title": f"M{i}"} for i in range(13)]},
-            ],
-        },
-    )
-    route = route_item(item)
-    assert route.renderer == "svg_native"
-    assert route.reasons
-
-
-def test_platform_decides_html_for_interface_map():
-    """Interface maps should use the figure-3 bid style renderer."""
-    from bid_tool.illustration.core.job import IllustrationItem
-    from bid_tool.illustration.core.router import route_item
-
-    item = IllustrationItem(
-        id="interface_map",
-        type="integration.interface_map",
-        renderer="auto",
-        insertion={"caption": "Interface map"},
-        data={"title": "Interface map"},
-    )
-    assert route_item(item).renderer == "html_css"
-
-
-def test_platform_v2_job_validation():
-    """v2 semantic validation should pass for a minimal renderable job."""
-    from bid_tool.illustration.core.job import IllustrationJob
-    from bid_tool.illustration.core.validator import validate_platform_job
-
-    job = IllustrationJob.from_raw({
+def _drawio_job():
+    return {
         "version": "2.0",
-        "document": {"title": "Test"},
+        "document": {"title": "Draw.io 迁移测试"},
         "illustrations": [
             {
-                "id": "trend",
-                "type": "chart.bar_line",
-                "renderer": "auto",
-                "intent": "show trend",
-                "insertion": {"section": "1", "caption": "Figure 1 Trend"},
+                "id": "drawio_arch",
+                "type": "architecture.layered",
+                "renderer": "drawio",
+                "intent": "验证 Draw.io 已注册到 illustration_v2",
+                "insertion": {"section": "测试章节", "caption": "Draw.io 系统框图"},
                 "data": {
-                    "source": "test data",
-                    "categories": ["A", "B"],
-                    "bar": {"name": "Count", "values": [1, 2]},
-                    "line": {"name": "Rate", "values": [50, 80]},
+                    "title": "系统框图",
+                    "layers": [
+                        {
+                            "title": "接入层",
+                            "items": [
+                                {"id": "portal", "title": "门户"},
+                                {"id": "gateway", "title": "API 网关"},
+                            ],
+                        },
+                        {
+                            "title": "服务层",
+                            "items": [
+                                {"id": "service", "title": "业务服务"},
+                                {"id": "db", "title": "数据仓库"},
+                            ],
+                        },
+                    ],
+                    "edges": [
+                        {"from": "portal", "to": "gateway", "label": "请求"},
+                        {"from": "gateway", "to": "service", "label": "编排"},
+                        {"from": "service", "to": "db", "label": "读写"},
+                    ],
                 },
             }
         ],
-    })
-    assert validate_platform_job(job) == []
+    }
 
 
-def test_public_api_facade_plans_job():
-    """Public API should expose stable planning surface for external callers."""
-    from bid_tool.illustration import api
+def test_illustration_v2_exports_drawing_tools():
+    from bid_tool.illustration_v2 import list_drawing_tools
 
-    job = api.load("examples/示例_接口关系与数据交互图.json")
-    errors, warnings = api.validate(job)
-    decisions = api.plan(job)
-    types = api.list_diagram_types()
+    tools = list_drawing_tools()
 
-    assert errors == []
-    assert isinstance(warnings, list)
-    assert decisions[0]["renderer"] == "html_css"
-    assert any(item["id"] == "integration.interface_map" for item in types)
+    assert any(tool["name"] == "drawio" and tool["kind"] == "external_cli" for tool in tools)
 
 
-def test_standalone_bundle_builds_minimal_runtime(tmp_path):
-    """Standalone bundle should contain the illustration runtime, not the full pipeline."""
-    from bid_tool.illustration.standalone import build_bundle
+def test_illustration_v2_plans_explicit_drawio_renderer():
+    from bid_tool.illustration_v2 import api
+    from bid_tool.illustration_v2.core.models import IllustrationJob
 
-    bundle = build_bundle(tmp_path / "bundle", include_examples=False)
+    decision = api.plan(IllustrationJob.from_raw(_drawio_job()))[0]
 
-    assert (bundle / "run_illustration.py").exists()
-    assert (bundle / "requirements.txt").exists()
-    assert (bundle / "src" / "bid_tool" / "illustration" / "toolkit.py").exists()
-    assert (bundle / "src" / "bid_tool" / "schemas" / "illustration_job_v2.schema.json").exists()
-    assert not (bundle / "src" / "bid_tool" / "pipeline").exists()
+    assert decision["renderer"] == "drawio"
+    assert decision["decision"]["tier"] == 2
+    assert decision["decision"]["template"] is None
+
+
+def test_illustration_v2_drawio_renders_editable_source(tmp_path, monkeypatch):
+    from bid_tool.illustration_v2 import api
+    from bid_tool.illustration_v2.core.models import IllustrationJob
+    from bid_tool.illustration_v2.renderers import drawio
+
+    monkeypatch.setattr(drawio, "_find_drawio_command", lambda: None)
+
+    records = api.render(IllustrationJob.from_raw(_drawio_job()), tmp_path, png=True)
+
+    assert records[0].renderer == "drawio"
+    assert records[0].outputs["drawio"].endswith(".drawio")
+    assert "png" not in records[0].outputs
+    assert (tmp_path / records[0].outputs["drawio"]).exists()
+    assert (tmp_path / "illustration-manifest.json").exists()
+
+
+def test_illustration_v2_toolkit_schema_dir_exists():
+    from bid_tool.illustration_v2.toolkit import SCHEMA_DIR
+
+    assert Path(SCHEMA_DIR, "illustration_job_v2.schema.json").exists()
+
+
+def test_drawio_content_standard_normalizes_labels_and_subtitles():
+    from bid_tool.illustration_v2.core.models import IllustrationJob
+    from bid_tool.illustration_v2.renderers.drawio import _drawio_xml
+
+    raw = _drawio_job()
+    raw["illustrations"][0]["data"]["layers"][0]["items"][0]["description"] = "接入层"
+    raw["illustrations"][0]["data"]["edges"] = [
+        {"from": "portal", "to": "gateway", "label": "请求"},
+        {"from": "gateway", "to": "service", "label": "请求"},
+        {"from": "service", "to": "db", "label": "HTTPS"},
+    ]
+    item = IllustrationJob.from_raw(raw).illustrations[0]
+    xml = _drawio_xml(IllustrationJob.from_raw(raw), item)
+
+    assert "请求" not in xml
+    assert "HTTPS" in xml
+    assert "门户&lt;/b&gt;&lt;br&gt;" not in xml
+    assert 'fillColor=#eaf3ff' in xml
+
+
+def test_drawio_router_uses_container_absolute_coordinates():
+    from bid_tool.illustration_v2.renderers.drawio import (
+        DrawContainer,
+        DrawNode,
+        DrawPlan,
+        _edge_waypoints,
+    )
+
+    plan = DrawPlan(
+        "测试图",
+        "",
+        900,
+        600,
+        nodes=[
+            DrawNode("a", "A", parent="c1", x=30, y=40, width=120, height=60),
+            DrawNode("b", "B", parent="c2", x=30, y=40, width=120, height=60),
+        ],
+        containers=[
+            DrawContainer("c1", "左区", 60, 120, 240, 180, 0),
+            DrawContainer("c2", "右区", 560, 360, 240, 180, 1),
+        ],
+    )
+
+    assert _edge_waypoints(plan, plan.nodes[0], plan.nodes[1]) == [(400, 190), (400, 430)]
