@@ -37,8 +37,14 @@ cd D:\AI_native_change\bid-tool
 git status --short --branch
 Get-Content WORKSPACE.md -TotalCount 220
 Get-Content docs\workspace\STATE.md -TotalCount 220
+Get-Content docs\PROJECT_BUILD_OVERVIEW.md -TotalCount 260
+Get-Content docs\PROJECT_FEATURES.md -TotalCount 260
+Get-Content docs\PROJECT_TODO.md -TotalCount 260
+Get-Content docs\NAVIGATION.md -TotalCount 260
+Get-Content docs\FILE_GOVERNANCE.md -TotalCount 260
 Get-Content docs\workspace\ROADMAP.md -TotalCount 260
 Get-Content docs\PROJECT_STRUCTURE.md -TotalCount 260
+Get-Content docs\quality-targets\illustration\README.md -TotalCount 220
 ```
 
 ## 当前核心问题

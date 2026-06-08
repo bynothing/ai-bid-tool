@@ -127,3 +127,64 @@ def test_drawio_router_uses_container_absolute_coordinates():
     )
 
     assert _edge_waypoints(plan, plan.nodes[0], plan.nodes[1]) == [(400, 190), (400, 430)]
+
+
+def test_process_interaction_map_auto_routes_to_drawio():
+    from bid_tool.illustration_v2 import api
+
+    job = Path("tests/fixtures/illustration_cases/process_interaction_map/job.json")
+    decision = api.plan(job)[0]
+
+    assert decision["renderer"] == "drawio"
+    assert decision["decision"]["tier"] == 2
+    assert decision["decision"]["fallback"] == "auto_structured_drawio"
+    assert decision["decision"]["needs_human_review"] is True
+
+
+def test_process_interaction_map_drawio_outputs_sections_and_legend(tmp_path, monkeypatch):
+    from bid_tool.illustration_v2 import api
+    from bid_tool.illustration_v2.renderers import drawio
+
+    monkeypatch.setattr(drawio, "_find_drawio_command", lambda: None)
+
+    job = Path("tests/fixtures/illustration_cases/process_interaction_map/job.json")
+    records = api.render(job, tmp_path, png=True)
+    drawio_file = tmp_path / records[0].outputs["drawio"]
+    xml = drawio_file.read_text(encoding="utf-8")
+
+    assert records[0].renderer == "drawio"
+    assert records[0].tier == 2
+    assert records[0].needs_human_review is True
+    assert records[0].warnings == ["未检测到 Draw.io CLI；已生成可编辑 .drawio 源文件，跳过 SVG/PNG 导出"]
+    assert "A 上线准备" in xml
+    assert "图例与术语" in xml
+    assert "dashed=1" in xml
+    assert "strokeWidth=3" in xml
+
+
+def test_process_interaction_map_uses_bottom_legend_and_secondary_lanes():
+    from bid_tool.illustration_v2 import api
+    from bid_tool.illustration_v2.renderers.drawio import _drawio_xml
+
+    job = api.load_job("tests/fixtures/illustration_cases/process_interaction_map/job.json")
+    xml = _drawio_xml(job, job.illustrations[0])
+
+    legend_start = xml.index('<mxCell id="C_legend"')
+    legend_end = xml.index("</mxCell>", legend_start)
+    legend_cell = xml[legend_start:legend_end]
+
+    assert 'y="440"' in legend_cell
+    assert 'width="1210"' in legend_cell
+    assert 'height="140"' in legend_cell
+    assert "fillColor=#fffaf2" in xml
+    assert "fillColor=#f5f6ff" in xml
+    assert "fillColor=#f2fbf8" in xml
+    assert "strokeColor=#0f766e" in xml
+    assert "strokeColor=#b45309" in xml
+    assert "strokeColor=#4f46e5" in xml
+    assert "exitX=0.5;exitY=1" in xml
+    assert "exitX=1;exitY=0.5" in xml
+    assert "entryX=0;entryY=0.5" in xml
+    assert '<mxPoint x="414" y="360"' in xml
+    assert '<mxPoint x="1040" y="110"' in xml
+    assert '<mxPoint x="530" y="110"' in xml

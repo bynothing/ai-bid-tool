@@ -161,3 +161,69 @@
 - 新增长期方案文档不再放入 `src/bid_tool/`。
 - 配图模板自己的 `README.md`、`contract.json`、`analysis.md` 仍留在 `src/bid_tool/illustration_v2/templates/`，因为它们是模板能力的一部分。
 - 文件归位以 `docs/PROJECT_STRUCTURE.md` 为准。
+
+## D-006：配图质量改造采用人工目标驱动
+
+日期：2026-06-07
+
+状态：采用
+
+背景：
+
+当前系统已经具备配图能力，但产出效果不稳定：图不够美观、信息表达不清楚、箭头混乱，尚未达到工程级标书图的交付标准。此类问题如果只靠开发者主观调样式，很容易变成零散修补，无法持续提高。
+
+决策：
+
+建立 `docs/quality-targets/illustration/` 作为配图质量目标区。后续配图质量优化必须先对齐人工参考目标、评分标准和当前输出基线，再进入具体开发。
+
+质量改造链路：
+
+```text
+人工参考图
+  -> 目标说明
+  -> 当前输出评分
+  -> 缺陷记录
+  -> Todo
+  -> fixture / QA
+  -> 渲染器或模板改造
+  -> 再评分
+```
+
+原因：
+
+- “美观”和“清楚”必须转化为可讨论、可评分、可回归的工程指标。
+- 箭头混乱、信息不清楚等问题需要样本驱动，而不是只调颜色和样式。
+- 人工参考目标能为模板、布局、箭头策略、质量门禁提供稳定方向。
+
+影响：
+
+- 新的配图质量任务优先写入 `docs/quality-targets/illustration/TODO.md`。
+- 参考图和人工评审记录放入 `references/` 与 `reviews/`。
+- 当前系统输出基线放入 `generated-baselines/` 或转为 `tests/fixtures/illustration_cases/`。
+- 质量优化完成后必须记录在 `RECORD.md`，并尽量沉淀为 fixture 或 QA 规则。
+
+## D-007：工艺流程 / 系统交互大图先走 Draw.io Tier 2 路径
+
+日期：2026-06-08
+
+状态：采用
+
+背景：
+
+参考图“总装 A-H 工艺段流程及系统交互点分析图”不是普通线性流程图，而是多工艺段分区、段内步骤、主流程、辅助/回流关系、系统交互点、图例和术语说明的复合工程图。当前尚无冻结 Tier 1 模板可直接承载此结构。
+
+决策：
+
+新增 `process.interaction_map` 图型。决策层遇到该图型或具备 `sections + primary_flow/support_flows` 的结构化 Job 时，优先路由到 Draw.io renderer，作为 Tier 2 首个实现路径，并标记 `needs_human_review=true`。
+
+原因：
+
+- Draw.io 适合先验证复杂分区、可编辑源文件和正交连接线。
+- 该图型仍需人工目标反复校准，过早冻结 Tier 1 模板会增加返工成本。
+- 当前阶段更需要可复现基线、评分和缺陷清单。
+
+影响：
+
+- `process.interaction_map` 进入 `AI_ILLUSTRATION_API_V2.md`。
+- 回归样本进入 `tests/fixtures/illustration_cases/process_interaction_map/`。
+- 后续若该图型评分稳定达到 80+，应将高频结构沉淀为 Tier 1 模板候选。

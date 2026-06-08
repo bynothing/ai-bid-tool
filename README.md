@@ -10,6 +10,9 @@
 
 | 文档 | 定位 |
 |------|------|
+| [AGENTS.md](AGENTS.md) | **智能体入口** — 新会话启动顺序、文件边界、验证纪律 |
+| [docs/NAVIGATION.md](docs/NAVIGATION.md) | **导航索引** — 人和智能体按任务类型快速定位文件 |
+| [docs/FILE_GOVERNANCE.md](docs/FILE_GOVERNANCE.md) | **文件治理规则** — 文件归位、Git 跟踪、大文件和产物管理 |
 | [src/bid_tool/illustration_v2/toolkit.py](src/bid_tool/illustration_v2/toolkit.py) | **配图工具入口** — 当前 `bid-illustrate` 命令入口与参数契约 |
 | [src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md](src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md) | **AI 配图接口** — AI 输出结构化 JSON 配图任务的协议规范 |
 | [WORKSPACE.md](WORKSPACE.md) | **持续开发入口** — 项目记忆系统、当前主线、工作区纪律 |

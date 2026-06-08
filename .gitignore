@@ -14,3 +14,13 @@ htmlcov/
 Thumbs.db
 node_modules/
 .tools/
+.tmp_illustration_v2_*/
+output/workspace_smoke/
+docs/quality-targets/illustration/references/*
+!docs/quality-targets/illustration/references/.gitkeep
+!docs/quality-targets/illustration/references/README.md
+!docs/quality-targets/illustration/references/*.md
+docs/quality-targets/illustration/generated-baselines/*
+!docs/quality-targets/illustration/generated-baselines/.gitkeep
+!docs/quality-targets/illustration/generated-baselines/README.md
+!docs/quality-targets/illustration/generated-baselines/*.md

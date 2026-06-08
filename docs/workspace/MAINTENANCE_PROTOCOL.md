@@ -11,8 +11,14 @@ cd D:\AI_native_change\bid-tool
 git status --short --branch
 Get-Content WORKSPACE.md -TotalCount 220
 Get-Content docs\workspace\STATE.md -TotalCount 220
+Get-Content docs\PROJECT_BUILD_OVERVIEW.md -TotalCount 260
+Get-Content docs\PROJECT_FEATURES.md -TotalCount 260
+Get-Content docs\PROJECT_TODO.md -TotalCount 260
+Get-Content docs\NAVIGATION.md -TotalCount 260
+Get-Content docs\FILE_GOVERNANCE.md -TotalCount 260
 Get-Content docs\workspace\ROADMAP.md -TotalCount 260
 Get-Content docs\PROJECT_STRUCTURE.md -TotalCount 260
+Get-Content docs\quality-targets\illustration\README.md -TotalCount 220
 ```
 
 如果任务涉及配图架构，再读：
@@ -30,6 +36,12 @@ Get-Content docs\workspace\DECISION_LOG.md -TotalCount 260
 - `ROADMAP.md`：任务状态变化、阶段目标变化。
 - `SESSION_HANDOFF.md`：下一次继续开发需要知道的具体上下文。
 - `DECISION_LOG.md`：出现新的架构取舍。
+- `docs/quality-targets/illustration/TODO.md`：配图质量目标或质量任务变化。
+- `docs/quality-targets/illustration/RECORD.md`：配图质量评审、基线或参考目标变化。
+- `docs/PROJECT_FEATURES.md`：新增或完成系统能力。
+- `docs/PROJECT_TODO.md`：项目级任务状态变化。
+- `docs/NAVIGATION.md`：入口或阅读路径变化。
+- `docs/FILE_GOVERNANCE.md`：文件归位、命名、Git 跟踪规则变化。
 
 如果修改影响用户命令、Schema、流水线逻辑、标书输出正确性，还必须更新：
 

@@ -8,9 +8,14 @@
 
 1. `WORKSPACE.md`：项目根入口，确认真实目录、核心问题和工作纪律。
 2. `docs/workspace/STATE.md`：当前事实状态，包括分支、测试基线、活跃焦点、风险。
-3. `docs/workspace/ROADMAP.md`：当前阶段目标、任务队列和验收标准。
-4. `docs/PROJECT_STRUCTURE.md`：当前文件结构和新增文件归位规则。
-5. 按需读取：
+3. `docs/PROJECT_BUILD_OVERVIEW.md`：工程项目级建设总控。
+4. `docs/PROJECT_FEATURES.md`：已完成功能和能力成熟度。
+5. `docs/PROJECT_TODO.md`：全工程 TODO 队列。
+6. `docs/NAVIGATION.md`：按任务类型导航。
+7. `docs/FILE_GOVERNANCE.md`：文件治理和 Git 跟踪规则。
+8. `docs/workspace/ROADMAP.md`：当前阶段目标、任务队列和验收标准。
+9. `docs/PROJECT_STRUCTURE.md`：当前文件结构和新增文件归位规则。
+10. 按需读取：
    - `docs/workspace/KNOWLEDGE_MAP.md`：业务背景、配图体系、关键模块地图。
    - `docs/workspace/DECISION_LOG.md`：重要架构决策和原因。
    - `docs/workspace/MAINTENANCE_PROTOCOL.md`：如何更新这些文件。

@@ -14,6 +14,7 @@ import subprocess
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from hashlib import sha1
 from pathlib import Path
 from typing import Any
 
@@ -107,6 +108,7 @@ class DrawContainer:
     height: int
     color_index: int
     kind: str = "swimlane"
+    color_role: str = ""
 
 
 @dataclass(slots=True)
@@ -151,6 +153,7 @@ class DrawioRenderer:
 
             outputs = {"drawio": drawio_path.relative_to(context.output).as_posix()}
             warnings = _validate_drawio_xml(xml)
+            warnings.extend(_quality_warnings(item))
 
             if drawio_cmd:
                 svg_path = output_dir / f"{stem}.svg"
@@ -245,7 +248,7 @@ def _drawio_xml(job: IllustrationJob, item: IllustrationItem) -> str:
             "target": target.id,
         })
         geometry = ET.SubElement(edge_cell, "mxGeometry", {"relative": "1", "as": "geometry"})
-        points = _edge_waypoints(plan, source, target)
+        points = _edge_waypoints(plan, source, target, edge)
         if points:
             array = ET.SubElement(geometry, "Array", {"as": "points"})
             for x, y in points:
@@ -264,6 +267,10 @@ def _plan_diagram(job: IllustrationJob, item: IllustrationItem) -> DrawPlan:
         return _plan_zones(title, subtitle, item)
     if item.type == "integration.interface_map":
         return _plan_interface(title, subtitle, item)
+    if item.type in {"process.interaction_map", "process.system_interaction"} or (
+        item.data.get("sections") and (item.data.get("primary_flow") or item.data.get("support_flows"))
+    ):
+        return _plan_process_interaction(title, subtitle, item)
     if item.type in {"process.flowchart", "flowchart"}:
         return _plan_flowchart(title, subtitle, item)
     return _plan_general(title, subtitle, item)
@@ -342,6 +349,108 @@ def _plan_interface(title: str, subtitle: str, item: IllustrationItem) -> DrawPl
     for node in nodes:
         node.parent = "1"
     return DrawPlan(title, subtitle, width, 560, nodes, edges, containers)
+
+
+def _plan_process_interaction(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
+    sections = item.data.get("sections", [])
+    if not isinstance(sections, list) or not sections:
+        return _plan_general(title, subtitle, item)
+
+    section_count = len(sections)
+    legend_entries = _legend_entries(item)
+    bottom_legend = len(legend_entries) > 5
+    legend_w = 280 if legend_entries and not bottom_legend else 0
+    width = max(1280, 120 + section_count * 240 + legend_w)
+    left, gap_x, top_y = 56, 22, 130
+    available_w = width - left * 2 - legend_w - (28 if legend_w else 0) - gap_x * max(0, section_count - 1)
+    container_w = max(210, min(270, available_w // max(section_count, 1)))
+    max_steps = max([len(section.get("steps", [])) for section in sections if isinstance(section, dict)] or [1])
+    container_h = max(292, 76 + max_steps * 76)
+
+    nodes: list[DrawNode] = []
+    containers: list[DrawContainer] = []
+    first_by_section: dict[str, str] = {}
+    last_by_section: dict[str, str] = {}
+
+    for section_idx, section in enumerate(sections, start=1):
+        if not isinstance(section, dict):
+            continue
+        section_id = str(section.get("id") or f"S{section_idx}")
+        cid = _xml_id(f"C_{section_id}")
+        x = left + (section_idx - 1) * (container_w + gap_x)
+        title_text = str(section.get("title") or section.get("label") or f"工艺段 {section_idx}")
+        subtitle_text = str(section.get("subtitle") or "")
+        container_title = title_text if not subtitle_text else f"{title_text}\n{subtitle_text}"
+        containers.append(DrawContainer(
+            cid,
+            container_title,
+            x,
+            top_y,
+            container_w,
+            container_h,
+            section_idx - 1,
+            color_role=_process_section_role(section, section_idx),
+        ))
+
+        steps = section.get("steps", [])
+        if not isinstance(steps, list) or not steps:
+            steps = [{"id": f"{section_id}_summary", "title": title_text, "description": subtitle_text}]
+        for step_idx, step in enumerate(steps, start=1):
+            node = _node(step, len(nodes) + 1)
+            node.parent = cid
+            node.group = cid
+            node.x = 24
+            node.y = 46 + (step_idx - 1) * 72
+            node.width = container_w - 48
+            node.height = 58
+            node.subtitle = node.subtitle or str(step.get("output") or step.get("interaction_type") or "")
+            node.kind = _process_step_kind(step)
+            nodes.append(node)
+            first_by_section.setdefault(section_id, node.id)
+            last_by_section[section_id] = node.id
+
+    edges = _interaction_edges(item, first_by_section, last_by_section)
+
+    legend_h = 0
+    if legend_entries and bottom_legend:
+        legend_x = left
+        legend_y = top_y + container_h + 20
+        legend_wide = width - left * 2
+        legend_cols = 4 if len(legend_entries) >= 6 else 3
+        legend_rows = math.ceil(len(legend_entries) / legend_cols)
+        legend_h = max(126, 48 + legend_rows * 46)
+        legend_id = "C_legend"
+        containers.append(DrawContainer(legend_id, "图例与术语", legend_x, legend_y, legend_wide, legend_h, section_count, "box", "legend"))
+        card_w = max(210, (legend_wide - 44 - (legend_cols - 1) * 18) // legend_cols)
+        for index, entry in enumerate(legend_entries, start=1):
+            node = _node(entry, len(nodes) + 1)
+            node.parent = legend_id
+            col = (index - 1) % legend_cols
+            row = (index - 1) // legend_cols
+            node.x = 22 + col * (card_w + 18)
+            node.y = 38 + row * 44
+            node.width = card_w
+            node.height = 36
+            nodes.append(node)
+    elif legend_entries:
+        legend_x = left + section_count * (container_w + gap_x) + 6
+        legend_h = max(240, 70 + len(legend_entries) * 58)
+        legend_id = "C_legend"
+        containers.append(DrawContainer(legend_id, "图例与术语", legend_x, top_y, legend_w, legend_h, section_count, "box", "legend"))
+        for index, entry in enumerate(legend_entries, start=1):
+            node = _node(entry, len(nodes) + 1)
+            node.parent = legend_id
+            node.x = 22
+            node.y = 42 + (index - 1) * 54
+            node.width = legend_w - 44
+            node.height = 42
+            nodes.append(node)
+
+    if bottom_legend:
+        height = top_y + container_h + 20 + legend_h + 44
+    else:
+        height = top_y + max(container_h, legend_h) + 80
+    return DrawPlan(title, subtitle, width, height, nodes, edges, containers)
 
 
 def _plan_flowchart(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
@@ -463,13 +572,108 @@ def _edges(item: IllustrationItem) -> list[DrawEdge]:
         target = str(edge.get("to") or edge.get("target") or "")
         if source and target:
             edges.append(DrawEdge(
-                id=f"E{index}",
+                id=f"EDGE_{index}",
                 source=_xml_id(source),
                 target=_xml_id(target),
                 label=str(edge.get("label") or edge.get("title") or ""),
                 relation=str(edge.get("relation") or ""),
             ))
     return edges
+
+
+def _interaction_edges(
+    item: IllustrationItem,
+    first_by_section: dict[str, str],
+    last_by_section: dict[str, str],
+) -> list[DrawEdge]:
+    data = item.data or {}
+    edges: list[DrawEdge] = []
+    edge_index = 1
+
+    for flow in data.get("primary_flow") or []:
+        edge = _flow_edge(flow, edge_index, first_by_section, last_by_section, default_relation="primary")
+        if edge:
+            edges.append(edge)
+            edge_index += 1
+
+    for flow in data.get("support_flows") or []:
+        edge = _flow_edge(flow, edge_index, first_by_section, last_by_section, default_relation="support")
+        if edge:
+            edges.append(edge)
+            edge_index += 1
+
+    if not edges:
+        edges = _edges(item)
+
+    return edges
+
+
+def _flow_edge(
+    raw: Any,
+    index: int,
+    first_by_section: dict[str, str],
+    last_by_section: dict[str, str],
+    *,
+    default_relation: str,
+) -> DrawEdge | None:
+    if not isinstance(raw, dict):
+        return None
+    source = str(raw.get("from") or raw.get("source") or "")
+    target = str(raw.get("to") or raw.get("target") or "")
+    if not source or not target:
+        return None
+    source_id = _resolve_interaction_endpoint(source, last_by_section, first_by_section)
+    target_id = _resolve_interaction_endpoint(target, first_by_section, last_by_section)
+    return DrawEdge(
+        id=f"EDGE_{index}",
+        source=source_id,
+        target=target_id,
+        label=str(raw.get("label") or raw.get("title") or ""),
+        relation=str(raw.get("relation") or raw.get("type") or default_relation),
+    )
+
+
+def _resolve_interaction_endpoint(value: str, preferred: dict[str, str], fallback: dict[str, str]) -> str:
+    if value in preferred:
+        return preferred[value]
+    if value in fallback:
+        return fallback[value]
+    return _xml_id(value)
+
+
+def _legend_entries(item: IllustrationItem) -> list[dict[str, Any]]:
+    entries: list[dict[str, Any]] = []
+    for raw in item.data.get("interaction_types") or []:
+        if isinstance(raw, dict):
+            entries.append({
+                "id": raw.get("id") or raw.get("title") or raw.get("label") or f"legend_{len(entries) + 1}",
+                "title": raw.get("title") or raw.get("label") or raw.get("id") or "交互点",
+                "description": raw.get("description") or raw.get("desc") or raw.get("meaning") or "",
+                "kind": "legend",
+            })
+    legend = item.data.get("legend")
+    if isinstance(legend, list):
+        for raw in legend:
+            if isinstance(raw, dict):
+                entries.append({
+                    "id": raw.get("id") or raw.get("title") or raw.get("label") or f"legend_{len(entries) + 1}",
+                    "title": raw.get("title") or raw.get("label") or "图例",
+                    "description": raw.get("description") or raw.get("desc") or "",
+                    "kind": "legend",
+                })
+            else:
+                entries.append({"id": f"legend_{len(entries) + 1}", "title": str(raw), "kind": "legend"})
+    glossary = item.data.get("glossary")
+    if isinstance(glossary, list):
+        for raw in glossary:
+            if isinstance(raw, dict):
+                entries.append({
+                    "id": raw.get("term") or raw.get("id") or f"term_{len(entries) + 1}",
+                    "title": raw.get("term") or raw.get("title") or "术语",
+                    "description": raw.get("definition") or raw.get("description") or "",
+                    "kind": "legend",
+                })
+    return entries[:8]
 
 
 def _node(value: Any, index: int) -> DrawNode:
@@ -483,6 +687,45 @@ def _node(value: Any, index: int) -> DrawNode:
     return DrawNode(node_id, title, subtitle, _infer_kind(title, subtitle, raw))
 
 
+def _process_section_role(section: dict[str, Any], index: int) -> str:
+    role = str(section.get("color_role") or section.get("role") or "").strip().lower()
+    if role:
+        return role
+    title = str(section.get("title") or section.get("label") or "")
+    if _has_any(title, ["上线", "准备", "计划"]):
+        return "process_planning"
+    if _has_any(title, ["装配", "工位", "生产"]):
+        return "process_assembly"
+    if _has_any(title, ["电检", "标定", "检测"]):
+        return "process_validation"
+    if _has_any(title, ["质量", "返修", "问题"]):
+        return "process_quality"
+    if _has_any(title, ["下线", "入库", "交付"]):
+        return "process_delivery"
+    roles = ["process_planning", "process_assembly", "process_validation", "process_quality", "process_delivery"]
+    return roles[(index - 1) % len(roles)]
+
+
+def _process_step_kind(step: Any) -> str:
+    if not isinstance(step, dict):
+        return "service"
+    text = " ".join(
+        str(step.get(key) or "")
+        for key in ("title", "description", "desc", "interaction_type", "output")
+    )
+    if _has_any(text, ["QMS", "质量", "缺陷", "返修", "放行"]):
+        return "system_qms"
+    if _has_any(text, ["WMS", "物料", "齐套", "配送", "入库"]):
+        return "system_wms"
+    if _has_any(text, ["刷写", "电检", "扭矩", "设备", "ECU"]):
+        return "system_device"
+    if _has_any(text, ["MES", "工单", "排产", "工艺参数"]):
+        return "system_mes"
+    if _has_any(text, ["VIN", "扫码"]):
+        return "system_id"
+    return "service"
+
+
 def _ordered_nodes(nodes: list[DrawNode], preferred: list[str]) -> list[DrawNode]:
     by_id = {node.id: node for node in nodes}
     ordered = [by_id[item] for item in preferred if item in by_id]
@@ -492,6 +735,9 @@ def _ordered_nodes(nodes: list[DrawNode], preferred: list[str]) -> list[DrawNode
 
 def _infer_kind(title: str, subtitle: str, raw: dict[str, Any]) -> str:
     text = f"{title} {subtitle} {raw.get('kind', '')} {raw.get('type', '')}".lower()
+    raw_kind = str(raw.get("kind") or "").lower()
+    if raw_kind in {"start", "end", "decision", "gateway", "external", "database", "queue", "legend"}:
+        return raw_kind
     if _has_any(text, ["数据库", "db", "data", "仓库", "缓存", "redis", "mysql", "存储"]):
         return "database"
     if _has_any(text, ["mq", "queue", "队列", "消息", "bus"]):
@@ -523,17 +769,18 @@ def _add_header(root: ET.Element, plan: DrawPlan) -> None:
 
 
 def _container_style(container: DrawContainer) -> str:
-    palette = _palette(container.color_index)
+    palette = _container_palette(container)
     if container.kind == "box":
         return (
             "rounded=1;whiteSpace=wrap;html=1;container=1;pointerEvents=0;arcSize=4;"
             f"fillColor={palette['container_fill']};strokeColor={palette['stroke']};"
-            "fontStyle=1;fontSize=14;fontColor=#1e3a5f;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;dashed=1;"
+            f"fontStyle=1;fontSize=14;fontColor={palette.get('text', '#1e3a5f')};"
+            "align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;dashed=1;"
         )
     return (
         "swimlane;whiteSpace=wrap;html=1;startSize=34;container=1;recursiveResize=0;collapsible=0;"
         f"fillColor={palette['container_fill']};strokeColor={palette['stroke']};"
-        f"swimlaneFillColor={palette['header_fill']};fontColor=#1e3a5f;fontStyle=1;fontSize=14;"
+        f"swimlaneFillColor={palette['header_fill']};fontColor={palette.get('text', '#1e3a5f')};fontStyle=1;fontSize=14;"
     )
 
 
@@ -550,6 +797,18 @@ def _node_style(node: DrawNode, index: int) -> str:
         return f"rounded=1;arcSize=10;dashed=1;{base}fillColor=#f8fafc;strokeColor=#94a3b8;"
     if node.kind == "decision":
         return f"rhombus;{base}fillColor=#fff7ed;strokeColor=#f97316;"
+    if node.kind == "legend":
+        return f"rounded=1;arcSize=8;{base}fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=12;"
+    if node.kind == "system_mes":
+        return f"rounded=1;arcSize=8;{base}fillColor=#eef6ff;strokeColor=#2563eb;"
+    if node.kind == "system_wms":
+        return f"rounded=1;arcSize=8;{base}fillColor=#ecfdf5;strokeColor=#0f766e;"
+    if node.kind == "system_qms":
+        return f"rounded=1;arcSize=8;{base}fillColor=#fff7ed;strokeColor=#b45309;"
+    if node.kind == "system_device":
+        return f"rounded=1;arcSize=8;{base}fillColor=#eef2ff;strokeColor=#4f46e5;"
+    if node.kind == "system_id":
+        return f"rounded=1;arcSize=8;{base}fillColor=#f8fafc;strokeColor=#64748b;"
     if node.kind in {"start", "end"}:
         return f"ellipse;{base}fillColor=#ecfdf5;strokeColor=#10b981;fontStyle=1;"
     return f"rounded=1;arcSize=10;{base}fillColor={palette['fill']};strokeColor={palette['stroke']};"
@@ -567,12 +826,21 @@ def _edge_style(
 ) -> str:
     sx, sy = _absolute_center(plan, source)
     tx, ty = _absolute_center(plan, target)
+    relation = edge.relation.lower()
     horizontal = abs(tx - sx) >= abs(ty - sy)
     exit_x = 1 if tx >= sx else 0
     entry_x = 0 if tx >= sx else 1
     exit_y = 1 if ty >= sy else 0
     entry_y = 0 if ty >= sy else 1
-    if horizontal:
+    if relation == "rework":
+        exit_x = 0 if tx >= sx else 1
+        entry_x = 1 if tx >= sx else 0
+        exit = f"exitX={exit_x};exitY=0.5;exitDx=0;exitDy=0;"
+        entry = f"entryX={entry_x};entryY=0.5;entryDx=0;entryDy=0;"
+    elif relation in {"support", "auxiliary", "material"}:
+        exit = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
+        entry = "entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+    elif horizontal:
         spread = _spread_point(index, out_count)
         entry_spread = _spread_point(index, in_count)
         exit = f"exitX={exit_x};exitY={spread};exitDx=0;exitDy=0;"
@@ -582,17 +850,39 @@ def _edge_style(
         entry_spread = _spread_point(index, in_count)
         exit = f"exitX={spread};exitY={exit_y};exitDx=0;exitDy=0;"
         entry = f"entryX={entry_spread};entryY={entry_y};entryDx=0;entryDy=0;"
-    dashed = "dashed=1;" if edge.relation in {"data", "async", "backup"} else ""
+    dashed = "dashed=1;" if relation in {"data", "async", "backup", "support", "auxiliary", "material", "rework"} else ""
+    color = _edge_color(relation, dashed=bool(dashed))
+    width = "3" if relation == "primary" else "2"
     return (
         "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;"
         f"{exit}{entry}{dashed}strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;"
         f"endArrow=block;endFill=1;{'labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;' if has_label else ''}"
-    )
+    ).replace("strokeColor=#2563eb;strokeWidth=2;", f"strokeColor={color};strokeWidth={width};")
 
 
-def _edge_waypoints(plan: DrawPlan, source: DrawNode, target: DrawNode) -> list[tuple[int, int]]:
+def _edge_color(relation: str, *, dashed: bool) -> str:
+    if relation == "material":
+        return "#0f766e"
+    if relation == "rework":
+        return "#b45309"
+    if relation in {"support", "auxiliary"}:
+        return "#64748b"
+    return "#64748b" if dashed else "#2563eb"
+
+
+def _edge_waypoints(
+    plan: DrawPlan,
+    source: DrawNode,
+    target: DrawNode,
+    edge: DrawEdge | None = None,
+) -> list[tuple[int, int]]:
     sx, sy = _absolute_center(plan, source)
     tx, ty = _absolute_center(plan, target)
+    relation = (edge.relation.lower() if edge else "")
+    if relation == "rework":
+        return _rework_edge_waypoints(plan, source, target)
+    if relation in {"support", "auxiliary", "material"}:
+        return _secondary_edge_waypoints(plan, sx, sy, tx, ty, relation)
     if abs(tx - sx) < 80 or abs(ty - sy) < 80:
         return []
     if abs(tx - sx) >= abs(ty - sy):
@@ -600,6 +890,51 @@ def _edge_waypoints(plan: DrawPlan, source: DrawNode, target: DrawNode) -> list[
         return [(mid_x, sy), (mid_x, ty)]
     mid_y = _snap((sy + ty) / 2)
     return [(sx, mid_y), (tx, mid_y)]
+
+
+def _rework_edge_waypoints(plan: DrawPlan, source: DrawNode, target: DrawNode) -> list[tuple[int, int]]:
+    sx, sy = _absolute_center(plan, source)
+    tx, ty = _absolute_center(plan, target)
+    section_top = min([container.y for container in plan.containers if container.id != "C_legend"] or [130])
+    corridor_y = _snap(max(108, section_top - 18))
+    source_container = plan.container_by_id(source.parent)
+    target_container = plan.container_by_id(target.parent)
+
+    if tx < sx:
+        source_lane = _snap((source_container.x + source_container.width if source_container else sx + source.width // 2) + 18)
+        target_lane = _snap((target_container.x if target_container else tx - target.width // 2) - 18)
+    else:
+        source_lane = _snap((source_container.x if source_container else sx - source.width // 2) - 18)
+        target_lane = _snap((target_container.x + target_container.width if target_container else tx + target.width // 2) + 18)
+
+    return [
+        (source_lane, sy),
+        (source_lane, corridor_y),
+        (target_lane, corridor_y),
+        (target_lane, ty),
+    ]
+
+
+def _secondary_edge_waypoints(
+    plan: DrawPlan,
+    sx: int,
+    sy: int,
+    tx: int,
+    ty: int,
+    relation: str,
+) -> list[tuple[int, int]]:
+    if relation == "rework" or tx < sx:
+        section_top = min(
+            [container.y for container in plan.containers if container.id != "C_legend"] or [130]
+        )
+        corridor_y = max(108, section_top - 18)
+    else:
+        corridor_y = min(plan.height - 80, max(sy, ty) + 86)
+    corridor_y = _snap(corridor_y)
+    if abs(tx - sx) < 80:
+        corridor_x = _snap(max(sx, tx) + 80)
+        return [(corridor_x, sy), (corridor_x, corridor_y), (tx, corridor_y)]
+    return [(sx, corridor_y), (tx, corridor_y)]
 
 
 def _edge_counts(edges: list[DrawEdge]) -> tuple[dict[str, int], dict[str, int]]:
@@ -685,14 +1020,64 @@ def _snap(value: int | float) -> int:
 
 def _xml_id(value: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9_-]+", "_", value).strip("_")
-    if not cleaned or not re.match(r"^[A-Za-z_]", cleaned):
-        cleaned = f"N_{cleaned or 'node'}"
+    if not cleaned:
+        cleaned = f"N_{sha1(value.encode('utf-8')).hexdigest()[:8]}"
+    elif not re.match(r"^[A-Za-z_]", cleaned):
+        cleaned = f"N_{cleaned}"
     return cleaned
 
 
 def _safe_name(value: str) -> str:
     cleaned = "".join("_" if char in '<>:"/\\|?* ' else char for char in str(value))
     return cleaned.strip("._") or "diagram"
+
+
+def _container_palette(container: DrawContainer) -> dict[str, str]:
+    role_palettes = {
+        "process_planning": {
+            "fill": "#eef6ff",
+            "stroke": "#2563eb",
+            "container_fill": "#f4f8ff",
+            "header_fill": "#dbeafe",
+            "text": "#17345f",
+        },
+        "process_assembly": {
+            "fill": "#ecfdf5",
+            "stroke": "#0f766e",
+            "container_fill": "#f2fbf8",
+            "header_fill": "#ccfbf1",
+            "text": "#164e63",
+        },
+        "process_validation": {
+            "fill": "#f8fafc",
+            "stroke": "#64748b",
+            "container_fill": "#f7f9fc",
+            "header_fill": "#e2e8f0",
+            "text": "#334155",
+        },
+        "process_quality": {
+            "fill": "#fff7ed",
+            "stroke": "#b45309",
+            "container_fill": "#fffaf2",
+            "header_fill": "#fed7aa",
+            "text": "#713f12",
+        },
+        "process_delivery": {
+            "fill": "#eef2ff",
+            "stroke": "#4f46e5",
+            "container_fill": "#f5f6ff",
+            "header_fill": "#e0e7ff",
+            "text": "#312e81",
+        },
+        "legend": {
+            "fill": "#ffffff",
+            "stroke": "#64748b",
+            "container_fill": "#f8fafc",
+            "header_fill": "#e2e8f0",
+            "text": "#1e293b",
+        },
+    }
+    return role_palettes.get(container.color_role, _palette(container.color_index))
 
 
 def _palette(index: int) -> dict[str, str]:
@@ -793,6 +1178,30 @@ def _validate_drawio_xml(xml: str) -> list[str]:
             for other in boxes[idx + 1:]:
                 if current[1] == other[1] and _overlap(current[2], other[2]):
                     warnings.append(f"Draw.io lint: vertices {current[0]} and {other[0]} overlap")
+    return warnings
+
+
+def _quality_warnings(item: IllustrationItem) -> list[str]:
+    warnings: list[str] = []
+    if item.type not in {"process.interaction_map", "process.system_interaction"}:
+        return warnings
+
+    sections = item.data.get("sections") or []
+    primary = item.data.get("primary_flow") or []
+    support = item.data.get("support_flows") or []
+    step_count = sum(len(section.get("steps", [])) for section in sections if isinstance(section, dict))
+    edge_count = len(primary) + len(support)
+
+    if not primary:
+        warnings.append("quality: process interaction map 缺少 primary_flow，主路径不可验证")
+    if item.visual.get("legend") and not _legend_entries(item):
+        warnings.append("quality: 已要求图例但缺少 legend / interaction_types")
+    if step_count > 24:
+        warnings.append(f"quality: step_count={step_count} 超过 24，建议拆图或摘要")
+    if edge_count > 14:
+        warnings.append(f"quality: edge_count={edge_count} 超过 14，箭头复杂度偏高")
+    if len(support) > 6:
+        warnings.append(f"quality: support_flow_count={len(support)} 超过 6，辅助关系应转说明区或拆图")
     return warnings
 
 

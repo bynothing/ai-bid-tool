@@ -83,6 +83,7 @@ AI 必须遵守：
 | 展示网络设备和链路 | `network.topology` | 网络拓扑 |
 | 展示业务办理步骤 | `process.flowchart` | 普通流程 |
 | 展示多角色协同 | `process.swimlane` | 泳道流程 |
+| 展示多工艺段流程与系统交互点 | `process.interaction_map` | 工艺段分区 + 主流程 + 辅助/回流关系 + 图例术语 |
 | 展示接口调用先后 | `interaction.sequence` | 时序图 |
 | 展示功能模块分类 | `capability.map` | 能力地图 |
 | 展示系统/实体关系 | `relationship.domain` | 关系图 |
@@ -258,7 +259,65 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.3 甘特图 `timeline.gantt`
+### 6.3 工艺流程与系统交互大图 `process.interaction_map`
+
+适用于总装、生产、运维、审批等多业务段流程，需要同时表达：
+
+- 工艺段或业务段分区。
+- 段内关键步骤。
+- 主流程段间关系。
+- 辅助流程、物料关系、异常回流或复检关系。
+- 系统交互点、线型图例和术语说明。
+
+当前自动决策会将该图型路由到 Draw.io renderer，输出可编辑 `.drawio`，并在可用时导出 SVG/PNG。该图型仍属于 Tier 2 基线实现，`manifest` 会标记 `needs_human_review=true`，后续高频场景应沉淀为 Tier 1 模板。
+
+```json
+{
+  "sections": [
+    {
+      "id": "A",
+      "title": "A 上线准备",
+      "subtitle": "计划下达",
+      "steps": [
+        {
+          "id": "A1",
+          "title": "订单排产",
+          "description": "MES 下达工单",
+          "interaction_type": "MES"
+        }
+      ]
+    }
+  ],
+  "primary_flow": [
+    { "from": "A", "to": "B", "label": "上线", "relation": "primary" }
+  ],
+  "support_flows": [
+    { "from": "D2", "to": "C1", "label": "返修复检", "relation": "rework" }
+  ],
+  "interaction_types": [
+    { "id": "MES", "title": "MES", "description": "工单、工艺参数、过程状态" }
+  ],
+  "legend": [
+    { "title": "主流程", "description": "粗实线箭头表示工艺主路径" },
+    { "title": "辅助/回流", "description": "细虚线箭头表示物料、异常和返修关系" }
+  ],
+  "glossary": [
+    { "term": "VIN", "definition": "车辆唯一识别码" }
+  ]
+}
+```
+
+容量建议：
+
+| 字段 | 建议上限 |
+| --- | ---: |
+| `sections` | 6 |
+| 每个 `section.steps` | 4 |
+| `primary_flow` | 8 |
+| `support_flows` | 6 |
+| `interaction_types + legend + glossary` | 8 |
+
+### 6.4 甘特图 `timeline.gantt`
 
 ```json
 {
@@ -274,7 +333,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.4 风险矩阵 `matrix.risk`
+### 6.5 风险矩阵 `matrix.risk`
 
 ```json
 {
@@ -290,7 +349,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.5 方案对比 `comparison.solution`
+### 6.6 方案对比 `comparison.solution`
 
 ```json
 {
@@ -309,7 +368,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.6 接口关系与数据交互图 `integration.interface_map`
+### 6.7 接口关系与数据交互图 `integration.interface_map`
 
 适用于类似“省级平台与国家平台数据交互规则适配架构图”的正式标书大图。典型特点：
 

@@ -24,7 +24,14 @@ S9 偏离表
 
 - `README.md`
 - `WORKSPACE.md`
+- `AGENTS.md`
+- `docs/NAVIGATION.md`
+- `docs/FILE_GOVERNANCE.md`
+- `docs/PROJECT_BUILD_OVERVIEW.md`
+- `docs/PROJECT_FEATURES.md`
+- `docs/PROJECT_TODO.md`
 - `docs/PROJECT_STRUCTURE.md`
+- `docs/quality-targets/illustration/README.md`
 - `src/bid_tool/pipeline/engine.py`
 - `src/bid_tool/pipeline/stages/`
 - `src/bid_tool/schemas/`
@@ -56,6 +63,9 @@ S9 偏离表
 
 配图内容规范：
 
+- `docs/quality-targets/illustration/TARGET_BRIEF.md`
+- `docs/quality-targets/illustration/ACCEPTANCE_RUBRIC.md`
+- `docs/quality-targets/illustration/TODO.md`
 - `docs/standards/illustration/drawing-content-standard.md`
 - `docs/standards/illustration/drawio-integration.md`
 - `src/bid_tool/pipeline/stages/BID_WRITING_ILLUSTRATION_STRATEGY.md`

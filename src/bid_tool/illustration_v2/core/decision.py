@@ -25,6 +25,22 @@ def _plan_item(item: IllustrationItem, catalog: CapabilityCatalog, theme: str) -
             ],
         )
 
+    if _should_use_drawio(item):
+        return PlanDecision(
+            item=item,
+            tier=2,
+            renderer="drawio",
+            template_id=None,
+            theme=theme,
+            fit_score=0.74,
+            fallback="auto_structured_drawio",
+            needs_human_review=True,
+            reasons=[
+                "Tier 2 selected: process interaction maps need editable sections and orthogonal connectors.",
+                "No frozen Tier 1 template is registered yet; output is a baseline implementation path.",
+            ],
+        )
+
     candidates = [template for template in catalog.templates if template.diagram_type == item.type]
     best_template, best_score, best_issues = _best_template(item, candidates)
 
@@ -105,3 +121,13 @@ def _fit_score(item: IllustrationItem, template: Template, issues: list[str]) ->
     if item.visual.get("rendererPreference") == "template_svg":
         score += 0.04
     return max(0.0, min(1.0, score))
+
+
+def _should_use_drawio(item: IllustrationItem) -> bool:
+    if item.type in {"process.interaction_map", "process.system_interaction"}:
+        return True
+    if item.visual.get("editableVector") or item.visual.get("preciseConnectors"):
+        return True
+    has_sections = isinstance(item.data.get("sections"), list) and bool(item.data.get("sections"))
+    has_structured_flows = bool(item.data.get("primary_flow") or item.data.get("support_flows"))
+    return has_sections and has_structured_flows

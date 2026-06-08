@@ -10,6 +10,7 @@
 bid-tool/
   README.md                         项目总说明与用户入口
   WORKSPACE.md                      持续开发入口和项目记忆系统入口
+  AGENTS.md                         智能体启动协议
   CHANGELOG.md                      重大修改记录
   pyproject.toml                    Python 包、依赖、命令入口
   docs/                             项目级文档
@@ -25,9 +26,14 @@ bid-tool/
 ## docs/
 
 ```text
-docs/
-  README.md
-  PROJECT_STRUCTURE.md
+  docs/
+    README.md
+    NAVIGATION.md
+    FILE_GOVERNANCE.md
+    PROJECT_BUILD_OVERVIEW.md
+    PROJECT_FEATURES.md
+    PROJECT_TODO.md
+    PROJECT_STRUCTURE.md
   workspace/
     README.md
     STATE.md
@@ -50,6 +56,21 @@ docs/
       README.md
       drawing-content-standard.md
       drawio-integration.md
+  quality-targets/
+    illustration/
+      README.md
+      TARGET_BRIEF.md
+      REFERENCE_INTAKE_TEMPLATE.md
+      ACCEPTANCE_RUBRIC.md
+      DEVELOPMENT_PLAN.md
+      TODO.md
+      RECORD.md
+      references/
+      generated-baselines/
+      reviews/
+  methodology/
+    README.md
+    agent-complex-engineering-methodology.md
 ```
 
 放置规则：
@@ -57,12 +78,15 @@ docs/
 - `workspace/`：当前状态、阶段计划、决策日志、交接记录。
 - `architecture/`：系统设计、重构方案、长期架构说明。
 - `standards/`：绘图内容规范、质量标准、交付标准。
+- `quality-targets/`：人工参考目标、质量评分、持续 Todo、基线和评审记录。
+- `methodology/`：从项目实践提炼的方法论和分享材料。
 - 新增长期文档优先放 `docs/`，不要放进 `src/`。
 
 ## src/bid_tool/
 
 ```text
 src/bid_tool/
+  README.md                         源码模块地图
   cli.py                            bid-tool 命令入口
   pipeline/                         9 阶段标书流水线
   prompts/                          LLM Prompt 模板
@@ -82,6 +106,7 @@ src/bid_tool/
 
 ```text
 illustration_v2/
+  README.md                         配图执行环境源码地图
   api.py                            Python API
   toolkit.py                        bid-illustrate CLI
   standalone.py                     独立工具包构建
@@ -150,10 +175,19 @@ quality.md
 | 新配图渲染器 | `src/bid_tool/illustration_v2/renderers/` |
 | 新配图能力目录项 | `src/bid_tool/illustration_v2/catalogs/` |
 | 新项目状态 | `docs/workspace/STATE.md` |
+| 新导航规则 | `docs/NAVIGATION.md` |
+| 新文件治理规则 | `docs/FILE_GOVERNANCE.md` |
 | 新任务计划 | `docs/workspace/ROADMAP.md` |
+| 新项目级建设总控 | `docs/PROJECT_BUILD_OVERVIEW.md` |
+| 新已完成功能记录 | `docs/PROJECT_FEATURES.md` |
+| 新项目级 TODO | `docs/PROJECT_TODO.md` |
 | 新架构决策 | `docs/workspace/DECISION_LOG.md` |
 | 新架构方案 | `docs/architecture/` |
 | 新内容/质量标准 | `docs/standards/` |
+| 新人工参考目标 | `docs/quality-targets/` |
+| 新方法论分享 | `docs/methodology/` |
+| 新配图质量 Todo | `docs/quality-targets/illustration/TODO.md` |
+| 新配图人工评审 | `docs/quality-targets/illustration/reviews/` |
 | 新真实样本 | `tests/fixtures/` |
 | 临时生成结果 | `output/` |
 

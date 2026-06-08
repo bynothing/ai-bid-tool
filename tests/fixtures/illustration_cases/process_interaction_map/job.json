@@ -1,0 +1,109 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "总装工艺数字化协同技术方案",
+    "projectName": "总装工艺协同平台",
+    "bidSection": "技术方案"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "assembly_process_interaction_map",
+      "type": "process.interaction_map",
+      "renderer": "auto",
+      "intent": "展示总装 A-E 工艺段的主流程、系统交互点、质量回流和物料协同关系",
+      "insertion": {
+        "section": "4.2 总装工艺协同流程",
+        "caption": "图 4-2 总装工艺流程及系统交互点分析图",
+        "purpose": "说明工艺段、系统交互点和主辅流程关系"
+      },
+      "data": {
+        "title": "总装工艺流程及系统交互点分析图",
+        "subtitle": "主流程、质量回流、物料配送与系统交互点统一表达",
+        "sections": [
+          {
+            "id": "A",
+            "title": "A 上线准备",
+            "subtitle": "计划下达",
+            "steps": [
+              { "id": "A1", "title": "订单排产", "description": "MES 下达工单", "interaction_type": "MES" },
+              { "id": "A2", "title": "物料齐套", "description": "WMS 校验批次", "interaction_type": "WMS" }
+            ]
+          },
+          {
+            "id": "B",
+            "title": "B 车身装配",
+            "subtitle": "工位协同",
+            "steps": [
+              { "id": "B1", "title": "VIN 绑定", "description": "扫码确认车辆", "interaction_type": "扫码" },
+              { "id": "B2", "title": "关键件装配", "description": "扭矩数据采集", "interaction_type": "设备" }
+            ]
+          },
+          {
+            "id": "C",
+            "title": "C 电检标定",
+            "subtitle": "设备联动",
+            "steps": [
+              { "id": "C1", "title": "ECU 刷写", "description": "工艺参数下发", "interaction_type": "设备" },
+              { "id": "C2", "title": "电检判定", "description": "结果回传 MES", "interaction_type": "MES" }
+            ]
+          },
+          {
+            "id": "D",
+            "title": "D 质量确认",
+            "subtitle": "问题闭环",
+            "steps": [
+              { "id": "D1", "title": "缺陷登记", "description": "QMS 生成问题单", "interaction_type": "QMS" },
+              { "id": "D2", "title": "返修确认", "description": "闭环状态同步", "interaction_type": "QMS" }
+            ]
+          },
+          {
+            "id": "E",
+            "title": "E 下线入库",
+            "subtitle": "交付归档",
+            "steps": [
+              { "id": "E1", "title": "终检放行", "description": "质量结果归档", "interaction_type": "QMS" },
+              { "id": "E2", "title": "成品入库", "description": "WMS 接收入库", "interaction_type": "WMS" }
+            ]
+          }
+        ],
+        "primary_flow": [
+          { "from": "A", "to": "B", "label": "上线", "relation": "primary" },
+          { "from": "B", "to": "C", "label": "装配完成", "relation": "primary" },
+          { "from": "C", "to": "D", "label": "电检结果", "relation": "primary" },
+          { "from": "D", "to": "E", "label": "质量放行", "relation": "primary" }
+        ],
+        "support_flows": [
+          { "from": "A2", "to": "B2", "label": "配送确认", "relation": "material" },
+          { "from": "B2", "to": "D1", "label": "异常上报", "relation": "support" },
+          { "from": "D2", "to": "C1", "label": "返修复检", "relation": "rework" }
+        ],
+        "interaction_types": [
+          { "id": "MES", "title": "MES", "description": "工单、工艺参数、过程状态" },
+          { "id": "WMS", "title": "WMS", "description": "齐套、配送、入库信息" },
+          { "id": "QMS", "title": "QMS", "description": "缺陷、返修、放行记录" },
+          { "id": "设备", "title": "设备交互", "description": "扭矩、电检、刷写数据" }
+        ],
+        "legend": [
+          { "title": "主流程", "description": "粗实线箭头表示工艺主路径" },
+          { "title": "辅助/回流", "description": "细虚线箭头表示物料、异常和返修关系" }
+        ],
+        "glossary": [
+          { "term": "VIN", "definition": "车辆唯一识别码" }
+        ]
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "critical_path",
+        "legend": true,
+        "badges": true,
+        "editableVector": true,
+        "preciseConnectors": true
+      }
+    }
+  ]
+}

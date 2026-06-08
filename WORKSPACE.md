@@ -18,10 +18,16 @@ C:\Users\杨辉\Documents\自动标书项目\bid-tool.code-workspace
 
 1. `WORKSPACE.md`：项目根入口。
 2. `docs/workspace/STATE.md`：当前状态、测试基线、风险和下一步。
-3. `docs/workspace/ROADMAP.md`：阶段计划、任务板和验收标准。
-4. `docs/PROJECT_STRUCTURE.md`：项目文件结构和新增文件归位规则。
-5. `docs/workspace/KNOWLEDGE_MAP.md`：背景知识、模块地图和查找命令。
-6. `docs/workspace/DECISION_LOG.md`：关键架构决策。
+3. `docs/PROJECT_BUILD_OVERVIEW.md`：工程项目级建设总控。
+4. `docs/PROJECT_FEATURES.md`：已完成功能和能力成熟度。
+5. `docs/PROJECT_TODO.md`：全工程 TODO 队列。
+6. `docs/NAVIGATION.md`：按任务类型导航。
+7. `docs/FILE_GOVERNANCE.md`：文件管理和 Git 跟踪规则。
+8. `docs/workspace/ROADMAP.md`：阶段计划、任务板和验收标准。
+9. `docs/PROJECT_STRUCTURE.md`：项目文件结构和新增文件归位规则。
+10. `docs/quality-targets/illustration/README.md`：配图质量目标、人工参考入口和持续 Todo。
+11. `docs/workspace/KNOWLEDGE_MAP.md`：背景知识、模块地图和查找命令。
+12. `docs/workspace/DECISION_LOG.md`：关键架构决策。
 
 维护规则见：
 
@@ -89,6 +95,12 @@ tools\drawio.ps1 --help
 | 文档 | 用途 |
 | --- | --- |
 | `README.md` | 项目总入口与命令 |
+| `AGENTS.md` | 智能体启动协议 |
+| `docs/NAVIGATION.md` | 人和智能体导航 |
+| `docs/FILE_GOVERNANCE.md` | 文件治理和 Git 跟踪规则 |
+| `docs/PROJECT_BUILD_OVERVIEW.md` | 工程项目级建设总控 |
+| `docs/PROJECT_FEATURES.md` | 已完成功能和能力成熟度 |
+| `docs/PROJECT_TODO.md` | 全工程 TODO 队列 |
 | `docs/PROJECT_STRUCTURE.md` | 项目文件结构与放置规则 |
 | `src/bid_tool/schemas/AI_ILLUSTRATION_API_V2.md` | AI 配图 Job v2 调用协议 |
 | `src/bid_tool/schemas/illustration_job_v2.schema.json` | Job v2 JSON Schema |
@@ -96,6 +108,8 @@ tools\drawio.ps1 --help
 | `docs/architecture/illustration-v2/stable-svg-rendering.md` | 稳定 SVG 渲染方案 |
 | `docs/standards/illustration/drawing-content-standard.md` | 绘图内容标准 |
 | `docs/standards/illustration/drawio-integration.md` | Draw.io 集成说明 |
+| `docs/quality-targets/illustration/README.md` | 配图质量目标入口 |
+| `docs/quality-targets/illustration/TODO.md` | 配图工程级质量持续任务 |
 | `src/bid_tool/pipeline/stages/BID_WRITING_ILLUSTRATION_STRATEGY.md` | 标书流水线中的配图策略 |
 | `src/bid_tool/pipeline/stages/BID_TOOL_ILLUSTRATION_ADAPTER.md` | 流水线调用配图工具的适配说明 |
 
@@ -214,15 +228,15 @@ tests/fixtures/illustration_cases/
 
 ## 下一阶段建议任务板
 
-当前任务板以 `docs/workspace/ROADMAP.md` 为准。
+当前任务板以 `docs/workspace/ROADMAP.md` 为准。配图质量专项任务以 `docs/quality-targets/illustration/TODO.md` 为准。
 
 最近建议优先级：
 
-1. 梳理 `illustration_v2/core/decision.py`，确认 Tier 字段、降级链和 manifest 是否完整。
-2. 把 S5 prompt 和 `AI_ILLUSTRATION_API_V2.md` 对齐到当前 `illustration_v2` 能力目录，去掉旧版 `illustration/ILLUSTRATION_DATA_SPEC.md` 依赖。
-3. 为 5 个高频标书图型建立真实样本 fixture。
-4. 给模板 SVG 输出增加几何 QA 的最小自动检查。
-5. 建立“图件质量评分表”：内容准确性、结构清晰度、视觉稳定性、Word 可读性、生成成本。
+1. 人工在 `docs/quality-targets/illustration/references/` 提供 5-10 张目标参考图，并填写参考说明。
+2. 建立当前系统输出基线和评分记录，明确“不清楚、不美观、箭头乱”的具体样本。
+3. 梳理架构图、流程图、接口图的表达模型和箭头治理策略。
+4. 梳理 `illustration_v2/core/decision.py`，确认 Tier 字段、降级链和 manifest 是否完整。
+5. 给模板 SVG / Draw.io 输出增加几何 QA 和关系 QA 的最小自动检查。
 
 ## 开发纪律
 
