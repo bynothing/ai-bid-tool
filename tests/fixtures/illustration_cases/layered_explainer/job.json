@@ -1,0 +1,110 @@
+{
+  "version": "2.0",
+  "document": {
+    "title": "AI 系统工程化能力建设方案",
+    "projectName": "AI 系统能力体系",
+    "bidSection": "总体架构说明"
+  },
+  "style": {
+    "theme": "formal_blue",
+    "tone": "formal_bid",
+    "preferredFormat": "both"
+  },
+  "illustrations": [
+    {
+      "id": "ai_seven_layer_explainer",
+      "type": "architecture.layered_explainer",
+      "renderer": "auto",
+      "intent": "参考 AI 系统七层架构全景图，展示系统能力从 Token 到 Skills 的层级关系、职责说明和通俗类比",
+      "insertion": {
+        "section": "2.1 AI 系统能力分层",
+        "caption": "图 2-1 AI 系统七层架构全景图",
+        "purpose": "说明 AI 系统从信息单元到技能经验库的能力层级"
+      },
+      "data": {
+        "title": "AI 系统七层架构全景图",
+        "subtitle": "从 Token、提示词、上下文到 Agent、调度、外部连接与技能沉淀",
+        "levels": [
+          {
+            "number": 7,
+            "id": "skills",
+            "title": "Skills",
+            "subtitle": "技能 / 经验库",
+            "icon": "SK",
+            "description": "沉淀可复用的方法、经验与能力，持续积累，让 AI 越用越强。",
+            "analogy": "经验手册",
+            "color_role": "layer_red"
+          },
+          {
+            "number": 6,
+            "id": "mcp",
+            "title": "MCP",
+            "subtitle": "连接外部世界",
+            "icon": "IO",
+            "description": "打通与外部系统的通道，连接邮件、数据库、文件及第三方工具。",
+            "analogy": "外部接口",
+            "color_role": "layer_red"
+          },
+          {
+            "number": 5,
+            "id": "harness",
+            "title": "Harness",
+            "subtitle": "工程框架 / 调度层",
+            "icon": "HF",
+            "description": "统一编排流程与模块，管理资源与任务流，保障多环节协同顺畅。",
+            "analogy": "项目调度",
+            "color_role": "layer_orange"
+          },
+          {
+            "number": 4,
+            "id": "agent",
+            "title": "Agent",
+            "subtitle": "智能体 / 执行层",
+            "icon": "AI",
+            "description": "理解目标、拆解任务、规划步骤，并调用工具或能力完成执行。",
+            "analogy": "施工人员",
+            "color_role": "layer_gold"
+          },
+          {
+            "number": 3,
+            "id": "context",
+            "title": "Context",
+            "subtitle": "背景信息层",
+            "icon": "CTX",
+            "description": "提供相关背景、历史记录与约束条件，帮助模型更好地理解与推理。",
+            "analogy": "地基 / 环境",
+            "color_role": "layer_blue"
+          },
+          {
+            "number": 2,
+            "id": "prompt",
+            "title": "提示词 Prompt",
+            "subtitle": "指令 / 意图层",
+            "icon": "PT",
+            "description": "明确任务目标、要求与格式，是人与模型进行沟通的直接指令。",
+            "analogy": "施工图",
+            "color_role": "layer_blue"
+          },
+          {
+            "number": 1,
+            "id": "token",
+            "title": "Token",
+            "subtitle": "最小单元层",
+            "icon": "TK",
+            "description": "模型处理信息的最小颗粒，以片段而非逐字进行理解与生成。",
+            "analogy": "积木",
+            "color_role": "layer_blue"
+          }
+        ],
+        "analogyTitle": "通俗理解 · 一句话类比"
+      },
+      "visual": {
+        "density": "standard",
+        "emphasis": "key_nodes",
+        "legend": true,
+        "badges": true,
+        "editableVector": true
+      }
+    }
+  ]
+}

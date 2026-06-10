@@ -188,3 +188,36 @@ def test_process_interaction_map_uses_bottom_legend_and_secondary_lanes():
     assert '<mxPoint x="414" y="360"' in xml
     assert '<mxPoint x="1040" y="110"' in xml
     assert '<mxPoint x="530" y="110"' in xml
+
+
+def test_layered_explainer_auto_routes_to_drawio():
+    from bid_tool.illustration_v2 import api
+
+    job = Path("tests/fixtures/illustration_cases/layered_explainer/job.json")
+    decision = api.plan(job)[0]
+
+    assert decision["renderer"] == "drawio"
+    assert decision["decision"]["tier"] == 2
+    assert decision["decision"]["fallback"] == "auto_structured_drawio"
+    assert decision["decision"]["needs_human_review"] is True
+
+
+def test_layered_explainer_drawio_uses_reference_structure(tmp_path, monkeypatch):
+    from bid_tool.illustration_v2 import api
+    from bid_tool.illustration_v2.renderers import drawio
+
+    monkeypatch.setattr(drawio, "_find_drawio_command", lambda: None)
+
+    job = Path("tests/fixtures/illustration_cases/layered_explainer/job.json")
+    records = api.render(job, tmp_path, png=True)
+    xml = (tmp_path / records[0].outputs["drawio"]).read_text(encoding="utf-8")
+
+    assert records[0].renderer == "drawio"
+    assert records[0].tier == 2
+    assert "Skills" in xml
+    assert "Token" in xml
+    assert "通俗理解" in xml
+    assert "ellipse;whiteSpace=wrap" in xml
+    assert "fillColor=#dc2626" in xml
+    assert "fillColor=#0f5fb8" in xml
+    assert "EDGE_CALLOUT_1" in xml

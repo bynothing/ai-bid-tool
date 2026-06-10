@@ -239,10 +239,10 @@ python -m bid_tool.illustration_v2.toolkit --job <job.json> --output <output-dir
 
 最高优先级：
 
-1. 将 `process.interaction_map` 当前工艺段配色、系统节点配色、线型语义抽成 design tokens。
-2. 压缩返修/回流线长度，并评估是否将回流标签移入图例或说明区。
-3. 补充 `process.interaction_map` 的自动 QA：主流程缺失、图例缺失、边数量预算、线型语义。
-4. 执行 `P0-002`：再建立至少 2 个当前系统输出基线，完成 3 个基线评分。
+1. 将 `process.interaction_map` 与 `architecture.layered_explainer` 的配色、线型和卡片规则抽成 design tokens。
+2. 为 `architecture.layered_explainer` 建立 icon token 映射，替换文本缩写图标。
+3. 补充自动 QA：主流程缺失、图例缺失、边数量预算、线型语义、文本容量。
+4. 执行 `P0-002`：再建立至少 1 个当前系统输出基线，完成 3 个基线评分。
 4. 执行 `P0-002`：再建立至少 2 个当前系统输出基线，完成 3 个基线评分。
 
 并行可推进：

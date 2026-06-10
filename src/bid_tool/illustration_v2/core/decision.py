@@ -26,6 +26,11 @@ def _plan_item(item: IllustrationItem, catalog: CapabilityCatalog, theme: str) -
         )
 
     if _should_use_drawio(item):
+        diagram_label = "structured diagram"
+        if item.type in {"process.interaction_map", "process.system_interaction"}:
+            diagram_label = "process interaction maps"
+        elif item.type in {"architecture.layered_explainer", "methodology.layered_stack"}:
+            diagram_label = "layered explainer diagrams"
         return PlanDecision(
             item=item,
             tier=2,
@@ -36,7 +41,7 @@ def _plan_item(item: IllustrationItem, catalog: CapabilityCatalog, theme: str) -
             fallback="auto_structured_drawio",
             needs_human_review=True,
             reasons=[
-                "Tier 2 selected: process interaction maps need editable sections and orthogonal connectors.",
+                f"Tier 2 selected: {diagram_label} need editable structured layout.",
                 "No frozen Tier 1 template is registered yet; output is a baseline implementation path.",
             ],
         )
@@ -124,7 +129,12 @@ def _fit_score(item: IllustrationItem, template: Template, issues: list[str]) ->
 
 
 def _should_use_drawio(item: IllustrationItem) -> bool:
-    if item.type in {"process.interaction_map", "process.system_interaction"}:
+    if item.type in {
+        "process.interaction_map",
+        "process.system_interaction",
+        "architecture.layered_explainer",
+        "methodology.layered_stack",
+    }:
         return True
     if item.visual.get("editableVector") or item.visual.get("preciseConnectors"):
         return True

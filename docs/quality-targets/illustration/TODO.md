@@ -18,6 +18,7 @@
 | IQ-008 | 完成 | 生成当前系统 A 类基线图 | `generated-baselines/` 中有 job、manifest、输出和评分 |
 | IQ-009 | 进行中 | 将 A 类目标转成 Job 契约草案 | 已形成 `process.interaction_map` 初版字段，需继续沉淀容量限制和 Tier 1 模板契约 |
 | IQ-010 | 完成 | 制定第一轮持续改进计划 | `ITERATION_001_PROCESS_INTERACTION.md` 完成 |
+| IQ-011 | 完成 | 建立 D 类多层能力说明图基线 | 新增 `architecture.layered_explainer`、fixture、基线输出和评分 |
 
 ## 表达清晰度任务
 
@@ -49,6 +50,7 @@
 | IQ-303 | 进行中 | 优化节点和容器层级 | `process.interaction_map` 已按工艺段和系统交互类型增加语义配色 |
 | IQ-304 | 待办 | 建立 A 级目标模板 | 至少一个图型达到评分 90+ |
 | IQ-305 | 待办 | 建立工程级标题/图例/说明区规范 | 大图具备标题区、主体区、图例区、术语区 |
+| IQ-306 | 待办 | 建立 icon token 映射 | 层级说明图、能力图和方法论图可使用稳定图标语义 |
 
 ## QA 和回归任务
 

@@ -69,14 +69,14 @@
 - 至少 3 个当前系统输出有评分和缺陷记录。
 - 首批质量 Todo 能落到具体图型、渲染器或模板改造。
 - 后续每轮质量优化都有 `RECORD.md` 或 fixture 记录。
-- 已完成 1 个 A 类当前系统输出基线，当前评分 86 / 100。
+- 已完成 2 个当前系统输出基线：A 类工艺流程 / 系统交互大图 86 / 100，D 类多层能力体系说明图 90 / 100。
 
 当前第一轮：
 
 - 原型：工艺流程 / 系统交互大图。
 - 目标参考：`五菱总装A-H工艺段流程及系统交互点分析图 (1).png`。
 - 计划入口：`docs/quality-targets/illustration/ITERATION_001_PROCESS_INTERACTION.md`。
-- 当前实现：`process.interaction_map` 自动路由 Draw.io，已生成基线、评分和 fixture，并完成主辅流程通道、底部图例、回流线外侧绕行、语义配色和整体布局优化。
+- 当前实现：`process.interaction_map` 和 `architecture.layered_explainer` 均可自动路由 Draw.io，并已生成基线、评分和 fixture。
 
 ### Phase 0：信息系统与基线
 
@@ -117,7 +117,7 @@
 
 - `api.plan()` 可返回 tier、renderer、template、reason、fallback。
 - fallback 不是静默发生，必须写入 manifest。
-- 现有 60 个测试通过，并新增 `process.interaction_map` 自动路由、底部图例和辅助通道测试。
+- 现有 62 个测试通过，并新增 `process.interaction_map` 与 `architecture.layered_explainer` 自动路由和结构测试。
 
 ### Phase 2：真实样本与质量评测
 
@@ -215,7 +215,7 @@ tests/fixtures/illustration_cases/
 | T-007 | 完成 | 整理项目文件结构 | 长期架构与标准文档迁到 `docs/`，并新增 `docs/PROJECT_STRUCTURE.md` |
 | T-008 | 完成 | 建立配图质量目标区 | `docs/quality-targets/illustration/` 包含目标、评分、计划、Todo、记录和参考素材入口 |
 | T-009 | 待办 | 人工补充配图参考目标 | 至少 5 个参考图有说明，并进入 `references/` / `reviews/` |
-| T-010 | 进行中 | 建立当前配图质量基线 | 已完成 1 个 A 类基线，仍需至少 2 个当前输出按 Rubric 评分 |
+| T-010 | 进行中 | 建立当前配图质量基线 | 已完成 2 个基线，仍需至少 1 个当前输出按 Rubric 评分 |
 | T-011 | 完成 | 执行配图质量第一轮迭代 | 已生成系统交互大图基线，完成评分、契约草案和首个 Draw.io 实现路径 |
 | T-012 | 完成 | 建立项目级建设总控 | `docs/PROJECT_BUILD_OVERVIEW.md` 汇总目标、现状、主线、路线、门禁和下一步 |
 | T-013 | 完成 | 建立项目级功能和 TODO 清单 | `docs/PROJECT_FEATURES.md` 与 `docs/PROJECT_TODO.md` 可持续维护 |

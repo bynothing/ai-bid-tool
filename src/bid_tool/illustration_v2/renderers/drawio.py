@@ -96,6 +96,7 @@ class DrawNode:
     width: int = 190
     height: int = 76
     parent: str = "1"
+    color_role: str = ""
 
 
 @dataclass(slots=True)
@@ -263,6 +264,8 @@ def _plan_diagram(job: IllustrationJob, item: IllustrationItem) -> DrawPlan:
     subtitle = job.document.get("title", "")
     if item.type in {"architecture.layered", "layered_architecture"} and item.data.get("layers"):
         return _plan_layers(title, subtitle, item)
+    if item.type in {"architecture.layered_explainer", "methodology.layered_stack"}:
+        return _plan_layered_explainer(title, subtitle, item)
     if item.type in {"architecture.deployment", "network.topology"} and item.data.get("zones"):
         return _plan_zones(title, subtitle, item)
     if item.type == "integration.interface_map":
@@ -301,6 +304,134 @@ def _plan_layers(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
             nodes.append(node)
     height = top_y + len(containers) * (row_h + gap_y) + 50
     return DrawPlan(title, subtitle, width, max(520, height), nodes, _edges(item), containers)
+
+
+def _plan_layered_explainer(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
+    levels = item.data.get("levels") or item.data.get("layers") or []
+    if not isinstance(levels, list) or not levels:
+        return _plan_general(title, subtitle, item)
+
+    width = 1240
+    left = 60
+    top_y = 126
+    row_h = 78
+    gap_y = 8
+    badge_w = 82
+    card_x = left + badge_w + 18
+    card_w = 410
+    icon_size = 72
+    icon_x = card_x + card_w - 34
+    note_x = icon_x + icon_size + 88
+    note_w = width - note_x - 70
+
+    nodes: list[DrawNode] = []
+    edges: list[DrawEdge] = []
+    normalized_levels = [_normalize_level(level, index) for index, level in enumerate(levels, start=1)]
+
+    for row_idx, level in enumerate(normalized_levels, start=1):
+        y = top_y + (row_idx - 1) * (row_h + gap_y)
+        role = _layer_explainer_role(level, row_idx, len(normalized_levels))
+        badge_id = _xml_id(f"{level['id']}_badge")
+        card_id = _xml_id(f"{level['id']}_card")
+        icon_id = _xml_id(f"{level['id']}_icon")
+        note_id = _xml_id(f"{level['id']}_note")
+
+        nodes.append(DrawNode(
+            badge_id,
+            str(level["number"]),
+            kind="layer_badge",
+            x=left,
+            y=y,
+            width=badge_w,
+            height=row_h,
+            color_role=role,
+        ))
+        nodes.append(DrawNode(
+            card_id,
+            str(level["title"]),
+            str(level.get("subtitle") or ""),
+            kind="layer_card",
+            x=card_x,
+            y=y + 3,
+            width=card_w,
+            height=row_h - 6,
+            color_role=role,
+        ))
+        nodes.append(DrawNode(
+            icon_id,
+            _layer_icon_text(level),
+            kind="layer_icon",
+            x=icon_x,
+            y=y + 3,
+            width=icon_size,
+            height=icon_size,
+            color_role=role,
+        ))
+        nodes.append(DrawNode(
+            note_id,
+            str(level.get("description") or level.get("desc") or ""),
+            kind="layer_note",
+            x=note_x,
+            y=y + 9,
+            width=note_w,
+            height=row_h - 18,
+            color_role=role,
+        ))
+        edges.append(DrawEdge(
+            id=f"EDGE_CALLOUT_{row_idx}",
+            source=icon_id,
+            target=note_id,
+            relation="callout",
+        ))
+
+    analogy_items = item.data.get("analogies") or [
+        {
+            "number": level["number"],
+            "title": level["title"],
+            "description": level.get("analogy") or level.get("subtitle") or "",
+            "color_role": _layer_explainer_role(level, idx, len(normalized_levels)),
+        }
+        for idx, level in enumerate(normalized_levels, start=1)
+    ]
+    if isinstance(analogy_items, list) and analogy_items:
+        analogy_items = _sort_analogy_items(analogy_items)
+        bottom_y = top_y + len(normalized_levels) * (row_h + gap_y) + 18
+        bottom_h = 138
+        containers = [DrawContainer(
+            "C_analogy",
+            str(item.data.get("analogyTitle") or "通俗理解 · 一句话类比"),
+            38,
+            bottom_y,
+            width - 76,
+            bottom_h,
+            0,
+            "box",
+            "legend",
+        )]
+        cols = min(7, len(analogy_items))
+        card_wide = (width - 112 - (cols - 1) * 10) // cols
+        for idx, raw in enumerate(analogy_items, start=1):
+            if not isinstance(raw, dict):
+                raw = {"title": str(raw)}
+            col = (idx - 1) % cols
+            row = (idx - 1) // cols
+            role = str(raw.get("color_role") or _layer_explainer_role(normalized_levels[min(idx - 1, len(normalized_levels) - 1)], idx, len(normalized_levels)))
+            nodes.append(DrawNode(
+                _xml_id(f"analogy_{idx}"),
+                f"{raw.get('number') or idx}  {raw.get('title') or ''}",
+                str(raw.get("description") or raw.get("desc") or raw.get("analogy") or ""),
+                kind="analogy_item",
+                parent="C_analogy",
+                x=24 + col * (card_wide + 10),
+                y=42 + row * 78,
+                width=card_wide,
+                height=66,
+                color_role=role,
+            ))
+        height = bottom_y + bottom_h + 46
+        return DrawPlan(title, subtitle, width, height, nodes, edges, containers)
+
+    return DrawPlan(title, subtitle, width, top_y + len(normalized_levels) * (row_h + gap_y) + 52, nodes, edges, [])
 
 
 def _plan_zones(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
@@ -495,8 +626,18 @@ def _normalize_plan(plan: DrawPlan) -> DrawPlan:
     container_titles = {container.id: container.title for container in plan.containers}
     for node in plan.nodes:
         parent_title = container_titles.get(node.parent, "")
-        node.title = _compact_text(node.title, 14)
-        node.subtitle = _normalize_subtitle(node.subtitle, parent_title)
+        if node.kind == "layer_note":
+            node.title = _compact_text(node.title, 46)
+            node.subtitle = ""
+        elif node.kind == "analogy_item":
+            node.title = _compact_text(node.title, 18)
+            node.subtitle = _compact_text(node.subtitle, 16)
+        elif node.kind in {"layer_card", "layer_icon", "layer_badge"}:
+            node.title = _compact_text(node.title, 18)
+            node.subtitle = _normalize_subtitle(node.subtitle, parent_title)
+        else:
+            node.title = _compact_text(node.title, 14)
+            node.subtitle = _normalize_subtitle(node.subtitle, parent_title)
     for edge in plan.edges:
         edge.label = _compact_text(edge.label, 10)
     return plan
@@ -509,6 +650,19 @@ def _normalize_subtitle(value: str, parent_title: str) -> str:
     if parent_title and _similar_text(subtitle, parent_title):
         return ""
     return subtitle
+
+
+def _sort_analogy_items(items: list[Any]) -> list[Any]:
+    def key(value: Any) -> tuple[int, int]:
+        if not isinstance(value, dict):
+            return (1, 0)
+        raw = value.get("number") or value.get("level") or 0
+        try:
+            return (0, int(raw))
+        except (TypeError, ValueError):
+            return (1, 0)
+
+    return sorted(items, key=key)
 
 
 def _similar_text(left: str, right: str) -> bool:
@@ -726,6 +880,60 @@ def _process_step_kind(step: Any) -> str:
     return "service"
 
 
+def _normalize_level(level: Any, index: int) -> dict[str, Any]:
+    if isinstance(level, dict):
+        raw = dict(level)
+    else:
+        raw = {"title": str(level)}
+    number = raw.get("number") or raw.get("level") or index
+    title = raw.get("title") or raw.get("label") or raw.get("name") or f"Layer {number}"
+    raw["number"] = number
+    raw["title"] = title
+    raw["id"] = str(raw.get("id") or f"L{number}_{title}")
+    return raw
+
+
+def _layer_explainer_role(level: dict[str, Any], index: int, total: int) -> str:
+    role = str(level.get("color_role") or level.get("role") or "").strip().lower()
+    if role:
+        return role
+    title = str(level.get("title") or "")
+    if _has_any(title, ["Token", "提示", "Prompt", "Context", "上下文"]):
+        return "layer_blue"
+    if _has_any(title, ["Agent", "Harness"]):
+        return "layer_gold"
+    if _has_any(title, ["MCP", "Skills", "技能"]):
+        return "layer_red"
+    midpoint = max(1, total // 2)
+    if index <= midpoint:
+        return "layer_red"
+    if index == midpoint + 1:
+        return "layer_gold"
+    return "layer_blue"
+
+
+def _layer_icon_text(level: dict[str, Any]) -> str:
+    icon = str(level.get("icon") or "").strip()
+    if icon:
+        return icon[:4]
+    title = str(level.get("title") or "")
+    if _has_any(title, ["Skills", "技能"]):
+        return "SK"
+    if _has_any(title, ["MCP"]):
+        return "IO"
+    if _has_any(title, ["Harness"]):
+        return "HF"
+    if _has_any(title, ["Agent"]):
+        return "AI"
+    if _has_any(title, ["Context", "上下文"]):
+        return "CTX"
+    if _has_any(title, ["Prompt", "提示"]):
+        return "PT"
+    if _has_any(title, ["Token"]):
+        return "TK"
+    return str(level.get("number") or "")[:3]
+
+
 def _ordered_nodes(nodes: list[DrawNode], preferred: list[str]) -> list[DrawNode]:
     by_id = {node.id: node for node in nodes}
     ordered = [by_id[item] for item in preferred if item in by_id]
@@ -799,6 +1007,41 @@ def _node_style(node: DrawNode, index: int) -> str:
         return f"rhombus;{base}fillColor=#fff7ed;strokeColor=#f97316;"
     if node.kind == "legend":
         return f"rounded=1;arcSize=8;{base}fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=12;"
+    if node.kind == "layer_badge":
+        palette = _layer_palette(node.color_role)
+        return (
+            "rounded=1;arcSize=12;whiteSpace=wrap;html=1;shadow=1;"
+            f"fillColor={palette['strong']};strokeColor={palette['stroke']};"
+            "fontColor=#ffffff;fontStyle=1;fontSize=30;align=center;verticalAlign=middle;"
+        )
+    if node.kind == "layer_card":
+        palette = _layer_palette(node.color_role)
+        return (
+            "rounded=1;arcSize=10;whiteSpace=wrap;html=1;shadow=1;"
+            f"fillColor=#ffffff;strokeColor={palette['light_stroke']};"
+            f"fontColor={palette['text']};fontSize=18;fontStyle=1;spacing=12;align=left;verticalAlign=middle;"
+        )
+    if node.kind == "layer_icon":
+        palette = _layer_palette(node.color_role)
+        return (
+            "ellipse;whiteSpace=wrap;html=1;shadow=1;"
+            f"fillColor={palette['pale']};strokeColor={palette['stroke']};"
+            f"fontColor={palette['strong']};fontStyle=1;fontSize=20;align=center;verticalAlign=middle;"
+        )
+    if node.kind == "layer_note":
+        palette = _layer_palette(node.color_role)
+        return (
+            "rounded=1;arcSize=8;whiteSpace=wrap;html=1;"
+            f"fillColor=#ffffff;strokeColor={palette['light_stroke']};"
+            "fontColor=#1f2937;fontSize=13;spacing=12;align=left;verticalAlign=middle;"
+        )
+    if node.kind == "analogy_item":
+        palette = _layer_palette(node.color_role)
+        return (
+            "rounded=1;arcSize=6;whiteSpace=wrap;html=1;"
+            f"fillColor={palette['pale']};strokeColor={palette['light_stroke']};"
+            f"fontColor={palette['text']};fontSize=12;spacing=8;"
+        )
     if node.kind == "system_mes":
         return f"rounded=1;arcSize=8;{base}fillColor=#eef6ff;strokeColor=#2563eb;"
     if node.kind == "system_wms":
@@ -850,13 +1093,15 @@ def _edge_style(
         entry_spread = _spread_point(index, in_count)
         exit = f"exitX={spread};exitY={exit_y};exitDx=0;exitDy=0;"
         entry = f"entryX={entry_spread};entryY={entry_y};entryDx=0;entryDy=0;"
-    dashed = "dashed=1;" if relation in {"data", "async", "backup", "support", "auxiliary", "material", "rework"} else ""
+    dashed = "dashed=1;" if relation in {"data", "async", "backup", "support", "auxiliary", "material", "rework", "callout"} else ""
     color = _edge_color(relation, dashed=bool(dashed))
     width = "3" if relation == "primary" else "2"
+    arrow = "none" if relation == "callout" else "block"
+    fill = "0" if relation == "callout" else "1"
     return (
         "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;"
         f"{exit}{entry}{dashed}strokeColor=#2563eb;strokeWidth=2;fontColor=#334155;fontSize=11;"
-        f"endArrow=block;endFill=1;{'labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;' if has_label else ''}"
+        f"endArrow={arrow};endFill={fill};{'labelBackgroundColor=#f8fafc;labelBorderColor=#cbd5e1;' if has_label else ''}"
     ).replace("strokeColor=#2563eb;strokeWidth=2;", f"strokeColor={color};strokeWidth={width};")
 
 
@@ -865,6 +1110,8 @@ def _edge_color(relation: str, *, dashed: bool) -> str:
         return "#0f766e"
     if relation == "rework":
         return "#b45309"
+    if relation == "callout":
+        return "#94a3b8"
     if relation in {"support", "auxiliary"}:
         return "#64748b"
     return "#64748b" if dashed else "#2563eb"
@@ -881,6 +1128,11 @@ def _edge_waypoints(
     relation = (edge.relation.lower() if edge else "")
     if relation == "rework":
         return _rework_edge_waypoints(plan, source, target)
+    if relation == "callout":
+        sx, sy = _absolute_center(plan, source)
+        tx, ty = _absolute_center(plan, target)
+        mid_x = _snap((sx + tx) / 2)
+        return [(mid_x, sy), (mid_x, ty)]
     if relation in {"support", "auxiliary", "material"}:
         return _secondary_edge_waypoints(plan, sx, sy, tx, ty, relation)
     if abs(tx - sx) < 80 or abs(ty - sy) < 80:
@@ -1078,6 +1330,40 @@ def _container_palette(container: DrawContainer) -> dict[str, str]:
         },
     }
     return role_palettes.get(container.color_role, _palette(container.color_index))
+
+
+def _layer_palette(role: str) -> dict[str, str]:
+    palettes = {
+        "layer_red": {
+            "strong": "#dc2626",
+            "stroke": "#b91c1c",
+            "light_stroke": "#fecaca",
+            "pale": "#fff1f2",
+            "text": "#991b1b",
+        },
+        "layer_orange": {
+            "strong": "#ea580c",
+            "stroke": "#c2410c",
+            "light_stroke": "#fed7aa",
+            "pale": "#fff7ed",
+            "text": "#9a3412",
+        },
+        "layer_gold": {
+            "strong": "#d97706",
+            "stroke": "#b45309",
+            "light_stroke": "#fde68a",
+            "pale": "#fffbeb",
+            "text": "#92400e",
+        },
+        "layer_blue": {
+            "strong": "#0f5fb8",
+            "stroke": "#1d4ed8",
+            "light_stroke": "#bfdbfe",
+            "pale": "#eff6ff",
+            "text": "#1e3a8a",
+        },
+    }
+    return palettes.get(role, palettes["layer_blue"])
 
 
 def _palette(index: int) -> dict[str, str]:

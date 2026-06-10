@@ -79,6 +79,7 @@ AI 必须遵守：
 | 需求 | 推荐图型 | 说明 |
 | --- | --- | --- |
 | 展示系统分层与组件 | `architecture.layered` | 总体架构、技术架构 |
+| 展示多层能力体系说明 | `architecture.layered_explainer` | 左编号层级 + 中部层名/图标 + 右侧说明 + 底部类比 |
 | 展示服务器/网络区域 | `architecture.deployment` | 部署架构、安全域 |
 | 展示网络设备和链路 | `network.topology` | 网络拓扑 |
 | 展示业务办理步骤 | `process.flowchart` | 普通流程 |
@@ -245,7 +246,43 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.2 流程图 `process.flowchart`
+### 6.2 多层能力体系说明图 `architecture.layered_explainer`
+
+适用于参考“AI 系统七层架构全景图”这类表达：一组从底层到高层的能力层级，每层包含编号、层名、短说明、右侧解释，并可在底部给出通俗类比。
+
+当前自动决策会将该图型路由到 Draw.io renderer，输出可编辑 `.drawio`，并在可用时导出 SVG/PNG。该图型适合方法论、能力体系、平台分层、建设路径等标书说明图。
+
+```json
+{
+  "title": "AI 系统七层架构全景图",
+  "subtitle": "从 Token 到 Skills 的能力层级",
+  "levels": [
+    {
+      "number": 7,
+      "id": "skills",
+      "title": "Skills",
+      "subtitle": "技能 / 经验库",
+      "icon": "SK",
+      "description": "沉淀可复用的方法、经验与能力，持续积累，让 AI 越用越强。",
+      "analogy": "经验手册",
+      "color_role": "layer_red"
+    }
+  ],
+  "analogyTitle": "通俗理解 · 一句话类比"
+}
+```
+
+容量建议：
+
+| 字段 | 建议上限 |
+| --- | ---: |
+| `levels` | 7 |
+| `level.title` | 18 字 |
+| `level.subtitle` | 18 字 |
+| `level.description` | 46 字 |
+| `level.analogy` | 16 字 |
+
+### 6.3 流程图 `process.flowchart`
 
 ```json
 {
@@ -259,7 +296,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.3 工艺流程与系统交互大图 `process.interaction_map`
+### 6.4 工艺流程与系统交互大图 `process.interaction_map`
 
 适用于总装、生产、运维、审批等多业务段流程，需要同时表达：
 
@@ -317,7 +354,7 @@ AI 调用时推荐始终保留：
 | `support_flows` | 6 |
 | `interaction_types + legend + glossary` | 8 |
 
-### 6.4 甘特图 `timeline.gantt`
+### 6.5 甘特图 `timeline.gantt`
 
 ```json
 {
@@ -333,7 +370,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.5 风险矩阵 `matrix.risk`
+### 6.6 风险矩阵 `matrix.risk`
 
 ```json
 {
@@ -349,7 +386,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.6 方案对比 `comparison.solution`
+### 6.7 方案对比 `comparison.solution`
 
 ```json
 {
@@ -368,7 +405,7 @@ AI 调用时推荐始终保留：
 }
 ```
 
-### 6.7 接口关系与数据交互图 `integration.interface_map`
+### 6.8 接口关系与数据交互图 `integration.interface_map`
 
 适用于类似“省级平台与国家平台数据交互规则适配架构图”的正式标书大图。典型特点：
 

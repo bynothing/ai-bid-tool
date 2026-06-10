@@ -110,3 +110,30 @@ python -m pytest
 - 已完成回流线外侧绕行，避开 C/D 主流程交界。
 - 已完成语义配色和紧凑图例优化，整体视觉专业度提升。
 - 下一步应集中处理 design tokens、回流线长度压缩和自动 QA。
+
+## 2026-06-08：D 类多层能力说明图基线
+
+本次根据用户提供的“AI 系统七层架构全景图”参考图，新增一个更适合方法论、能力体系和层级说明的图型。
+
+新增能力：
+
+- `architecture.layered_explainer` 图型。
+- `renderer: auto` 自动路由到 Draw.io。
+- 支持左侧编号层级、中部层名/图标、右侧说明、底部通俗类比区。
+
+新增样本与基线：
+
+- fixture：`tests/fixtures/illustration_cases/layered_explainer/job.json`
+- 本地基线：`docs/quality-targets/illustration/generated-baselines/iteration-002-layered-explainer/`
+- 评审：`docs/quality-targets/illustration/reviews/baseline-layered-explainer-iteration-002.md`
+
+当前评分：
+
+```text
+90 / 100
+```
+
+结论：
+
+- 该图型已达到 A- 目标级基线候选。
+- 后续重点是 icon token、文本容量 QA 和 Tier 1 模板化。

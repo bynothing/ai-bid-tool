@@ -49,6 +49,7 @@ LLM 负责语义理解、图型选择、模板选择、结构化 Job 填充。
 - 本轮新增方法论分享：`docs/methodology/agent-complex-engineering-methodology.md`，将本项目的复杂工程建设方式沉淀为可复用方法。
 - 本轮新增 `process.interaction_map` 初版，支持工艺段分区、主流程、辅助/回流关系、图例和术语说明，并可由 `renderer: auto` 自动路由到 Draw.io。
 - 本轮完成 A 类工艺流程 / 系统交互大图基线、评分和 fixture，并完成主辅流程通道、底部图例、回流线外侧绕行、语义配色和整体布局优化。
+- 本轮根据用户提供的“AI 系统七层架构全景图”参考图，新增 D 类 `architecture.layered_explainer` 多层能力体系说明图。
 
 重要提醒：不要回滚现有未提交改动。任何新修改都要先用 `git status --short --branch` 确认边界。
 
@@ -152,6 +153,12 @@ rendered 4 asset(s)
 60 passed
 ```
 
+2026-06-08 新增 `architecture.layered_explainer` 后复验：
+
+```text
+62 passed
+```
+
 基线产物：
 
 ```text
@@ -164,6 +171,12 @@ docs/quality-targets/illustration/generated-baselines/iteration-001-process-inte
 86 / 100
 ```
 
+D 类多层能力体系说明图评分：
+
+```text
+90 / 100
+```
+
 文件管理治理结果：
 
 - `AGENTS.md` 成为智能体启动协议。
@@ -173,6 +186,7 @@ docs/quality-targets/illustration/generated-baselines/iteration-001-process-inte
 - `.gitignore` 已忽略大型参考图和生成基线产物，只保留说明/索引文件。
 - `docs/methodology/` 成为项目实践方法论沉淀区，当前已形成一篇可分享的方法论文档。
 - `process.interaction_map` 已进入 API 文档、fixture、测试和质量评审闭环，当前为 Tier 2 B 级候选实现。
+- `architecture.layered_explainer` 已进入 API 文档、fixture、测试和质量评审闭环，当前为 Tier 2 A- 目标级基线候选。
 
 ## 当前关键风险
 
@@ -185,10 +199,10 @@ docs/quality-targets/illustration/generated-baselines/iteration-001-process-inte
 
 ## 当前推荐下一步
 
-1. 推进 design tokens，将工艺段配色、系统节点配色、主辅线型语义抽成可复用策略。
-2. 压缩返修/回流线长度，并评估是否将回流标签移入图例或说明区。
-3. 建立自动视觉 QA 草案，优先覆盖主流程缺失、图例缺失、边数量预算和线型语义。
-4. 为 `process.interaction_map` 增加边数量、缺失图例、主流程缺失、线型语义的自动 QA。
+1. 推进 design tokens，将工艺段配色、系统节点配色、层级说明图配色、主辅线型语义抽成可复用策略。
+2. 为 `architecture.layered_explainer` 增加 icon token 映射，替换当前文本缩写图标。
+3. 建立自动视觉 QA 草案，优先覆盖主流程缺失、图例缺失、边数量预算、线型语义和文本容量。
+4. 执行 `P0-002`：再建立至少 1 个当前系统输出基线，补足 3 个基线评分。
 4. 更新 S5 prompt 与 `AI_ILLUSTRATION_API_V2.md`，确保 AI 能生成当前 `process.interaction_map` 契约字段。
 5. 建立至少 2 个新的当前输出基线，完成 `P0-002`。
 6. 建立真实样本基准集，覆盖至少 5 个高频标书图型。

@@ -30,6 +30,7 @@
 | 表格规划 | M2 | 已有 S5_tables 阶段和 schema |
 | 配图执行环境 v2 | M2 | 已有 API、CLI、能力目录、模板、Draw.io renderer |
 | 工艺流程 / 系统交互大图 | M2 | `process.interaction_map` 可自动路由 Draw.io，有 fixture、基线和 86 分评分 |
+| 多层能力体系说明图 | M2 | `architecture.layered_explainer` 可自动路由 Draw.io，有 fixture、基线和 90 分评分 |
 | 配图质量目标体系 | M2 | 已有参考图、Rubric、Todo、第一轮迭代计划、A 类基线评分 |
 | 图文合成 | M2 | S6 可消费配图 manifest 和表格计划 |
 | 闭环校验 | M2 | 已有 trace/validator 测试基础 |
@@ -297,6 +298,37 @@
 
 - 当前评分 86 / 100，是 B 级阶段性候选。
 - design tokens、回流线长度压缩和几何 QA 仍需继续开发。
+
+### F-010：多层能力体系说明图初版
+
+状态：已具备
+
+成熟度：M2
+
+说明：
+
+- 新增 `architecture.layered_explainer` 图型。
+- `renderer: auto` 可自动路由到 Tier 2 Draw.io。
+- 支持左侧编号层级、中部层名/图标、右侧说明和底部通俗类比区。
+- 适合方法论、能力体系、平台分层、建设路径等标书说明图。
+
+关键文件：
+
+- `src/bid_tool/illustration_v2/core/decision.py`
+- `src/bid_tool/illustration_v2/renderers/drawio.py`
+- `tests/fixtures/illustration_cases/layered_explainer/job.json`
+- `docs/quality-targets/illustration/reviews/baseline-layered-explainer-iteration-002.md`
+
+验证：
+
+- `tests/test_illustration.py`
+- `python -m pytest` 当前 62 passed。
+
+限制：
+
+- 当前评分 90 / 100，是 A- 目标级基线候选。
+- 圆形图标仍是文本缩写，后续需要 icon token 映射。
+- 右侧说明文本容量和换行 QA 仍需继续开发。
 
 限制：
 

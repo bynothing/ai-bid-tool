@@ -28,6 +28,9 @@
 - 优化 `process.interaction_map`：长图例自动转底部图例，物料/异常走下方通道，返修/回流走上方通道，并增加语义线色。
 - 继续优化 `process.interaction_map`：返修/回流线改为外侧顶部绕行，避开 C/D 主流程交界。
 - 继续优化 `process.interaction_map`：工艺段与节点增加语义配色，底部图例进一步压缩，整体布局更紧凑。
+- 新增 `architecture.layered_explainer`：参考用户提供的“AI 系统七层架构全景图”，支持左编号层级、中部层名/图标、右说明和底部类比区。
+- 新增回归样本：`tests/fixtures/illustration_cases/layered_explainer/job.json`。
+- 新增基线评审：`docs/quality-targets/illustration/reviews/baseline-layered-explainer-iteration-002.md`，当前评分 90 / 100。
 
 ## 本次验证
 
@@ -117,6 +120,18 @@ python -m pytest
 60 passed
 ```
 
+新增 `architecture.layered_explainer` 后再次执行：
+
+```powershell
+python -m pytest
+```
+
+结果：
+
+```text
+62 passed
+```
+
 ## 下一次最小可执行任务
 
 从 `T-002` 或 `T-003` 开始：
@@ -141,6 +156,7 @@ python -m pytest
 
 - `P0-002`：补足至少 3 个当前配图输出基线。
 - design tokens：将当前工艺段配色、系统节点配色、线型语义抽成共享策略。
+- icon token：为层级说明图、能力图、方法论图建立稳定图标映射。
 - 回流线长度压缩：当前外侧绕行清晰但路径偏长。
 - 自动 QA：将主流程缺失、图例缺失、边数量预算、线型语义写入可测试规则。
 - `P0-005`：让 S5 prompt 能稳定产出 `process.interaction_map` 契约字段。
