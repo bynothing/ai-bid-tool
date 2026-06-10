@@ -2,17 +2,18 @@
 """bid-tool — 标书自动生成工具统一入口
 
 Usage:
-  bid-tool init --project "项目名" --type software    初始化新项目
-  bid-tool run                                         运行全流程
-  bid-tool run --from s2 --to s7                       部分运行
-  bid-tool status                                      查看状态
-  bid-tool gate s3                                     门禁检查
-  bid-tool illustrate --job <作业JSON>                  仅运行配图工具
-  bid-tool export --format docx                         仅导出
+  bid-tool init --project "项目名" --workspace ~/bid-workspace   初始化新项目
+  bid-tool run -d ~/bid-workspace/某项目                         运行全流程
+  bid-tool status -d ~/bid-workspace/某项目                      查看状态
+  bid-tool migrate --source . --project "项目名"                  迁移旧项目
 """
 import argparse
 import sys
 from pathlib import Path
+
+
+def _add_project_dir(parser):
+    parser.add_argument('--project-dir', '-d', help='项目目录路径')
 
 
 def cmd_init(args):
@@ -35,16 +36,25 @@ def cmd_gate(args):
     engine_gate(args)
 
 
+def cmd_migrate(args):
+    """Migrate an existing cwd/output project into the workspace."""
+    from .workspace import migrate_cwd_output
+    paths = migrate_cwd_output(
+        source_dir=args.source or '.',
+        workspace=args.workspace,
+        project_name=args.project or '迁移项目',
+    )
+    print(f'[OK] 项目已迁移到: {paths.root}')
+    print(f'[INFO] 后续使用: bid-tool run -d {paths.root}')
+
+
 def cmd_illustrate(args):
     from .illustration_v2.toolkit import main as illustrate_main
-    # Patch sys.argv for the illustration toolkit's argparse
     original_argv = sys.argv
     try:
-        sys.argv = [
-            'bid-tool-illustrate',
-            '--job', str(args.job),
-            '--output', str(args.output or Path.cwd() / 'output' / 'illustrations'),
-        ]
+        pd = getattr(args, 'project_dir', None)
+        out = args.output or (Path(pd) / 'output' / 'illustrations' if pd else Path.cwd() / 'output' / 'illustrations')
+        sys.argv = ['bid-tool-illustrate', '--job', str(args.job), '--output', str(out)]
         if args.png:
             sys.argv.append('--png')
         if getattr(args, 'png_scale', None):
@@ -103,13 +113,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog='''
 常用命令:
-  bid-tool init --project "某项目" --type software    初始化新项目
-  bid-tool status                                     查看各阶段状态
-  bid-tool run                                        运行全流程
-  bid-tool run --from s2 --to s7                      部分运行
-  bid-tool gate s3                                    门禁检查
-  bid-tool illustrate --job examples/示例.json         生成配图
-  bid-tool export --profile software                  导出 DOCX
+  bid-tool init --project "某项目" --workspace ~/bid-workspace     初始化新项目
+  bid-tool status -d ~/bid-workspace/某项目                        查看状态
+  bid-tool run -d ~/bid-workspace/某项目                           运行全流程
+  bid-tool migrate --source . --project "旧项目"                    迁移旧项目到工作空间
+  bid-tool illustrate --job examples/示例.json                     生成配图
         '''
     )
     sub = parser.add_subparsers(dest='command')
@@ -117,11 +125,21 @@ def main():
     # init
     p_init = sub.add_parser('init', help='初始化新项目')
     p_init.add_argument('--project', help='项目名称')
+    p_init.add_argument('--workspace', '-w', help='工作空间目录 (默认 ~/bid-workspace)')
     p_init.add_argument('--type', dest='profile_type', choices=['software', 'construction'],
                         default='software', help='项目类型')
+    p_init.add_argument('--tender', help='招标文件路径')
+    _add_project_dir(p_init)
+
+    # migrate
+    p_migrate = sub.add_parser('migrate', help='迁移旧项目到工作空间')
+    p_migrate.add_argument('--source', '-s', default='.', help='源目录（含 output/ 的目录）')
+    p_migrate.add_argument('--project', required=True, help='项目名称')
+    p_migrate.add_argument('--workspace', '-w', help='目标工作空间目录')
 
     # status
-    sub.add_parser('status', help='查看各阶段状态')
+    p_status = sub.add_parser('status', help='查看各阶段状态')
+    _add_project_dir(p_status)
 
     # run
     p_run = sub.add_parser('run', help='运行流程')
@@ -131,47 +149,49 @@ def main():
     p_run.add_argument('--skip-gate', action='store_true', help='跳过门禁检查')
     p_run.add_argument('--yes', '-y', action='store_true', help='自动确认人工阶段')
     p_run.add_argument('--verbose', '-v', action='store_true', help='详细输出')
+    _add_project_dir(p_run)
 
     # gate
     p_gate = sub.add_parser('gate', help='门禁管理')
     p_gate.add_argument('stage', help='阶段编号（如 s3）')
-    p_gate.add_argument('--continue', dest='continue_', action='store_true',
-                        help='门禁通过后继续下一阶段')
+    p_gate.add_argument('--continue', dest='continue_', action='store_true')
     p_gate.add_argument('--confirm', action='store_true', help='确认人工阶段完成')
     p_gate.add_argument('--skip-gate', action='store_true')
     p_gate.add_argument('--verbose', '-v', action='store_true')
+    _add_project_dir(p_gate)
 
     # illustrate
     p_illu = sub.add_parser('illustrate', help='运行配图工具')
-    p_illu.add_argument('--job', type=Path, required=True, help='统一配图任务 JSON 文件')
+    p_illu.add_argument('--job', type=Path, required=True)
     p_illu.add_argument('--output', type=Path, help='输出目录')
-    p_illu.add_argument('--png', action='store_true', help='同步生成 PNG 预览')
-    p_illu.add_argument('--png-scale', type=int, choices=(1, 2, 3), default=2, help='PNG 输出倍率')
-    p_illu.add_argument('--validate-only', action='store_true', help='仅校验任务文件')
-    p_illu.add_argument('--no-echarts-export', action='store_true',
-                        help='ECharts 只生成本地 HTML 审图页，不自动导出图片')
+    p_illu.add_argument('--png', action='store_true')
+    p_illu.add_argument('--png-scale', type=int, choices=(1, 2, 3), default=2)
+    p_illu.add_argument('--validate-only', action='store_true')
+    p_illu.add_argument('--no-echarts-export', action='store_true')
+    _add_project_dir(p_illu)
 
     # illustration bundle
-    p_bundle = sub.add_parser('illustration-bundle', help='生成可独立解压运行的绘图工具包')
-    p_bundle.add_argument('--output', type=Path, default=Path.cwd() / 'dist' / 'bid-illustration-standalone',
-                          help='独立绘图工具包输出目录')
-    p_bundle.add_argument('--no-examples', action='store_true', help='不复制 examples 目录')
-    p_bundle.add_argument('--zip', action='store_true', help='同时生成 zip 压缩包')
+    p_bundle = sub.add_parser('illustration-bundle', help='生成可独立运行的绘图工具包')
+    p_bundle.add_argument('--output', type=Path, default=Path.cwd() / 'dist' / 'bid-illustration-standalone')
+    p_bundle.add_argument('--no-examples', action='store_true')
+    p_bundle.add_argument('--zip', action='store_true')
 
     # export
     p_export = sub.add_parser('export', help='导出 DOCX')
-    p_export.add_argument('--profile', choices=['software', 'construction'],
-                          default='software', help='项目类型配置')
+    p_export.add_argument('--profile', choices=['software', 'construction'], default='software')
     p_export.add_argument('--input', type=Path, help='s6_combined_bid_document.md 路径')
-    p_export.add_argument('--s6-dir', type=Path, help='s6_synthesis 目录（用于解析图片路径）')
+    p_export.add_argument('--s6-dir', type=Path, help='s6_synthesis 目录')
     p_export.add_argument('--output', type=Path, help='s8_final 输出目录')
     p_export.add_argument('--trace', type=Path, help='trace.json 路径')
-    p_export.add_argument('--project', help='项目名称（用于输出文件名）')
+    p_export.add_argument('--project', help='项目名称')
+    _add_project_dir(p_export)
 
     args = parser.parse_args()
 
     if args.command == 'init':
         cmd_init(args)
+    elif args.command == 'migrate':
+        cmd_migrate(args)
     elif args.command == 'status':
         cmd_status(args)
     elif args.command == 'run':

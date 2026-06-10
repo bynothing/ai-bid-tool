@@ -67,7 +67,7 @@ def _ask_user(outline_summary, total_estimated_words):
         return result
 
     # Q2: Word budget
-    suggested = max(12000, min(total_estimated_words, 40000))
+    suggested = max(35000, min(total_estimated_words * 2, 65000))
     resp = input(f"\n  [2/3] 期望全文总字数？(直接回车 = 自动 {suggested} 字): ").strip()
     if resp.isdigit():
         result["word_budget"] = int(resp)
@@ -150,11 +150,11 @@ def prepare(s1_data_dir=None, s2_data_dir=None, output_dir=None, project_name=No
     elif not interactive:
         print("\n[INFO] 非交互模式，自动评估参数")
         if user_input["word_budget"] is None:
-            user_input["word_budget"] = max(12000, min(total_estimated_words, 40000))
+            user_input["word_budget"] = max(35000, min(total_estimated_words * 2, 65000))
         if not user_input["user_approach"]:
             user_input["user_approach"] = ""
 
-    final_word_budget = user_input["word_budget"] or max(12000, min(total_estimated_words, 40000))
+    final_word_budget = user_input["word_budget"] or max(35000, min(total_estimated_words * 2, 65000))
     final_approach = user_input.get("user_approach", "")
 
     # Run chapter planner

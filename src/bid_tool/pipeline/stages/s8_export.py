@@ -222,25 +222,37 @@ def add_requirement_annotation(doc, text):
 
 
 def add_image_with_caption(doc, image_path, caption_text):
-    """Add an embedded image with a centered caption."""
-    if os.path.exists(image_path):
-        try:
-            para = doc.add_paragraph()
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run()
-            run.add_picture(image_path, width=Cm(14.5))
-        except Exception:
-            para = doc.add_paragraph()
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run(f'[图: {os.path.basename(image_path)}]')
-            set_cell_font(run, '仿宋', Pt(10), False)
-            run.font.color.rgb = RGBColor(0x99, 0x99, 0x99)
-    else:
+    """Add an embedded image with a centered caption.
+
+    If image_path is an SVG and python-docx cannot embed it directly,
+    this function automatically tries to locate a .png version in the
+    same directory.
+    """
+    resolved = image_path
+    if not os.path.exists(resolved):
         para = doc.add_paragraph()
         para.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = para.add_run(f'[图缺失: {os.path.basename(image_path)}]')
         set_cell_font(run, '仿宋', Pt(10), False)
         run.font.color.rgb = RGBColor(0xCC, 0x00, 0x00)
+    else:
+        # python-docx cannot embed SVG directly — try PNG fallback first
+        if resolved.lower().endswith('.svg'):
+            png_path = resolved[:-4] + '.png'
+            if os.path.exists(png_path):
+                resolved = png_path
+        try:
+            para = doc.add_paragraph()
+            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            run = para.add_run()
+            run.add_picture(resolved, width=Cm(15.5))
+        except Exception:
+            # Last resort: try cairosvg or display placeholder
+            para = doc.add_paragraph()
+            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            run = para.add_run(f'[图: {os.path.basename(image_path)}]')
+            set_cell_font(run, '仿宋', Pt(10), False)
+            run.font.color.rgb = RGBColor(0x99, 0x99, 0x99)
 
     # Caption paragraph
     cap_para = doc.add_paragraph()
@@ -569,9 +581,9 @@ def export_to_docx(combined_md=None, s6_dir=None, s8_dir=None,
         if heading_match:
             level = len(heading_match.group(1))
             text = heading_match.group(2)
-            add_heading_para(doc, text, level)
             if level == 1 and i > 10:
                 add_page_break(doc)
+            add_heading_para(doc, text, level)
             i += 1
             continue
 

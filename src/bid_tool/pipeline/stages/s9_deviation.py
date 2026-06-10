@@ -28,11 +28,28 @@ from lxml import etree
 # ============================================================
 # Configuration
 # ============================================================
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUTPUT_DIR = os.path.join(ROOT, 'output')
-S3_CHAPTERS_DIR = os.path.join(OUTPUT_DIR, 's3_body', 'chapters')
-TRACE_PATH = os.path.join(OUTPUT_DIR, 'trace.json')
-S9_OUTPUT_DIR = os.path.join(OUTPUT_DIR, 's9_deviation')
+def _get_output_dir():
+    """Resolve output directory via workspace or fall back to cwd."""
+    try:
+        from bid_tool.workspace import resolve_project_paths
+        return str(resolve_project_paths().output)
+    except Exception:
+        return os.path.join(os.getcwd(), 'output')
+
+OUTPUT_DIR = None  # Lazily resolved by _resolve_paths()
+S3_CHAPTERS_DIR = None
+TRACE_PATH = None
+S9_OUTPUT_DIR = None
+
+def _resolve_paths():
+    """Resolve module-level path constants on first use."""
+    global OUTPUT_DIR, S3_CHAPTERS_DIR, TRACE_PATH, S9_OUTPUT_DIR
+    if OUTPUT_DIR is None:
+        OUTPUT_DIR = _get_output_dir()
+        S3_CHAPTERS_DIR = os.path.join(OUTPUT_DIR, 's3_body', 'chapters')
+        TRACE_PATH = os.path.join(OUTPUT_DIR, 'trace.json')
+        S9_OUTPUT_DIR = os.path.join(OUTPUT_DIR, 's9_deviation')
+    return OUTPUT_DIR
 
 W_NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
 
@@ -176,6 +193,7 @@ def extract_summaries(requirements, body_lookup, verbose=False):
 
     # Load all chapter markdown content
     chapter_texts = {}
+    _resolve_paths()  # ensure paths are resolved
     if os.path.isdir(S3_CHAPTERS_DIR):
         for fname in sorted(os.listdir(S3_CHAPTERS_DIR)):
             if fname.endswith('.md'):

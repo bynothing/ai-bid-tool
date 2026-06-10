@@ -134,6 +134,8 @@ def _should_use_drawio(item: IllustrationItem) -> bool:
         "process.system_interaction",
         "architecture.layered_explainer",
         "methodology.layered_stack",
+        "architecture.deployment",
+        "network.topology",
     }:
         return True
     if item.visual.get("editableVector") or item.visual.get("preciseConnectors"):

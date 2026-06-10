@@ -266,8 +266,11 @@ def _plan_diagram(job: IllustrationJob, item: IllustrationItem) -> DrawPlan:
         return _plan_layers(title, subtitle, item)
     if item.type in {"architecture.layered_explainer", "methodology.layered_stack"}:
         return _plan_layered_explainer(title, subtitle, item)
-    if item.type in {"architecture.deployment", "network.topology"} and item.data.get("zones"):
-        return _plan_zones(title, subtitle, item)
+    if item.type in {"architecture.deployment", "network.topology"}:
+        if item.data.get("zones"):
+            return _plan_zones(title, subtitle, item)
+        if item.data.get("platforms"):
+            return _plan_platforms(title, subtitle, item)
     if item.type == "integration.interface_map":
         return _plan_interface(title, subtitle, item)
     if item.type in {"process.interaction_map", "process.system_interaction"} or (
@@ -459,6 +462,98 @@ def _plan_zones(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
             node.subtitle = node.subtitle or str(zone.get("title") or "")
             nodes.append(node)
     return DrawPlan(title, subtitle, width, top_y + container_h + 70, nodes, _edges(item), containers)
+
+
+def _plan_platforms(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
+    """Plan a deployment diagram from platforms data (flat zones with string items)."""
+    platforms = item.data.get("platforms", [])
+    if not isinstance(platforms, list) or not platforms:
+        return _plan_general(title, subtitle, item)
+
+    # Calculate layout: 3 columns max, flexible rows
+    cols = min(3, len(platforms))
+    gap_x = 22
+    margin_x = 56
+    top_y = 130
+    width = max(1180, margin_x * 2 + cols * 340 + (cols - 1) * gap_x)
+    container_w = (width - margin_x * 2 - (cols - 1) * gap_x) // cols
+
+    # Determine max items to size containers uniformly
+    max_items = max(len(p.get("items", [])) for p in platforms if isinstance(p, dict))
+    row_h = 58
+    header_h = 42
+    container_h = max(200, header_h + 16 + max_items * (row_h + 6) + 12)
+
+    containers: list[DrawContainer] = []
+    nodes: list[DrawNode] = []
+    node_index = 0
+
+    for p_idx, platform in enumerate(platforms, start=1):
+        if not isinstance(platform, dict):
+            continue
+        cid = _xml_id(f"C_platform_{p_idx}")
+        col = (p_idx - 1) % cols
+        row = (p_idx - 1) // cols
+        cx = margin_x + col * (container_w + gap_x)
+        cy = top_y + row * (container_h + gap_x)
+
+        platform_title = str(platform.get("title") or platform.get("label") or f"Zone {p_idx}")
+        role = _platform_role(platform_title, p_idx)
+        containers.append(DrawContainer(
+            cid, platform_title, cx, cy, container_w, container_h,
+            p_idx - 1, kind="box", color_role=role,
+        ))
+
+        items = platform.get("items", [])
+        for item_idx, entry in enumerate(items, start=1):
+            node_index += 1
+            if isinstance(entry, str):
+                node_title = entry
+                node_subtitle = ""
+            elif isinstance(entry, dict):
+                node_title = str(entry.get("title") or entry.get("label") or f"Item {item_idx}")
+                node_subtitle = str(entry.get("desc") or entry.get("subtitle") or "")
+            else:
+                node_title = str(entry)
+                node_subtitle = ""
+
+            node = DrawNode(
+                _xml_id(f"PN_{node_index}"),
+                node_title,
+                node_subtitle,
+                kind="service",
+                parent=cid,
+                group=cid,
+                x=20,
+                y=header_h + 12 + (item_idx - 1) * (row_h + 6),
+                width=container_w - 40,
+                height=row_h,
+            )
+            nodes.append(node)
+
+    # Calculate total height
+    rows = (len(platforms) + cols - 1) // cols
+    total_height = top_y + rows * container_h + (rows - 1) * gap_x + 60
+    return DrawPlan(title, subtitle, width, total_height, nodes, _edges(item), containers)
+
+
+def _platform_role(title: str, index: int) -> str:
+    """Infer a color role from platform title text."""
+    title_lower = title.lower()
+    if any(kw in title_lower for kw in ["办公", "管理", "行政", "指挥"]):
+        return "process_planning"
+    if any(kw in title_lower for kw in ["生活", "宿舍", "食堂", "休息"]):
+        return "process_assembly"
+    if any(kw in title_lower for kw in ["材料", "堆场", "仓库", "存放", "加工"]):
+        return "process_quality"
+    if any(kw in title_lower for kw in ["施工", "安装", "作业", "生产", "主体"]):
+        return "process_validation"
+    if any(kw in title_lower for kw in ["辅助", "配电", "供水", "沉淀", "应急"]):
+        return "process_delivery"
+    if any(kw in title_lower for kw in ["交通", "道路", "通道", "车辆"]):
+        return "legend"
+    roles = ["process_planning", "process_assembly", "process_validation", "process_quality", "process_delivery"]
+    return roles[(index - 1) % len(roles)]
 
 
 def _plan_interface(title: str, subtitle: str, item: IllustrationItem) -> DrawPlan:
@@ -710,6 +805,31 @@ def _extract_graph(item: IllustrationItem) -> tuple[list[DrawNode], list[DrawEdg
             for entry in zone.get("nodes", []) or zone.get("devices", []):
                 node = _node(entry, len(nodes) + 1)
                 node.subtitle = node.subtitle or str(zone.get("title") or zone.get("label") or "")
+                nodes.append(node)
+
+    if data.get("platforms"):
+        for platform in data["platforms"]:
+            if not isinstance(platform, dict):
+                continue
+            platform_title = str(platform.get("title") or platform.get("label") or "")
+            for entry in platform.get("items", []):
+                if isinstance(entry, str):
+                    node = DrawNode(
+                        _xml_id(f"P{len(nodes) + 1}"),
+                        entry,
+                        platform_title,
+                        kind="service",
+                    )
+                elif isinstance(entry, dict):
+                    node = _node(entry, len(nodes) + 1)
+                    node.subtitle = node.subtitle or platform_title
+                else:
+                    node = DrawNode(
+                        _xml_id(f"P{len(nodes) + 1}"),
+                        str(entry),
+                        platform_title,
+                        kind="service",
+                    )
                 nodes.append(node)
 
     edges = _edges(item)

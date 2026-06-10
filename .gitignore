@@ -15,7 +15,7 @@ Thumbs.db
 node_modules/
 .tools/
 .tmp_illustration_v2_*/
-output/workspace_smoke/
+output/
 docs/quality-targets/illustration/references/*
 !docs/quality-targets/illustration/references/.gitkeep
 !docs/quality-targets/illustration/references/README.md
